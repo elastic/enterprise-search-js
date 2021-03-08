@@ -33,7 +33,6 @@ interface That { transport: Transport }
 
 export interface GetReadOnlyResponse {
   enabled: boolean
-  [k: string]: unknown
 }
 
 /** Get the read-only flag's state */
@@ -51,12 +50,10 @@ export async function getReadOnly (this: That, opts = {}, transportOptions?: Tra
 
 export interface PutReadOnlyOptions {
   enabled: boolean
-  [k: string]: unknown
 }
 
 export interface PutReadOnlyResponse {
   enabled: boolean
-  [k: string]: unknown
 }
 
 /** Update the read-only flag's state */

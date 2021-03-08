@@ -35,7 +35,6 @@ export interface GetVersionResponse {
   number: string
   build_hash: string
   build_date: string
-  [k: string]: unknown
 }
 
 /** Get version information for this server */

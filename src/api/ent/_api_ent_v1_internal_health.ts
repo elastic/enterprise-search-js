@@ -37,7 +37,6 @@ export interface GetHealthResponse {
     number: string
     build_hash: string
     build_date: string
-    [k: string]: unknown
   }
   jvm: {
     pid: number
@@ -49,7 +48,6 @@ export interface GetHealthResponse {
       heap_max: number
       non_heap_init: number
       non_heap_committed: number
-      [k: string]: unknown
     }
     memory_pools: string[]
     threads: {
@@ -57,28 +55,23 @@ export interface GetHealthResponse {
       peak_thread_count: number
       total_started_thread_count: number
       daemon_thread_count: number
-      [k: string]: unknown
     }
     vm_version: string
     vm_vendor: string
     vm_name: string
-    [k: string]: unknown
   }
   filebeat: {
     pid?: number
     alive: boolean
     restart_count?: number
     seconds_since_last_restart?: number
-    [k: string]: unknown
   }
   system: {
     java_version: string
     jruby_version: string
     os_name: string
     os_version: string
-    [k: string]: unknown
   }
-  [k: string]: unknown
 }
 
 /** Get information on the health of a deployment and basic statistics around resource usage */

@@ -36,7 +36,6 @@ export interface GetStatsOptions {
    * Comma-separated list of stats to return
    */
   include?: string[]
-  [k: string]: unknown
 }
 
 export interface GetStatsResponse {
@@ -51,10 +50,8 @@ export interface GetStatsResponse {
         sum: number
         max: number
         mean: number
-        [k: string]: unknown
       }
     }
-    [k: string]: unknown
   }
   queues?: null
   connectors?: {
@@ -68,7 +65,6 @@ export interface GetStatsResponse {
         idle: number
         total_scheduled: number
         total_completed: number
-        [k: string]: unknown
       }
       subextract_worker_pool: {
         running: boolean
@@ -78,7 +74,6 @@ export interface GetStatsResponse {
         idle: number
         total_scheduled: number
         total_completed: number
-        [k: string]: unknown
       }
       publish_worker_pool: {
         running: boolean
@@ -88,7 +83,6 @@ export interface GetStatsResponse {
         idle: number
         total_scheduled: number
         total_completed: number
-        [k: string]: unknown
       }
       status_update_worker_pool: {
         running: boolean
@@ -98,9 +92,7 @@ export interface GetStatsResponse {
         idle: number
         total_scheduled: number
         total_completed: number
-        [k: string]: unknown
       }
-      [k: string]: unknown
     }
     job_store: {
       waiting: number
@@ -110,13 +102,9 @@ export interface GetStatsResponse {
         incremental: number
         delete: number
         permissions: number
-        [k: string]: unknown
       }
-      [k: string]: unknown
     }
-    [k: string]: unknown
   }
-  [k: string]: unknown
 }
 
 /** Get information about the resource usage of the application, the state of different internal queues, etc. */
