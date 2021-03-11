@@ -32,27 +32,27 @@ import {
 interface That { transport: Transport }
 
 export interface CreateAnalyticsEventOptions {
-  type?: 'click' | 'feedback'
+  type: 'click' | 'feedback'
   /**
    * query identifier for the event
    */
-  query_id?: string
+  query_id: string
   /**
    * page number of the document in the query result set
    */
-  page?: number
+  page: number
   /**
    * content source identifier for the event document
    */
-  content_source_id?: string
+  content_source_id: string
   /**
    * document identifier for the event
    */
-  document_id?: string
+  document_id: string
   /**
    * rank of the document in the overall result set
    */
-  rank?: number
+  rank: number
   /**
    * the target identifier for a click event
    */
@@ -66,10 +66,10 @@ export interface CreateAnalyticsEventOptions {
 interface CreateAnalyticsEventResponse {}
 
 /** Capture click and feedback analytic events */
-export async function createAnalyticsEvent (this: That, opts?: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptionsWithOutMeta): Promise<CreateAnalyticsEventResponse>
-export async function createAnalyticsEvent (this: That, opts?: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptionsWithMeta): Promise<TransportResult<CreateAnalyticsEventResponse, unknown>>
-export async function createAnalyticsEvent (this: That, opts?: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptions): Promise<CreateAnalyticsEventResponse>
-export async function createAnalyticsEvent (this: That, opts?: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptions): Promise<any> {
+export async function createAnalyticsEvent (this: That, opts: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptionsWithOutMeta): Promise<CreateAnalyticsEventResponse>
+export async function createAnalyticsEvent (this: That, opts: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptionsWithMeta): Promise<TransportResult<CreateAnalyticsEventResponse, unknown>>
+export async function createAnalyticsEvent (this: That, opts: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptions): Promise<CreateAnalyticsEventResponse>
+export async function createAnalyticsEvent (this: That, opts: CreateAnalyticsEventOptions, transportOptions?: TransportRequestOptions): Promise<any> {
   const params: TransportRequestParams = {
     method: 'POST',
     path: '/api/ws/v1/analytics/event',
@@ -77,14 +77,14 @@ export async function createAnalyticsEvent (this: That, opts?: CreateAnalyticsEv
     body: {}
   }
 
-  if (opts?.type !== undefined) (params.body as Record<string, any>).type = opts.type
-  if (opts?.query_id !== undefined) (params.body as Record<string, any>).query_id = opts.query_id
-  if (opts?.page !== undefined) (params.body as Record<string, any>).page = opts.page
-  if (opts?.content_source_id !== undefined) (params.body as Record<string, any>).content_source_id = opts.content_source_id
-  if (opts?.document_id !== undefined) (params.body as Record<string, any>).document_id = opts.document_id
-  if (opts?.rank !== undefined) (params.body as Record<string, any>).rank = opts.rank
-  if (opts?.event !== undefined) (params.body as Record<string, any>).event = opts.event
-  if (opts?.score !== undefined) (params.body as Record<string, any>).score = opts.score
+  if (opts.type !== undefined) (params.body as Record<string, any>).type = opts.type
+  if (opts.query_id !== undefined) (params.body as Record<string, any>).query_id = opts.query_id
+  if (opts.page !== undefined) (params.body as Record<string, any>).page = opts.page
+  if (opts.content_source_id !== undefined) (params.body as Record<string, any>).content_source_id = opts.content_source_id
+  if (opts.document_id !== undefined) (params.body as Record<string, any>).document_id = opts.document_id
+  if (opts.rank !== undefined) (params.body as Record<string, any>).rank = opts.rank
+  if (opts.event !== undefined) (params.body as Record<string, any>).event = opts.event
+  if (opts.score !== undefined) (params.body as Record<string, any>).score = opts.score
 
   return await this.transport.request<CreateAnalyticsEventResponse>(params, transportOptions)
 }

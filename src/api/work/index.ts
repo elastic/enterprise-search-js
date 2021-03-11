@@ -23,6 +23,9 @@
 // DO NOT MODIFY IT BY HAND. Instead, modify the source open api file,
 // and elastic/elastic-client-generator-js to regenerate this file again.
 
+import { listContentSources } from './_api_ws_v1_sources'
+import { getContentSource } from './_api_ws_v1_sources_content_source_id'
+import { deleteAllDocuments } from './_api_ws_v1_sources_content_source_id_documents'
 import { indexDocuments } from './_api_ws_v1_sources_content_source_id_documents_bulk_create'
 import { deleteDocuments } from './_api_ws_v1_sources_content_source_id_documents_bulk_destroy'
 import { listExternalIdentities, createExternalIdentity } from './_api_ws_v1_sources_content_source_id_external_identities'
@@ -36,6 +39,9 @@ import { search } from './_api_ws_v1_search'
 
 export default interface API {
   new(): API
+  listContentSources: typeof listContentSources
+  getContentSource: typeof getContentSource
+  deleteAllDocuments: typeof deleteAllDocuments
   indexDocuments: typeof indexDocuments
   deleteDocuments: typeof deleteDocuments
   listExternalIdentities: typeof listExternalIdentities
@@ -53,6 +59,9 @@ export default interface API {
 }
 
 export default class API {}
+API.prototype.listContentSources = listContentSources
+API.prototype.getContentSource = getContentSource
+API.prototype.deleteAllDocuments = deleteAllDocuments
 API.prototype.indexDocuments = indexDocuments
 API.prototype.deleteDocuments = deleteDocuments
 API.prototype.listExternalIdentities = listExternalIdentities

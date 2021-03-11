@@ -36,7 +36,7 @@ export interface GetHealthResponse {
   version: {
     number: string
     build_hash: string
-    build_date: string
+    build_date: string | null
   }
   jvm: {
     pid: number

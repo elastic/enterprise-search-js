@@ -34,7 +34,7 @@ interface That { transport: Transport }
 export interface GetVersionResponse {
   number: string
   build_hash: string
-  build_date: string
+  build_date: string | null
 }
 
 /** Get version information for this server */

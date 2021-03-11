@@ -31,36 +31,32 @@ import {
 } from '@elastic/transport'
 interface That { transport: Transport }
 
-export interface AddUserPermissionsOptions {
+export interface DeleteAllDocumentsOptions {
   /**
    * Unique ID for a Custom API source, provided upon creation of a Custom API Source
    */
   content_source_id: string
-  /**
-   * The username in context
-   */
-  user: string
 }
 
-export interface AddUserPermissionsResponse {
-  user: string
-  /**
-   * List of permissions
-   */
-  permissions: string[]
+export interface DeleteAllDocumentsResponse {
+  total: number
+  deleted: number
+  failures: Array<{
+    [k: string]: unknown
+  }>
 }
 
-/** Adds one or more new permissions atop existing permissions */
-export async function addUserPermissions (this: That, opts: AddUserPermissionsOptions, transportOptions?: TransportRequestOptionsWithOutMeta): Promise<AddUserPermissionsResponse>
-export async function addUserPermissions (this: That, opts: AddUserPermissionsOptions, transportOptions?: TransportRequestOptionsWithMeta): Promise<TransportResult<AddUserPermissionsResponse, unknown>>
-export async function addUserPermissions (this: That, opts: AddUserPermissionsOptions, transportOptions?: TransportRequestOptions): Promise<AddUserPermissionsResponse>
-export async function addUserPermissions (this: That, opts: AddUserPermissionsOptions, transportOptions?: TransportRequestOptions): Promise<any> {
+/** Deletes all documents in a custom content source */
+export async function deleteAllDocuments (this: That, opts: DeleteAllDocumentsOptions, transportOptions?: TransportRequestOptionsWithOutMeta): Promise<DeleteAllDocumentsResponse>
+export async function deleteAllDocuments (this: That, opts: DeleteAllDocumentsOptions, transportOptions?: TransportRequestOptionsWithMeta): Promise<TransportResult<DeleteAllDocumentsResponse, unknown>>
+export async function deleteAllDocuments (this: That, opts: DeleteAllDocumentsOptions, transportOptions?: TransportRequestOptions): Promise<DeleteAllDocumentsResponse>
+export async function deleteAllDocuments (this: That, opts: DeleteAllDocumentsOptions, transportOptions?: TransportRequestOptions): Promise<any> {
   const params: TransportRequestParams = {
-    method: 'POST',
-    path: `/api/ws/v1/sources/${encodeURIComponent(opts.content_source_id)}/permissions/${encodeURIComponent(opts.user)}/add`,
+    method: 'DELETE',
+    path: `/api/ws/v1/sources/${encodeURIComponent(opts.content_source_id)}/documents`,
     querystring: {},
     body: {}
   }
 
-  return await this.transport.request<AddUserPermissionsResponse>(params, transportOptions)
+  return await this.transport.request<DeleteAllDocumentsResponse>(params, transportOptions)
 }
