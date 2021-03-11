@@ -18,6 +18,7 @@
  */
 
 import { Transport } from '@elastic/transport'
+import Serializer from './Serializer'
 import API from './api/app'
 import { BearerAuth, InternalOptions } from './types'
 
@@ -31,6 +32,7 @@ export default class AppSearchClient extends API {
   constructor (opts: AppSearchClientOptions, internal: InternalOptions) {
     super()
     this.transport = new Transport({
+      serializer: new Serializer(),
       connectionPool: internal.connectionPool,
       diagnostic: internal.diagnostic,
       compression: true,

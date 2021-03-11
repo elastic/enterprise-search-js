@@ -18,6 +18,7 @@
  */
 
 import { Transport } from '@elastic/transport'
+import Serializer from './Serializer'
 import API from './api/ent'
 import { BasicAuth, BearerAuth, InternalOptions } from './types'
 
@@ -34,6 +35,7 @@ export default class EnterpriseSearchClient extends API {
       ? `Bearer ${opts.auth.token}`
       : 'Basic ' + Buffer.from(`${opts.auth.username}:${opts.auth.password}`).toString('base64')
     this.transport = new Transport({
+      serializer: new Serializer(),
       connectionPool: internal.connectionPool,
       diagnostic: internal.diagnostic,
       compression: true,
