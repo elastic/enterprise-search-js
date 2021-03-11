@@ -27,6 +27,13 @@ import EnterpriseSearchClient from './EnterpriseSearchClient'
 import AppSearchClient from './AppSearchClient'
 import WorkplaceSearchClient from './WorkplaceSearchClient'
 import { BasicAuth, BearerAuth, InternalOptions } from './types'
+import {
+  kOptions,
+  kConnectionPool,
+  kEnterpriseSearch,
+  kAppSearch,
+  kWorkplaceSearch
+} from './symbols'
 
 export interface AuthOptions {
   enterprise?: {
@@ -43,12 +50,6 @@ export interface AuthOptions {
 export interface ClientOptions extends AuthOptions {
   url: string
 }
-
-const kOptions = Symbol('initial options')
-const kConnectionPool = Symbol('connection pool')
-const kEnterpriseSearch = Symbol('enterprise search')
-const kAppSearch = Symbol('app search')
-const kWorkplaceSearch = Symbol('workplace search')
 
 const { ConfigurationError } = errors
 
