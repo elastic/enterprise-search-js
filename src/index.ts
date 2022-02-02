@@ -71,7 +71,7 @@ export default class Client {
       this[kConnectionPool] = new CloudConnectionPool({
         Connection: UndiciConnection,
         diagnostic: this.diagnostic,
-        ssl: opts.url.startsWith('https://')
+        tls: opts.url.startsWith('https://')
           ? { secureProtocol: 'TLSv1_2_method' }
           : undefined
       })

@@ -19,8 +19,10 @@
 
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
-import API from './api/app'
+import API from './api/app/api'
 import { BearerAuth, InternalOptions } from './types'
+
+export * as AppTypes from './api/app/types'
 
 export interface AppSearchClientOptions {
   url: string

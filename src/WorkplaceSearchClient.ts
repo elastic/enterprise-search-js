@@ -19,8 +19,10 @@
 
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
-import API from './api/work'
+import API from './api/workplace/api'
 import { BasicAuth, BearerAuth, InternalOptions } from './types'
+
+export * as WorkplaceTypes from './api/workplace/types'
 
 export interface WorkplaceSearchClientOptions {
   url: string

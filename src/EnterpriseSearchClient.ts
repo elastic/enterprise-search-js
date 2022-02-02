@@ -19,8 +19,10 @@
 
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
-import API from './api/ent'
+import API from './api/enterprise/api'
 import { BasicAuth, BearerAuth, InternalOptions } from './types'
+
+export * as EnterpriseTypes from './api/enterprise/types'
 
 export interface EnterpriseSearchClientOptions {
   url: string
