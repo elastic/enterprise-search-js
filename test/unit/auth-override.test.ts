@@ -67,19 +67,19 @@ test('Override authentication', t => {
     ...initial
   })
 
-  t.deepEqual(client[kOptions], {
+  t.same(client[kOptions], {
     url: 'http://localhost:8080',
     ...initial
   })
 
   const child = client.withAuth(updated)
 
-  t.deepEqual(child[kOptions], {
+  t.same(child[kOptions], {
     url: 'http://localhost:8080',
     ...updated
   })
 
-  t.notDeep(child[kOptions], {
+  t.notSame(child[kOptions], {
     url: 'http://localhost:8080',
     ...initial
   })

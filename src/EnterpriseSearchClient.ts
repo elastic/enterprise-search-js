@@ -40,9 +40,13 @@ export default class EnterpriseSearchClient extends API {
       serializer: new Serializer(),
       connectionPool: internal.connectionPool,
       diagnostic: internal.diagnostic,
-      compression: true,
+      compression: false,
       name: 'enterprise-search',
-      headers: { authorization }
+      headers: {
+        authorization,
+        'content-type': 'application/json',
+        accept: 'application/json, text/plain'
+      }
     })
   }
 }

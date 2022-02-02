@@ -5,7 +5,8 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "npm run build && npm run lint && tap test/**/*.test.ts",
+    "test": "npm run build && tap test/unit/*.test.ts",
+    "test:integration": "npm run build && tap test/integration/**/*.test.ts",
     "lint": "ts-standard src",
     "lint:fix": "ts-standard --fix src",
     "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
@@ -44,15 +45,16 @@
     "@types/tap": "^15.0.5",
     "dotenv": "^15.0.0",
     "tap": "^15.1.6",
+    "ts-node": "^10.4.0",
     "ts-standard": "^11.0.0",
     "typescript": "^4.5.5"
   },
   "tap": {
-    "esm": false,
     "ts": true,
     "jsx": false,
     "flow": false,
-    "coverage": false
+    "coverage": false,
+    "check-coverage": false
   },
   "dependencies": {
     "@elastic/transport": "^8.1.0-beta.1",

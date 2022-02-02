@@ -40,7 +40,9 @@ export default class AppSearchClient extends API {
       compression: true,
       name: 'app-search',
       headers: {
-        authorization: `Bearer ${opts.auth.token}`
+        authorization: `Bearer ${opts.auth.token}`,
+        'content-type': 'application/json',
+        accept: 'application/json, text/plain'
       }
     })
   }

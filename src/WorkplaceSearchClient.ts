@@ -42,7 +42,11 @@ export default class WorkplaceSearchClient extends API {
       diagnostic: internal.diagnostic,
       compression: true,
       name: 'workplace-search',
-      headers: { authorization }
+      headers: {
+        authorization,
+        'content-type': 'application/json',
+        accept: 'application/json, text/plain'
+      }
     })
   }
 }
