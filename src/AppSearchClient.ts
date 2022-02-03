@@ -20,27 +20,25 @@
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
 import API from './api/app/api'
-import { BearerAuth, InternalOptions } from './types'
+import { BearerAuth, ClientOptions, InternalOptions } from './types'
 
 export * as AppTypes from './api/app/types'
 
-export interface AppSearchClientOptions {
-  url: string
-  auth: BearerAuth
-}
-
 export default class AppSearchClient extends API {
   transport: Transport
-  constructor (opts: AppSearchClientOptions, internal: InternalOptions) {
+  constructor (opts: ClientOptions, internal: InternalOptions) {
     super()
+    const authorization = isBearerAuth(opts.auth)
+      ? `Bearer ${opts.auth.token}`
+      : 'Basic ' + Buffer.from(`${opts.auth.username}:${opts.auth.password}`).toString('base64')
     this.transport = new Transport({
       serializer: new Serializer(),
       connectionPool: internal.connectionPool,
       diagnostic: internal.diagnostic,
-      compression: true,
+      compression: false,
       name: 'app-search',
       headers: {
-        authorization: `Bearer ${opts.auth.token}`,
+        authorization,
         'content-type': 'application/json',
         accept: 'application/json, text/plain'
       }
@@ -51,4 +49,8 @@ export default class AppSearchClient extends API {
   engine (name: string): AppSearchClient {
     return this
   }
+}
+
+function isBearerAuth (obj: any): obj is BearerAuth {
+  return obj.token != null
 }

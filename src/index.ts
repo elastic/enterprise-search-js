@@ -20,13 +20,12 @@
 import {
   CloudConnectionPool,
   Diagnostic,
-  UndiciConnection,
-  errors
+  UndiciConnection
 } from '@elastic/transport'
 import EnterpriseSearchClient from './EnterpriseSearchClient'
 import AppSearchClient from './AppSearchClient'
 import WorkplaceSearchClient from './WorkplaceSearchClient'
-import { BasicAuth, BearerAuth, InternalOptions } from './types'
+import { ClientOptions, InternalOptions, AuthOptions } from './types'
 import {
   kOptions,
   kConnectionPool,
@@ -34,24 +33,6 @@ import {
   kAppSearch,
   kWorkplaceSearch
 } from './symbols'
-
-export interface AuthOptions {
-  enterprise?: {
-    auth: BasicAuth | BearerAuth
-  }
-  app?: {
-    auth: BearerAuth
-  }
-  workplace?: {
-    auth: BasicAuth | BearerAuth
-  }
-}
-
-export interface ClientOptions extends AuthOptions {
-  url: string
-}
-
-const { ConfigurationError } = errors
 
 export default class Client {
   [kOptions]: ClientOptions
@@ -86,57 +67,33 @@ export default class Client {
   get enterprise (): EnterpriseSearchClient {
     let client = this[kEnterpriseSearch]
     if (client === null) {
-      const options = this[kOptions]
-      if (options.enterprise == null) {
-        throw new ConfigurationError('Missing enterprise options')
-      }
-      client = new EnterpriseSearchClient({
-        url: options.url,
-        ...options.enterprise
-      }, {
+      client = new EnterpriseSearchClient(this[kOptions], {
         connectionPool: this[kConnectionPool],
         diagnostic: this.diagnostic
       })
     }
-
     return client
   }
 
   get app (): AppSearchClient {
     let client = this[kAppSearch]
     if (client === null) {
-      const options = this[kOptions]
-      if (options.app == null) {
-        throw new ConfigurationError('Missing app options')
-      }
-      client = new AppSearchClient({
-        url: options.url,
-        ...options.app
-      }, {
+      client = new AppSearchClient(this[kOptions], {
         connectionPool: this[kConnectionPool],
         diagnostic: this.diagnostic
       })
     }
-
     return client
   }
 
   get workplace (): WorkplaceSearchClient {
     let client = this[kWorkplaceSearch]
     if (client === null) {
-      const options = this[kOptions]
-      if (options.workplace == null) {
-        throw new ConfigurationError('Missing workplace options')
-      }
-      client = new WorkplaceSearchClient({
-        url: options.url,
-        ...options.workplace
-      }, {
+      client = new WorkplaceSearchClient(this[kOptions], {
         connectionPool: this[kConnectionPool],
         diagnostic: this.diagnostic
       })
     }
-
     return client
   }
 

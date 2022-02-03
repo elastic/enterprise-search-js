@@ -20,18 +20,13 @@
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
 import API from './api/enterprise/api'
-import { BasicAuth, BearerAuth, InternalOptions } from './types'
+import { ClientOptions, BearerAuth, InternalOptions } from './types'
 
 export * as EnterpriseTypes from './api/enterprise/types'
 
-export interface EnterpriseSearchClientOptions {
-  url: string
-  auth: BasicAuth | BearerAuth
-}
-
 export default class EnterpriseSearchClient extends API {
   transport: Transport
-  constructor (opts: EnterpriseSearchClientOptions, internal: InternalOptions) {
+  constructor (opts: ClientOptions, internal: InternalOptions) {
     super()
     const authorization = isBearerAuth(opts.auth)
       ? `Bearer ${opts.auth.token}`

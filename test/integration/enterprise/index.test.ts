@@ -18,7 +18,7 @@
  */
 
 import { test } from 'tap'
-import Client from '../../..'
+import { Client } from '../../..'
 
 const url = process.env.ENTERPRISE_SEARCH_URL ?? 'http://localhost:3002'
 const username = process.env.ELASTIC_ENTERPRISE_USER ?? 'elastic'
@@ -27,9 +27,7 @@ const password = process.env.ELASTIC_ENTERPRISE_PASSWORD ?? 'changeme'
 test('getHealth', async t => {
   const client = new Client({
     url,
-    enterprise: {
-      auth: { username, password }
-    }
+    auth: { username, password }
   })
 
   const response = await client.enterprise.getHealth()
@@ -42,9 +40,7 @@ test('getHealth', async t => {
 test('getReadOnly', async t => {
   const client = new Client({
     url,
-    enterprise: {
-      auth: { username, password }
-    }
+    auth: { username, password }
   })
 
   const response = await client.enterprise.getReadOnly()
@@ -56,9 +52,7 @@ test('getReadOnly', async t => {
 test('putReadOnly true', async t => {
   const client = new Client({
     url,
-    enterprise: {
-      auth: { username, password }
-    }
+    auth: { username, password }
   })
 
   let response = await client.enterprise.putReadOnly({
@@ -75,9 +69,7 @@ test('putReadOnly true', async t => {
 test('putReadOnly false', async t => {
   const client = new Client({
     url,
-    enterprise: {
-      auth: { username, password }
-    }
+    auth: { username, password }
   })
 
   let response = await client.enterprise.putReadOnly({
@@ -94,9 +86,7 @@ test('putReadOnly false', async t => {
 test('getStats', async t => {
   const client = new Client({
     url,
-    enterprise: {
-      auth: { username, password }
-    }
+    auth: { username, password }
   })
 
   const response = await client.enterprise.getStats()
@@ -110,9 +100,7 @@ test('getStats', async t => {
 test('getVersion', async t => {
   const client = new Client({
     url,
-    enterprise: {
-      auth: { username, password }
-    }
+    auth: { username, password }
   })
 
   const response = await client.enterprise.getVersion()

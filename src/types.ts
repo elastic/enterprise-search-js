@@ -35,3 +35,11 @@ export interface InternalOptions {
   connectionPool: CloudConnectionPool
   diagnostic: Diagnostic
 }
+
+export interface ClientOptions extends AuthOptions {
+  url: string
+}
+
+export interface AuthOptions {
+  auth: BasicAuth | BearerAuth
+}

@@ -17,6 +17,15 @@
  * under the License.
  */
 
-const Client = require('./lib').default
-module.exports = Client
-module.exports.default = Client
+'use strict'
+
+const {
+  errors,
+} = require('@elastic/transport')
+
+const { default: Client } = require('./lib')
+
+module.exports = {
+  Client,
+  errors
+}
