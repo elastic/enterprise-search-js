@@ -64,6 +64,26 @@ export async function deleteEngines (name?: string): Promise<void> {
   await client.close()
 }
 
+export async function createContentSource (name = genName()): Promise<string> {
+  const client = new Client({ url, auth: { username, password } })
+  const response = await client.workplace.createContentSource({ body: { name } })
+  await client.close()
+  return response.id
+}
+
+export async function deleteContentSources (id?: string): Promise<void> {
+  const client = new Client({ url, auth: { username, password } })
+  if (typeof id === 'string') {
+    await client.workplace.deleteContentSource({ content_source_id: id })
+  } else {
+    const { results } = await client.workplace.listContentSources()
+    for (const { id } of results) {
+      await client.workplace.deleteContentSource({ content_source_id: id })
+    }
+  }
+  await client.close()
+}
+
 export async function cleanup (): Promise<void> {
   const client = new Client({ url, auth: { username, password } })
 
@@ -76,4 +96,11 @@ export async function cleanup (): Promise<void> {
   for (const { name } of apiKeys.results) {
     await client.app.deleteApiKey({ api_key_name: name })
   }
+
+  const contentSources = await client.workplace.listContentSources()
+  for (const { id } of contentSources.results) {
+    await client.workplace.deleteContentSource({ content_source_id: id })
+  }
+
+  await client.close()
 }

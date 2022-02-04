@@ -35,7 +35,7 @@ export default class WorkplaceSearchClient extends API {
       serializer: new Serializer(),
       connectionPool: internal.connectionPool,
       diagnostic: internal.diagnostic,
-      compression: true,
+      compression: false,
       name: 'workplace-search',
       headers: {
         authorization,
