@@ -17,14 +17,15 @@
  * under the License.
  */
 
-import { test, beforeEach } from 'tap'
-import { customAlphabet } from 'nanoid'
+import { test, beforeEach, teardown } from 'tap'
+import { cleanup, genName } from '../helper'
 import { Client, errors } from '../../..'
 
-const genName = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10)
 const url = process.env.ENTERPRISE_SEARCH_URL ?? 'http://localhost:3002'
 const username = process.env.ELASTIC_ENTERPRISE_USER ?? 'elastic'
 const password = process.env.ELASTIC_ENTERPRISE_PASSWORD ?? 'changeme'
+
+teardown(cleanup)
 
 beforeEach(async () => {
   const client = new Client({
