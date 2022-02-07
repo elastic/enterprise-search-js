@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/elastic/enterprise-search-python">
+  <a href="https://github.com/elastic/enterprise-search-js">
     <img src="https://raw.githubusercontent.com/elastic/enterprise-search-js/main/test/fixtures/elastic-enterprise-search-logo.png" width="70%" alt="Elastic Enterprise Search" />
   </a>
 </p>
