@@ -29,7 +29,7 @@ test('qserialize', t => {
     you_know: 'for search'
   }
 
-  t.strictEqual(
+  t.equal(
     s.qserialize(obj),
     qs.stringify(obj)
   )
@@ -43,7 +43,7 @@ test('qserialize array', t => {
     baz: [1, 2, 3]
   }
 
-  t.strictEqual(
+  t.equal(
     s.qserialize(obj),
     'foo=bar&baz%5B%5D=1&baz%5B%5D=2&baz%5B%5D=3'
   )

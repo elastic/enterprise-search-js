@@ -1,0 +1,9 @@
+---
+NODE_JS_VERSION:
+  - 16
+  - 14
+
+STACK_VERSION:
+  - 8.x-SNAPSHOT
+
+exclude: ~

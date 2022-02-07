@@ -17,29 +17,31 @@
  * under the License.
  */
 
-import {
-  CloudConnectionPool,
-  Diagnostic
-} from '@elastic/transport'
+import { test, teardown } from 'tap'
+import { cleanup, createEngine } from '../helper'
+import { Client } from '../../..'
 
-export interface BasicAuth {
-  username: string
-  password: string
-}
+const url = process.env.ENTERPRISE_SEARCH_URL ?? 'http://localhost:3002'
+const username = process.env.ELASTIC_ENTERPRISE_USER ?? 'elastic'
+const password = process.env.ELASTIC_ENTERPRISE_PASSWORD ?? 'changeme'
 
-export interface BearerAuth {
-  token: string
-}
+teardown(cleanup)
 
-export interface InternalOptions {
-  connectionPool: CloudConnectionPool
-  diagnostic: Diagnostic
-}
+test('logs clicked results', async t => {
+  const client = new Client({
+    url,
+    auth: { username, password }
+  })
 
-export interface ClientOptions extends AuthOptions {
-  url: string
-}
+  const engineName = await createEngine()
+  const response = await client.app.logClickthrough({
+    engine_name: engineName,
+    body: {
+      query: 'moon',
+      document_id: 'doc_id'
+    }
+  })
+  t.type(response, 'string')
 
-export interface AuthOptions {
-  auth: BasicAuth | BearerAuth
-}
+  await client.close()
+})

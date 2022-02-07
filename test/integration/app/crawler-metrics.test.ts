@@ -17,15 +17,34 @@
  * under the License.
  */
 
-'use strict'
+import { test, teardown } from 'tap'
+import { cleanup, createEngine } from '../helper'
+import { Client } from '../../..'
 
-const {
-  errors,
-} = require('@elastic/transport')
+const url = process.env.ENTERPRISE_SEARCH_URL ?? 'http://localhost:3002'
+const username = process.env.ELASTIC_ENTERPRISE_USER ?? 'elastic'
+const password = process.env.ELASTIC_ENTERPRISE_PASSWORD ?? 'changeme'
 
-const { default: Client } = require('./lib')
+teardown(cleanup)
 
-module.exports = {
-  Client,
-  errors
-}
+test('retrieves crawler metrics', async t => {
+  const client = new Client({
+    url,
+    auth: { username, password }
+  })
+
+  const engineName = await createEngine()
+  await client.app.createCrawlerDomain({
+    engine_name: engineName,
+    body: {
+      name: 'https://www.elastic.co'
+    }
+  })
+
+  const response = await client.app.getCrawlerMetrics()
+
+  t.type(response.global, 'object')
+  t.type(response.node, 'object')
+
+  await client.close()
+})

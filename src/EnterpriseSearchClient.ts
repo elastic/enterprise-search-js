@@ -19,17 +19,14 @@
 
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
-import API from './api/ent'
-import { BasicAuth, BearerAuth, InternalOptions } from './types'
+import API from './api/enterprise/api'
+import { ClientOptions, BearerAuth, InternalOptions } from './types'
 
-export interface EnterpriseSearchClientOptions {
-  url: string
-  auth: BasicAuth | BearerAuth
-}
+export * as EnterpriseTypes from './api/enterprise/types'
 
 export default class EnterpriseSearchClient extends API {
   transport: Transport
-  constructor (opts: EnterpriseSearchClientOptions, internal: InternalOptions) {
+  constructor (opts: ClientOptions, internal: InternalOptions) {
     super()
     const authorization = isBearerAuth(opts.auth)
       ? `Bearer ${opts.auth.token}`
@@ -38,9 +35,13 @@ export default class EnterpriseSearchClient extends API {
       serializer: new Serializer(),
       connectionPool: internal.connectionPool,
       diagnostic: internal.diagnostic,
-      compression: true,
+      compression: false,
       name: 'enterprise-search',
-      headers: { authorization }
+      headers: {
+        authorization,
+        'content-type': 'application/json',
+        accept: 'application/json, text/plain'
+      }
     })
   }
 }
