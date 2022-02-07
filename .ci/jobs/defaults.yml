@@ -46,10 +46,6 @@
         type: yaml
         filename: .ci/test-matrix.yml
         name: NODE_JS_VERSION
-    - axis:
-        type: yaml
-        filename: .ci/test-matrix.yml
-        name: SERVICE
     yaml-strategy:
       exclude-key: exclude
       filename: .ci/test-matrix.yml

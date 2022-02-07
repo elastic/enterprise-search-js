@@ -6,9 +6,4 @@ NODE_JS_VERSION:
 STACK_VERSION:
   - 8.x-SNAPSHOT
 
-SERVICE:
-  - appsearch
-  - enterprisesearch
-  - workplacesearch
-
 exclude: ~

@@ -47,4 +47,4 @@ docker run \
        --rm \
        --volume `pwd`:/code/enterprise-search-js \
        elastic/enterprise-search-js \
-       rake spec:integration:${SERVICE}
+       npm run test:integration
