@@ -35,13 +35,14 @@ const response = await client.app.search({
     query: 'Pack-Man'
   }
 })
+console.log(response)
 
 // Workplace Search API
 const response = await client.workplace.getDocument({
   content_source_id: 'test',
   document_id: 'id'
 })
-  console.log(response)
+console.log(response)
 ```
 
 ## License
