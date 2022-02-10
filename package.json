@@ -58,7 +58,7 @@
     "check-coverage": false
   },
   "dependencies": {
-    "@elastic/transport": "^8.1.0-beta.1",
+    "@elastic/transport": "^8.0.0",
     "qs": "^6.10.3",
     "tslib": "^2.3.1"
   }

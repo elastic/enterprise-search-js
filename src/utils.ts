@@ -43,3 +43,7 @@ export interface ClientOptions extends AuthOptions {
 export interface AuthOptions {
   auth: BasicAuth | BearerAuth
 }
+
+export function isBearerAuth (obj: any): obj is BearerAuth {
+  return obj.token != null
+}

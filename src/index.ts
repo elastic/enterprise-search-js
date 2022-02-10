@@ -25,7 +25,7 @@ import {
 import EnterpriseSearchClient from './EnterpriseSearchClient'
 import AppSearchClient from './AppSearchClient'
 import WorkplaceSearchClient from './WorkplaceSearchClient'
-import { ClientOptions, InternalOptions, AuthOptions } from './types'
+import { ClientOptions, InternalOptions, AuthOptions } from './utils'
 import {
   kOptions,
   kConnectionPool,
