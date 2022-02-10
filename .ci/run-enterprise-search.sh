@@ -13,7 +13,7 @@ script_path=$(dirname $(realpath -s $0))
 source $script_path/functions/imports.sh
 set -euo pipefail
 
-CONTAINER_NAME=${CONTAINER_NAME-enterprise-search}
+CONTAINER_NAME=${CONTAINER_NAME-app-search}
 APP_SEARCH_SECRET_SESSION_KEY=${APP_SEARCH_SECRET_SESSION_KEY-int_test_secret}
 
 echo -e "\033[34;1mINFO:\033[0m Take down node if called twice with the same arguments (DETACH=true) or on seperate terminals \033[0m"
