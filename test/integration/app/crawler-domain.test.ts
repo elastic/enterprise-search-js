@@ -76,7 +76,7 @@ test('creates and updates a crawler domain', async t => {
   await client.close()
 })
 
-test('validates a domain', { skip: 'we are sending the wrong content type' }, async t => {
+test('validates a domain', { skip: 'bad definition' }, async t => {
   const client = new Client({
     url,
     auth: { username, password }
@@ -92,7 +92,10 @@ test('validates a domain', { skip: 'we are sending the wrong content type' }, as
   t.type(domain.id, 'string')
 
   const response = await client.app.getCrawlerDomainValidationResult({
-    body: 'https://www.elastic.co'
+    // @ts-expect-error
+    body: {
+      url: 'https://www.elastic.co'
+    }
   })
   t.ok(response.valid)
   await client.close()

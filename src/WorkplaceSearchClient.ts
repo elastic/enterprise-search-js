@@ -20,7 +20,7 @@
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
 import API from './api/workplace/api'
-import { ClientOptions, BearerAuth, InternalOptions } from './types'
+import { ClientOptions, InternalOptions, isBearerAuth } from './utils'
 
 export * as WorkplaceTypes from './api/workplace/types'
 
@@ -37,15 +37,7 @@ export default class WorkplaceSearchClient extends API {
       diagnostic: internal.diagnostic,
       compression: false,
       name: 'workplace-search',
-      headers: {
-        authorization,
-        'content-type': 'application/json',
-        accept: 'application/json, text/plain'
-      }
+      headers: { authorization }
     })
   }
-}
-
-function isBearerAuth (obj: any): obj is BearerAuth {
-  return obj.token != null
 }

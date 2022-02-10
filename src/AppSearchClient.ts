@@ -20,7 +20,7 @@
 import { Transport } from '@elastic/transport'
 import Serializer from './Serializer'
 import API from './api/app/api'
-import { BearerAuth, ClientOptions, InternalOptions } from './types'
+import { ClientOptions, InternalOptions, isBearerAuth } from './utils'
 
 export * as AppTypes from './api/app/types'
 
@@ -37,11 +37,7 @@ export default class AppSearchClient extends API {
       diagnostic: internal.diagnostic,
       compression: false,
       name: 'app-search',
-      headers: {
-        authorization,
-        'content-type': 'application/json',
-        accept: 'application/json, text/plain'
-      }
+      headers: { authorization }
     })
   }
 
@@ -49,8 +45,4 @@ export default class AppSearchClient extends API {
   engine (name: string): AppSearchClient {
     return this
   }
-}
-
-function isBearerAuth (obj: any): obj is BearerAuth {
-  return obj.token != null
 }

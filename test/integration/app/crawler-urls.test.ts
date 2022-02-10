@@ -45,7 +45,7 @@ beforeEach(async () => {
   await client.close()
 })
 
-test('validates a URL', { skip: 'we are sending the wrong content type' }, async t => {
+test('validates a URL', { skip: 'bad definition' }, async t => {
   const client = new Client({
     url,
     auth: { username, password }
@@ -53,7 +53,10 @@ test('validates a URL', { skip: 'we are sending the wrong content type' }, async
 
   const response = await client.app.getCrawlerUrlValidationResult({
     engine_name: engineName,
-    body: 'https://www.elastic.co'
+    // @ts-expect-error
+    body: {
+      url: 'https://www.elastic.co'
+    }
   })
 
   t.ok(response.valid)
@@ -61,7 +64,7 @@ test('validates a URL', { skip: 'we are sending the wrong content type' }, async
   await client.close()
 })
 
-test('extracts content from a URL', { skip: 'we are sending the wrong content type' }, async t => {
+test('extracts content from a URL', { skip: 'bad definition' }, async t => {
   const client = new Client({
     url,
     auth: { username, password }
@@ -69,7 +72,10 @@ test('extracts content from a URL', { skip: 'we are sending the wrong content ty
 
   const response = await client.app.getCrawlerUrlExtractionResult({
     engine_name: engineName,
-    body: 'https://www.elastic.co'
+    // @ts-expect-error
+    body: {
+      url: 'https://www.elastic.co'
+    }
   })
 
   t.type(response.url, 'string')
@@ -79,7 +85,7 @@ test('extracts content from a URL', { skip: 'we are sending the wrong content ty
   await client.close()
 })
 
-test('traces history for a crawler URL', { skip: 'we are sending the wrong content type' }, async t => {
+test('traces history for a crawler URL', { skip: 'bad definition' }, async t => {
   const client = new Client({
     url,
     auth: { username, password }
@@ -87,7 +93,10 @@ test('traces history for a crawler URL', { skip: 'we are sending the wrong conte
 
   const response = await client.app.getCrawlerUrlTracingResult({
     engine_name: engineName,
-    body: 'https://www.elastic.co'
+    // @ts-expect-error
+    body: {
+      url: 'https://www.elastic.co'
+    }
   })
 
   t.type(response.url, 'string')
