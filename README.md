@@ -4,6 +4,8 @@
   </a>
 </p>
 
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)  [![Build Status](https://clients-ci.elastic.co/buildStatus/icon?job=elastic%2Benterprise-search-js%2Bmain)](https://clients-ci.elastic.co/job/elastic+enterprise-search-js+main/)
+
 
 Official Node.js client for Elastic Enterprise Search, App Search, and Workplace Search.
 
