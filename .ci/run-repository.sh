@@ -43,7 +43,7 @@ echo -e "\033[32;1mRUN: \033[31mJS \e[0m container.\033[0m"
 docker run \
        --network ${network_name} \
        --name enterprise-search-js \
-       --env "ELASTIC_ENTERPRISE_HOST=http://${CONTAINER_NAME}:3002" \
+       --env "ENTERPRISE_SEARCH_URL=http://${CONTAINER_NAME}:3002" \
        --rm \
        --volume `pwd`:/code/enterprise-search-js \
        elastic/enterprise-search-js \
