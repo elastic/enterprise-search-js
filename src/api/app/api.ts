@@ -879,6 +879,20 @@ export default class API {
     }, options)
   }
 
+  async searchEsSearch (this: That, params: T.SearchEsSearchRequest, options?: TransportRequestOptions): Promise<T.SearchEsSearchResponse> {
+    const {
+      engine_name,
+      body,
+      ...querystring
+    } = params ?? {}
+    return await this.transport.request<T.SearchEsSearchResponse>({
+      method: 'POST',
+      path: `/api/as/v0/engines/${engine_name}/elasticsearch/_search`,
+      querystring,
+      body: body
+    }, options)
+  }
+
   async getApiLogs (this: That, params: T.GetApiLogsRequest, options?: TransportRequestOptions): Promise<T.GetApiLogsResponse> {
     const {
       engine_name,
@@ -942,6 +956,20 @@ export default class API {
     return await this.transport.request<T.SearchResponse>({
       method: 'POST',
       path: `/api/as/v1/engines/${engine_name}/search`,
+      querystring,
+      body: body
+    }, options)
+  }
+
+  async search_explain (this: That, params: T.SearchExplainRequest, options?: TransportRequestOptions): Promise<T.SearchExplainResponse> {
+    const {
+      engine_name,
+      body,
+      ...querystring
+    } = params ?? {}
+    return await this.transport.request<T.SearchExplainResponse>({
+      method: 'POST',
+      path: `/api/as/v0/engines/${engine_name}/search_explain`,
       querystring,
       body: body
     }, options)

@@ -402,11 +402,11 @@ export interface ListCrawlerCrawlRequestsRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
 }
 
 export interface ListCrawlerCrawlRequestsResponse {
@@ -722,11 +722,11 @@ export interface ListCrawlerDomainsRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
 }
 
 export interface ListCrawlerDomainsResponse {
@@ -1279,11 +1279,11 @@ export interface ListCrawlerProcessCrawlsRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
 }
 
 export interface ListCrawlerProcessCrawlsResponse {
@@ -1538,11 +1538,11 @@ export interface ListApiKeysRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
 }
 
 export interface ListApiKeysResponse {
@@ -1660,11 +1660,11 @@ export interface ListCurationsRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
   /**
    * Name of the engine
    */
@@ -1868,11 +1868,11 @@ export interface ListDocumentsRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
   /**
    * Name of the engine
    */
@@ -1897,11 +1897,11 @@ export interface ListEnginesRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
 }
 
 export interface ListEnginesResponse {
@@ -2051,6 +2051,23 @@ export interface AddMetaEngineSourceResponse {
     number_of_shards?: number
   }
 }
+
+export interface SearchEsSearchRequest {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  body?: {
+    request: {
+      [k: string]: unknown
+    }
+    analytics?: {
+      [k: string]: unknown
+    }
+  }
+}
+
+export type SearchEsSearchResponse = Record<string, unknown>
 
 export interface GetApiLogsRequest {
   /**
@@ -2217,6 +2234,62 @@ export interface SearchResponse {
   results: Array<{}>
 }
 
+export interface SearchExplainRequest {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  body?: {
+    query: string
+    analytics?: {}
+    boost?: {}
+    facets?: {}
+    filters?: {}
+    group?: {}
+    page?: {
+      current?: number
+      size?: number
+    }
+    result_fields?: {}
+    search_fields?: {
+      [k: string]: {
+        weight?: number
+      }
+    }
+    sort?: Array<{
+      [k: string]:
+      | ('asc' | 'desc')
+      | {
+        center?:
+        | string
+        | Array<{
+          [k: string]: unknown
+        }>
+        order?: 'asc' | 'desc'
+        mode?: 'min' | 'max' | 'median' | 'avg'
+      }
+    }>
+  }
+}
+
+export interface SearchExplainResponse {
+  meta: {
+    alerts: string[]
+    warnings: string[]
+    precision?: number
+    engine: {
+      name?: string
+      /**
+       * Engine type
+       */
+      type?: 'meta' | 'default'
+    }
+    request_id?: string
+  }
+  query_string: string
+  query_body: {}
+}
+
 export interface GetSearchSettingsRequest {
   /**
    * Name of the engine
@@ -2285,11 +2358,11 @@ export interface ListSynonymSetsRequest {
   /**
    * The page to fetch. Defaults to 1
    */
-  current_page?: number
+  pagecurrent?: number
   /**
    * The number of results per page
    */
-  page_size?: number
+  pagesize?: number
   /**
    * Name of the engine
    */
