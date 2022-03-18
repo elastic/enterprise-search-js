@@ -19,11 +19,16 @@ npm install @elastic/enterprise-search
 ```js
 const { Client } = require('@elastic/enterprise-search')
 const client = new Client({
-    url: 'http://localhost:3002',
-    auth: {
-      username: 'elastic',
-      password: 'changeme'
-    }
+  url: 'http://localhost:3002',
+  // basic auth
+  auth: {
+    username: 'elastic',
+    password: 'changeme'
+  }
+  // bearer auth
+  auth: {
+    token: 'my-token'
+  }
 })
 
 // Enterprise Search API
