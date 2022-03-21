@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/elastic/enterprise-search-js">
-    <img src="https://raw.githubusercontent.com/elastic/enterprise-search-js/main/test/fixtures/elastic-enterprise-search-logo.png" width="70%" alt="Elastic Enterprise Search" />
+    <img src="https://github.com/elastic/enterprise-search-js/raw/main/test/fixtures/elastic-enterprise-search-logo.png" width="70%" alt="Elastic Enterprise Search" />
   </a>
 </p>
 
