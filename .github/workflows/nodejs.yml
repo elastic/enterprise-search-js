@@ -30,7 +30,7 @@ jobs:
 
     - name: Unit test
       run: |
-        npm run test:unit
+        npm run test
 
   license:
     name: License check
