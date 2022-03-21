@@ -68,7 +68,7 @@ test('indexes and lists documents', async t => {
   await client.close()
 })
 
-test('retrieves documents by ID', async t => {
+test('retrieves documents by ID (body)', async t => {
   const client = new Client({
     url,
     auth: { username, password }
@@ -77,6 +77,21 @@ test('retrieves documents by ID', async t => {
   const response = await client.app.getDocuments({
     engine_name: engineName,
     documentIds
+  })
+  t.equal(response.length, 4)
+
+  await client.close()
+})
+
+test('retrieves documents by ID (querystring)', async t => {
+  const client = new Client({
+    url,
+    auth: { username, password }
+  })
+
+  const response = await client.app.getDocuments({
+    engine_name: engineName,
+    ids: documentIds
   })
   t.equal(response.length, 4)
 
