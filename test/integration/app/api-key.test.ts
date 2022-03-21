@@ -32,7 +32,11 @@ beforeEach(async () => {
     url,
     auth: { username, password }
   })
-  const response = await client.app.listApiKeys({ page_size: 100 })
+  const response = await client.app.listApiKeys({
+    page: {
+      size: 100
+    }
+  })
   for (const key of response.results) {
     await client.app.deleteApiKey({ api_key_name: key.name })
   }

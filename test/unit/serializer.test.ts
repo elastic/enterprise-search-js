@@ -49,3 +49,18 @@ test('qserialize array', t => {
   )
 })
 
+test('qserialize nested object', t => {
+  t.plan(1)
+  const s = new Serializer()
+  const obj = {
+    page: {
+      size: 0,
+      current: 1
+    }
+  }
+
+  t.equal(
+    s.qserialize(obj),
+    'page%5Bsize%5D=0&page%5Bcurrent%5D=1'
+  )
+})

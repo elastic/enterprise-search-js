@@ -371,14 +371,16 @@ export interface CreateContentSourceResponse {
 }
 
 export interface ListContentSourcesRequest {
-  /**
-   * Which page of results to request
-   */
-  pagecurrent?: number
-  /**
-   * The number of results to return in a page
-   */
-  pagesize?: number
+  page?: {
+    /**
+     * Which page of results to request
+     */
+    current?: number
+    /**
+     * The number of results to return in a page
+     */
+    size?: number
+  }
 }
 
 export interface ListContentSourcesResponse {
@@ -1403,14 +1405,16 @@ export interface ListExternalIdentitiesRequest {
    * Unique ID for a Custom API source, provided upon creation of a Custom API Source
    */
   content_source_id: string
-  /**
-   * Which page of results to request
-   */
-  pagecurrent?: number
-  /**
-   * The number of results to return in a page
-   */
-  pagesize?: number
+  page?: {
+    /**
+     * Which page of results to request
+     */
+    current?: number
+    /**
+     * The number of results to return in a page
+     */
+    size?: number
+  }
 }
 
 export interface ListExternalIdentitiesResponse {
