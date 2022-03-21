@@ -25,6 +25,6 @@ export default class EnterpriseSerializer extends Serializer {
     if (object == null) return ''
     if (typeof object === 'string') return object
     // { a: ['b', 'c'] } => 'a[]=b&a[]=c'
-    return qs.stringify(object, { arrayFormat: 'brackets' })
+    return qs.stringify(object, { arrayFormat: 'brackets', encode: false })
   }
 }

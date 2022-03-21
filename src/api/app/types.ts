@@ -399,14 +399,16 @@ export interface ListCrawlerCrawlRequestsRequest {
    * Name of the engine
    */
   engine_name: string
-  /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListCrawlerCrawlRequestsResponse {
@@ -719,14 +721,16 @@ export interface ListCrawlerDomainsRequest {
    * Name of the engine
    */
   engine_name: string
-  /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListCrawlerDomainsResponse {
@@ -1276,14 +1280,16 @@ export interface ListCrawlerProcessCrawlsRequest {
    * Name of the engine
    */
   engine_name: string
-  /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListCrawlerProcessCrawlsResponse {
@@ -1535,14 +1541,16 @@ export interface GetCrawlerUserAgentResponse {
 }
 
 export interface ListApiKeysRequest {
-  /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListApiKeysResponse {
@@ -1658,17 +1666,19 @@ export interface DeleteApiKeyResponse {
 
 export interface ListCurationsRequest {
   /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
-  /**
    * Name of the engine
    */
   engine_name: string
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListCurationsResponse {
@@ -1866,17 +1876,19 @@ export type PutDocumentsResponse = Array<{
 
 export interface ListDocumentsRequest {
   /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
-  /**
    * Name of the engine
    */
   engine_name: string
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListDocumentsResponse {
@@ -1894,14 +1906,16 @@ export interface ListDocumentsResponse {
 }
 
 export interface ListEnginesRequest {
-  /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListEnginesResponse {
@@ -2356,17 +2370,19 @@ export interface ResetSearchSettingsResponse {
 
 export interface ListSynonymSetsRequest {
   /**
-   * The page to fetch. Defaults to 1
-   */
-  pagecurrent?: number
-  /**
-   * The number of results per page
-   */
-  pagesize?: number
-  /**
    * Name of the engine
    */
   engine_name: string
+  page?: {
+    /**
+     * The page to fetch. Defaults to 1
+     */
+    current?: number
+    /**
+     * The number of results per page
+     */
+    size?: number
+  }
 }
 
 export interface ListSynonymSetsResponse {
