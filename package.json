@@ -44,6 +44,7 @@
     "@types/qs": "^6.9.7",
     "@types/tap": "^15.0.5",
     "dotenv": "^15.0.0",
+    "license-checker": "^25.0.1",
     "nanoid": "^3.2.0",
     "tap": "^15.1.6",
     "ts-node": "^10.4.0",
