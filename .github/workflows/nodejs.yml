@@ -21,14 +21,17 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install
+      working-directory: ./packages/enterprise-search
       run: |
         npm install
 
     - name: Lint
+      working-directory: ./packages/enterprise-search
       run: |
         npm run lint
 
     - name: Unit test
+      working-directory: ./packages/enterprise-search
       run: |
         npm run test
 
@@ -49,9 +52,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install
+      working-directory: ./packages/enterprise-search
       run: |
         npm install
 
     - name: License checker
+      working-directory: ./packages/enterprise-search
       run: |
         npm run license-checker

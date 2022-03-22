@@ -47,4 +47,4 @@ docker run \
        --rm \
        --volume `pwd`:/code/enterprise-search-js \
        elastic/enterprise-search-js \
-       npm run test:integration
+       cd packages/enterprise-search && npm run test:integration
