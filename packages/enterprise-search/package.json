@@ -1,0 +1,66 @@
+{
+  "name": "@elastic/enterprise-search",
+  "version": "8.1.0-beta.1",
+  "description": "Official Node.js client for Elastic Enterprise Search, App Search, and Workplace Search.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "npm run build && tap test/unit/*.test.ts",
+    "test:integration": "npm run build && tap --jobs=1 test/integration/**/*.test.ts",
+    "lint": "ts-standard src",
+    "lint:fix": "ts-standard --fix src",
+    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
+    "prebuild": "npm run clean-build && npm run lint",
+    "build": "tsc",
+    "clean-build": "rimraf ./lib && mkdir lib",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elastic/enterprise-search-js.git"
+  },
+  "keywords": [
+    "elastic",
+    "enterprise",
+    "workspace",
+    "app",
+    "site",
+    "search"
+  ],
+  "author": {
+    "name": "Tomas Della Vedova",
+    "company": "Elastic BV"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/elastic/enterprise-search-js/issues"
+  },
+  "homepage": "https://github.com/elastic/enterprise-search-js/blob/main/packages/enterprise-search",
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.14",
+    "@types/qs": "^6.9.7",
+    "@types/tap": "^15.0.5",
+    "dotenv": "^15.0.0",
+    "license-checker": "^25.0.1",
+    "nanoid": "^3.2.0",
+    "tap": "^15.1.6",
+    "ts-node": "^10.4.0",
+    "ts-standard": "^11.0.0",
+    "typescript": "^4.5.5"
+  },
+  "tap": {
+    "ts": true,
+    "jsx": false,
+    "flow": false,
+    "coverage": false,
+    "check-coverage": false
+  },
+  "dependencies": {
+    "@elastic/transport": "^8.0.0",
+    "qs": "^6.10.3",
+    "tslib": "^2.3.1"
+  }
+}
