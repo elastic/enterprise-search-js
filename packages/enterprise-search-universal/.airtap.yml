@@ -1,0 +1,30 @@
+providers:
+  - airtap-playwright
+
+server: ./test/utils/server.js
+
+browsers:
+  - name: chromium
+    title: Playwright Chromium
+    options:
+      headless: true
+    supports:
+      headless: true
+      devtools: true
+    provider: airtap-playwright
+
+  - name: webkit
+    title: Playwright Webkit
+    options:
+      headless: true
+    supports:
+      headless: true
+    provider: airtap-playwright
+
+  - name: firefox
+    title: Playwright Firefox
+    options:
+      headless: true
+    supports:
+      headless: true
+    provider: airtap-playwright
