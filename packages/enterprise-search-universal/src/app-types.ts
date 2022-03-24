@@ -24,6 +24,49 @@
 // DO NOT MODIFY IT BY HAND. Instead, modify the source open api file,
 // and elastic/elastic-client-generator-js to regenerate this file again.
 
+export interface LogClickthroughRequest {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  body?: {
+    query: string
+    request_id?: string
+    document_id: string
+    tags?: string[]
+  }
+}
+
+export type LogClickthroughResponse = Record<string, unknown>
+
+export interface QuerySuggestionRequest {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  body?: {
+    query?: string
+    types?: {
+      documents?: {
+        fields?: string[]
+        [k: string]: unknown
+      }
+      [k: string]: unknown
+    }
+    size?: number
+  }
+}
+
+export interface QuerySuggestionResponse {
+  results?: {
+    documents?: Array<{
+      suggestion?: string
+    }>
+    [k: string]: unknown
+  }
+  meta?: {}
+}
+
 export interface SearchRequest {
   /**
    * Name of the engine
@@ -84,47 +127,4 @@ export interface SearchResponse {
     request_id?: string
   }
   results: Array<{}>
-}
-
-export interface LogClickthroughRequest {
-  /**
-   * Name of the engine
-   */
-  engine_name: string
-  body?: {
-    query: string
-    request_id?: string
-    document_id: string
-    tags?: string[]
-  }
-}
-
-export type LogClickthroughResponse = Record<string, unknown>
-
-export interface QuerySuggestionRequest {
-  /**
-   * Name of the engine
-   */
-  engine_name: string
-  body?: {
-    query?: string
-    types?: {
-      documents?: {
-        fields?: string[]
-        [k: string]: unknown
-      }
-      [k: string]: unknown
-    }
-    size?: number
-  }
-}
-
-export interface QuerySuggestionResponse {
-  results?: {
-    documents?: Array<{
-      suggestion?: string
-    }>
-    [k: string]: unknown
-  }
-  meta?: {}
 }

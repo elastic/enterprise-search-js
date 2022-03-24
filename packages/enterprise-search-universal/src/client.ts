@@ -20,6 +20,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import type * as AppTypes from './app-types'
+import type * as WorkTypes from './workplace-types'
 
 export interface ClientOptions {
   url: string
@@ -41,11 +42,13 @@ export default class Client {
   readonly _url: string
   readonly _token: string
   readonly app: AppSearchClient
+  readonly workplace: WorkplaceSearchClient
 
   constructor (opts: ClientOptions) {
     this._url = opts.url
     this._token = opts.token
     this.app = new AppSearchClient(this.transportRequest.bind(this))
+    this.workplace = new WorkplaceSearchClient(this.transportRequest.bind(this))
   }
 
   async transportRequest<T = unknown> (params: RequestParams): Promise<T> {
@@ -85,22 +88,6 @@ class AppSearchClient {
     this.transportRequest = transportRequest
   }
 
-  async search (params: AppTypes.SearchRequest): Promise<AppTypes.SearchResponse> {
-    const {
-      engine_name,
-      body,
-      ...querystring
-    } = params ?? {}
-    return await this.transportRequest<AppTypes.SearchResponse>({
-      method: 'POST',
-      path: `/api/as/v1/engines/${engine_name}/search`,
-      querystring,
-      body: body
-    })
-  }
-
-  // TODO: multi search api
-
   async logClickthrough (params: AppTypes.LogClickthroughRequest): Promise<AppTypes.LogClickthroughResponse> {
     const {
       engine_name,
@@ -124,6 +111,71 @@ class AppSearchClient {
     return await this.transportRequest<AppTypes.QuerySuggestionResponse>({
       method: 'POST',
       path: `/api/as/v1/engines/${engine_name}/query_suggestion`,
+      querystring,
+      body: body
+    })
+  }
+
+  async search (params: AppTypes.SearchRequest): Promise<AppTypes.SearchResponse> {
+    const {
+      engine_name,
+      body,
+      ...querystring
+    } = params ?? {}
+    return await this.transportRequest<AppTypes.SearchResponse>({
+      method: 'POST',
+      path: `/api/as/v1/engines/${engine_name}/search`,
+      querystring,
+      body: body
+    })
+  }
+}
+
+class WorkplaceSearchClient {
+  transportRequest: TransportRequest
+  constructor (transportRequest: TransportRequest) {
+    this.transportRequest = transportRequest
+  }
+
+  async getTriggersBlocklist (params?: WorkTypes.GetTriggersBlocklistRequest): Promise<WorkTypes.GetTriggersBlocklistResponse> {
+    return await this.transportRequest<WorkTypes.GetTriggersBlocklistResponse>({
+      method: 'GET',
+      path: '/api/ws/v1/automatic_query_refinement'
+    })
+  }
+
+  async putTriggersBlocklist (params?: WorkTypes.PutTriggersBlocklistRequest): Promise<WorkTypes.PutTriggersBlocklistResponse> {
+    const {
+      ...querystring
+    } = params ?? {}
+    return await this.transportRequest<WorkTypes.PutTriggersBlocklistResponse>({
+      method: 'PUT',
+      path: '/api/ws/v1/automatic_query_refinement',
+      querystring
+    })
+  }
+
+  async createAnalyticsEvent (params: WorkTypes.CreateAnalyticsEventRequest): Promise<WorkTypes.CreateAnalyticsEventResponse> {
+    const {
+      body,
+      ...querystring
+    } = params ?? {}
+    return await this.transportRequest<WorkTypes.CreateAnalyticsEventResponse>({
+      method: 'POST',
+      path: '/api/ws/v1/analytics/event',
+      querystring,
+      body: body
+    })
+  }
+
+  async search (params: WorkTypes.SearchRequest): Promise<WorkTypes.SearchResponse> {
+    const {
+      body,
+      ...querystring
+    } = params ?? {}
+    return await this.transportRequest<WorkTypes.SearchResponse>({
+      method: 'POST',
+      path: '/api/ws/v1/search',
       querystring,
       body: body
     })
