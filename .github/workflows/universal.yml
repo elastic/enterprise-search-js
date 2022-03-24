@@ -9,7 +9,7 @@ on:
       - 'packages/enterprise-search-universal/**'
 
 jobs:
-  test:
+  test-node:
     name: Test Node.js
     runs-on: ${{ matrix.os }}
 
@@ -41,7 +41,7 @@ jobs:
       run: |
         npm run test:node
 
-  test:
+  test-browser:
     name: Test Browser
     runs-on: ${{ matrix.os }}
 
