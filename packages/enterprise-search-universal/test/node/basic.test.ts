@@ -54,3 +54,81 @@ test('Basic', async t => {
   t.same(response, { hello: 'world' })
   server.close()
 })
+
+test('Search', async t => {
+  t.plan(4)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
+    t.equal(req.method, 'POST')
+    t.equal(req.url, '/api/as/v1/engines/test/search')
+    t.equal(req.headers.authorization, 'token')
+    res.setHeader('content-type', 'application/json')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  const server = await buildServer(handler)
+  const client = new Client({
+    // @ts-expect-error
+    url: `http://localhost:${server.address().port}`,
+    token: 'token'
+  })
+
+  const response = await client.app.search({
+    engine_name: 'test',
+    body: { query: 'hello' }
+  })
+  t.same(response, { hello: 'world' })
+  server.close()
+})
+
+test('LogClickthrough', async t => {
+  t.plan(4)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
+    t.equal(req.method, 'POST')
+    t.equal(req.url, '/api/as/v1/engines/test/click')
+    t.equal(req.headers.authorization, 'token')
+    res.setHeader('content-type', 'application/json')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  const server = await buildServer(handler)
+  const client = new Client({
+    // @ts-expect-error
+    url: `http://localhost:${server.address().port}`,
+    token: 'token'
+  })
+
+  const response = await client.app.logClickthrough({
+    engine_name: 'test',
+    body: { query: 'hello', document_id: 'world' }
+  })
+  t.same(response, { hello: 'world' })
+  server.close()
+})
+
+test('QuerySuggestion', async t => {
+  t.plan(4)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
+    t.equal(req.method, 'POST')
+    t.equal(req.url, '/api/as/v1/engines/test/query_suggestion')
+    t.equal(req.headers.authorization, 'token')
+    res.setHeader('content-type', 'application/json')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  const server = await buildServer(handler)
+  const client = new Client({
+    // @ts-expect-error
+    url: `http://localhost:${server.address().port}`,
+    token: 'token'
+  })
+
+  const response = await client.app.querySuggestion({
+    engine_name: 'test',
+    body: { query: 'hello' }
+  })
+  t.same(response, { hello: 'world' })
+  server.close()
+})
