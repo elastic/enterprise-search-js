@@ -70,11 +70,19 @@ export default class Client {
     }
 
     const url = new URL(params.path, this._url)
-    // this might be a problem as ent-search needs rails-style query parameters
-    // invesitgate if URLSearchParams can help here or send everything
-    // in the body (can you send GET with body wit fetch?)
     for (const param in params.querystring) {
-      url.searchParams.set(param, params.querystring[param])
+      if (Array.isArray(params.querystring[param])) {
+        for (const element of params.querystring[param]) {
+          url.searchParams.append(`${param}[]`, element)
+        }
+      } else if (typeof params.querystring[param] === 'object' && params.querystring[param] !== null) {
+        // it only works for flat objects
+        for (const key in params.querystring[param]) {
+          url.searchParams.append(`${param}[${key}]`, params.querystring[param][key])
+        }
+      } else {
+        url.searchParams.set(param, params.querystring[param])
+      }
     }
 
     const response = await fetch(url.toString(), requestOptions)

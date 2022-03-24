@@ -55,6 +55,68 @@ test('Basic', async t => {
   server.close()
 })
 
+test('Array querystring', async t => {
+  t.plan(4)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
+    t.equal(req.method, 'GET')
+    t.equal(req.url, '/?foo=bar&baz%5B%5D=1&baz%5B%5D=2&baz%5B%5D=3')
+    t.equal(req.headers.authorization, 'token')
+    res.setHeader('content-type', 'application/json')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  const server = await buildServer(handler)
+  const client = new Client({
+    // @ts-expect-error
+    url: `http://localhost:${server.address().port}`,
+    token: 'token'
+  })
+
+  const response = await client.transportRequest<{ hello: string }>({
+    method: 'GET',
+    path: '/',
+    querystring: {
+      foo: 'bar',
+      baz: [1, 2, 3]
+    }
+  })
+  t.same(response, { hello: 'world' })
+  server.close()
+})
+
+test('Object querystring', async t => {
+  t.plan(4)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
+    t.equal(req.method, 'GET')
+    t.equal(req.url, '/?page%5Bsize%5D=0&page%5Bcurrent%5D=1')
+    t.equal(req.headers.authorization, 'token')
+    res.setHeader('content-type', 'application/json')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  const server = await buildServer(handler)
+  const client = new Client({
+    // @ts-expect-error
+    url: `http://localhost:${server.address().port}`,
+    token: 'token'
+  })
+
+  const response = await client.transportRequest<{ hello: string }>({
+    method: 'GET',
+    path: '/',
+    querystring: {
+      page: {
+        size: 0,
+        current: 1
+      }
+    }
+  })
+  t.same(response, { hello: 'world' })
+  server.close()
+})
+
 test('Search', async t => {
   t.plan(4)
 
