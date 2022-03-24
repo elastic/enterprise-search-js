@@ -63,6 +63,11 @@ jobs:
       run: |
         npm install
 
+    - name: Playwright configuration
+      working-directory: ./packages/enterprise-search-universal
+      run: |
+        npx playwright install-deps
+
     - name: Lint
       working-directory: ./packages/enterprise-search-universal
       run: |
