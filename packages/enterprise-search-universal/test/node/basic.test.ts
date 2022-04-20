@@ -20,7 +20,7 @@
 import 'cross-fetch/polyfill'
 import test from 'tape'
 import * as http from 'http'
-import Client from '../../src/client'
+import { Client } from '../../src/client'
 
 type ServerHandler = (req: http.IncomingMessage, res: http.ServerResponse) => void
 function buildServer (handler: ServerHandler): Promise<http.Server> {
@@ -60,7 +60,8 @@ test('Array querystring', async t => {
 
   function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
     t.equal(req.method, 'GET')
-    t.equal(req.url, '/?foo=bar&baz%5B%5D=1&baz%5B%5D=2&baz%5B%5D=3')
+    // @ts-ignore
+    t.equal(decodeURIComponent(req.url), '/?foo=bar&baz[]=1&baz[]=2&baz[]=3')
     t.equal(req.headers.authorization, 'token')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
@@ -90,7 +91,8 @@ test('Object querystring', async t => {
 
   function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
     t.equal(req.method, 'GET')
-    t.equal(req.url, '/?page%5Bsize%5D=0&page%5Bcurrent%5D=1')
+    // @ts-ignore
+    t.equal(decodeURIComponent(req.url), '/?page[size]=0&page[current]=1')
     t.equal(req.headers.authorization, 'token')
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))

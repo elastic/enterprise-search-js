@@ -42,11 +42,61 @@ function handler (req, res) {
     res.writeHead(204, headers)
     res.end()
   } else if (supportedMethods.includes(req.method)) {
-    res.writeHead(200, {
-      ...headers,
-      'content-type': 'application/json'
-    })
-    res.end(JSON.stringify({ hello: 'world' }))
+    // test meta header
+    const reg = /^[a-z]{1,}=[a-z0-9\.\-]{1,}(?:,[a-z]{1,}=[a-z0-9\.\-]+)*$/ // eslint-disable-line
+    if (!reg.test(req.headers['x-elastic-client-meta'])) {
+      res.writeHead(400, {
+        ...headers,
+        'content-type': 'text/plain'
+      })
+      res.end('Bad x-elastic-client-meta header')
+
+    // test body (just echo it back)
+    } else if (req.url.startsWith('/body')) {
+      let payload = ''
+      req.setEncoding('utf8')
+      req.on('data', chunk => { payload += chunk })
+      req.on('error', () => {
+        res.writeHead(500, {
+          ...headers,
+          'content-type': 'text/plain'
+        })
+        res.end('Something went wrong')
+      })
+      req.on('end', () => {
+        res.writeHead(200, {
+          ...headers,
+          'content-type': 'application/json'
+        })
+        res.end(payload)
+      })
+
+    // test querystring array format
+    } else if (req.url.startsWith('/query/array')) {
+      const valid = decodeURIComponent(req.url) === '/query/array?foo=bar&baz[]=1&baz[]=2&baz[]=3'
+      res.writeHead(200, {
+        ...headers,
+        'content-type': 'application/json'
+      })
+      res.end(JSON.stringify({ valid }))
+
+    // test querystring object format
+    } else if (req.url.startsWith('/query/object')) {
+      const valid = decodeURIComponent(req.url) === '/query/object?page[size]=0&page[current]=1'
+      res.writeHead(200, {
+        ...headers,
+        'content-type': 'application/json'
+      })
+      res.end(JSON.stringify({ valid }))
+
+    // base test
+    } else {
+      res.writeHead(200, {
+        ...headers,
+        'content-type': 'application/json'
+      })
+      res.end(JSON.stringify({ hello: 'world' }))
+    }
   } else {
     res.writeHead(405, {
       ...headers,

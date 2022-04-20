@@ -18,7 +18,7 @@
  */
 
 const test = require('tape')
-const Client = require('../../lib/client').default
+const { Client, ResponseError } = require('../../lib/client')
 
 test('Basic', async t => {
   t.plan(1)
@@ -30,4 +30,80 @@ test('Basic', async t => {
 
   const response = await client.transportRequest({ method: 'GET', path: '/' })
   t.same(response, { hello: 'world' })
+})
+
+test('Querystring array', async t => {
+  t.plan(1)
+
+  const client = new Client({
+    url: 'http://localhost:3000',
+    token: 'token'
+  })
+
+  const response = await client.transportRequest({
+    method: 'GET',
+    path: '/query/array',
+    querystring: {
+      foo: 'bar',
+      baz: [1, 2, 3]
+    }
+  })
+  t.same(response, { valid: true })
+})
+
+test('Querystring object', async t => {
+  t.plan(1)
+
+  const client = new Client({
+    url: 'http://localhost:3000',
+    token: 'token'
+  })
+
+  const response = await client.transportRequest({
+    method: 'GET',
+    path: '/query/object',
+    querystring: {
+      page: {
+        size: 0,
+        current: 1
+      }
+    }
+  })
+  t.same(response, { valid: true })
+})
+
+test('Request body', async t => {
+  t.plan(1)
+
+  const client = new Client({
+    url: 'http://localhost:3000',
+    token: 'token'
+  })
+
+  const response = await client.transportRequest({
+    method: 'POST',
+    path: '/body',
+    body: { foo: 'bar' }
+  })
+  t.same(response, { foo: 'bar' })
+})
+
+test('Disable meta header', async t => {
+  t.plan(4)
+
+  const client = new Client({
+    url: 'http://localhost:3000',
+    token: 'token',
+    enableMetaHeader: false
+  })
+
+  try {
+    await client.transportRequest({ method: 'GET', path: '/' })
+    t.fail('Should throw')
+  } catch (err) {
+    t.ok(err instanceof ResponseError)
+    t.equal(err.message, 'Bad x-elastic-client-meta header')
+    t.equal(err.statusCode, 400)
+    t.equal(err.body, 'Bad x-elastic-client-meta header')
+  }
 })
