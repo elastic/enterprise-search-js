@@ -33,12 +33,16 @@ function buildServer (handler: ServerHandler): Promise<http.Server> {
 }
 
 test('Basic', async t => {
-  t.plan(4)
+  t.plan(6)
 
   function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
     t.equal(req.method, 'GET')
     t.equal(req.url, '/')
     t.equal(req.headers.authorization, 'token')
+    const reg = /^[a-z]{1,}=[a-z0-9\.\-]{1,}(?:,[a-z]{1,}=[a-z0-9\.\-]+)*$/ // eslint-disable-line
+    // @ts-expect-error
+    t.ok(reg.test(req.headers['x-elastic-client-meta']))
+    t.notOk(req.headers['x-elastic-client-meta']?.includes('browser'))
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   }
@@ -48,6 +52,28 @@ test('Basic', async t => {
     // @ts-expect-error
     url: `http://localhost:${server.address().port}`,
     token: 'token'
+  })
+
+  const response = await client.transportRequest<{ hello: string }>({ method: 'GET', path: '/' })
+  t.same(response, { hello: 'world' })
+  server.close()
+})
+
+test('Disable meta header', async t => {
+  t.plan(2)
+
+  function handler (req: http.IncomingMessage, res: http.ServerResponse): void {
+    t.equal(req.headers['x-elastic-client-meta'], undefined)
+    res.setHeader('content-type', 'application/json')
+    res.end(JSON.stringify({ hello: 'world' }))
+  }
+
+  const server = await buildServer(handler)
+  const client = new Client({
+    // @ts-expect-error
+    url: `http://localhost:${server.address().port}`,
+    token: 'token',
+    enableMetaHeader: false
   })
 
   const response = await client.transportRequest<{ hello: string }>({ method: 'GET', path: '/' })
