@@ -33,7 +33,7 @@ const supportedMethods = [
 const headers = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': supportedMethods.join(', '),
-  'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization',
+  'Access-Control-Allow-Headers': '*',
   'Access-Control-Max-Age': 2592000
 }
 

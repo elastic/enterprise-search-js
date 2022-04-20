@@ -22,9 +22,15 @@
 import type * as AppTypes from './app-types'
 import type * as WorkTypes from './workplace-types'
 
+const clientVersion = '8.1'
+const jsVersion = typeof window !== 'undefined'
+  ? 'browser'
+  : process.versions.node
+
 export interface ClientOptions {
   url: string
   token: string
+  enableMetaHeader?: boolean
 }
 
 export interface RequestParams {
@@ -41,6 +47,7 @@ type TransportRequest = <T = unknown>(params: RequestParams) => Promise<T>
 export default class Client {
   readonly _url: string
   readonly _token: string
+  readonly _metaHeader: string | undefined
   readonly app: AppSearchClient
   readonly workplace: WorkplaceSearchClient
 
@@ -49,6 +56,9 @@ export default class Client {
     this._token = opts.token
     this.app = new AppSearchClient(this.transportRequest.bind(this))
     this.workplace = new WorkplaceSearchClient(this.transportRequest.bind(this))
+    if (opts.enableMetaHeader === true || opts.enableMetaHeader == null) {
+      this._metaHeader = `ent=${clientVersion},js=${jsVersion},t=${clientVersion},ft=universal`
+    }
   }
 
   async transportRequest<T = unknown> (params: RequestParams): Promise<T> {
@@ -56,6 +66,11 @@ export default class Client {
       method: params.method,
       headers: new Headers({ authorization: this._token }),
       signal: params.signal
+    }
+
+    if (this._metaHeader != null) {
+      // @ts-expect-error
+      requestOptions.headers.set('x-elastic-client-meta', this._metaHeader)
     }
 
     if (params.body != null && typeof params.body === 'object') {
