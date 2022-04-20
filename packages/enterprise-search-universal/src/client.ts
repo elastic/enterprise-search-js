@@ -44,7 +44,21 @@ export interface RequestParams {
 
 type TransportRequest = <T = unknown>(params: RequestParams) => Promise<T>
 
-export default class Client {
+export class ResponseError extends Error {
+  statusCode: number
+  body: any
+  constructor (message: string, statusCode: number, body: any) {
+    if (typeof body === 'string') {
+      message = body
+    }
+    super(message)
+    this.name = 'EnteropriseSearchClientError'
+    this.statusCode = statusCode
+    this.body = body
+  }
+}
+
+export class Client {
   readonly _url: string
   readonly _token: string
   readonly _metaHeader: string | undefined
@@ -101,7 +115,17 @@ export default class Client {
     }
 
     const response = await fetch(url.toString(), requestOptions)
-    return await response.json()
+    let body = await response.text()
+    if (response.headers.get('content-type')?.includes('json') === true && body !== '') {
+      body = JSON.parse(body)
+    }
+
+    if (!response.ok) {
+      throw new ResponseError('Response error', response.status, body)
+    }
+
+    // @ts-expect-error
+    return body
   }
 }
 
