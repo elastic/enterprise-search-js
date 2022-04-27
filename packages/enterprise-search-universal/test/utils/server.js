@@ -89,6 +89,16 @@ function handler (req, res) {
       })
       res.end(JSON.stringify({ valid }))
 
+    // slow response
+    } else if (req.url.startsWith('/slow')) {
+      setTimeout(() => {
+        res.writeHead(200, {
+          ...headers,
+          'content-type': 'application/json'
+        })
+        res.end(JSON.stringify({ hello: 'world' }))
+      }, 1000)
+
     // base test
     } else {
       res.writeHead(200, {

@@ -17,6 +17,8 @@
  * under the License.
  */
 
+/* globals AbortController */
+
 const test = require('tape')
 const { Client, ResponseError } = require('../../lib/client')
 
@@ -105,5 +107,23 @@ test('Disable meta header', async t => {
     t.equal(err.message, 'Bad x-elastic-client-meta header')
     t.equal(err.statusCode, 400)
     t.equal(err.body, 'Bad x-elastic-client-meta header')
+  }
+})
+
+test('Abort a request', async t => {
+  t.plan(1)
+
+  const client = new Client({
+    url: 'http://localhost:3000',
+    token: 'token'
+  })
+
+  const controller = new AbortController()
+  setTimeout(() => controller.abort(), 100)
+  try {
+    await client.transportRequest({ method: 'GET', path: '/slow', signal: controller.signal })
+    t.fail('Should throw')
+  } catch (err) {
+    t.equal(err.name, 'AbortError')
   }
 })
