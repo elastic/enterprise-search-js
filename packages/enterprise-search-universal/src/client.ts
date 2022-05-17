@@ -55,7 +55,7 @@ export class ResponseError extends Error {
       message = body
     }
     super(message)
-    this.name = 'EnteropriseSearchClientError'
+    this.name = 'EnterpriseSearchClientError'
     this.statusCode = statusCode
     this.body = body
   }

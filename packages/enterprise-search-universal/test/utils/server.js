@@ -44,7 +44,7 @@ function handler (req, res) {
   } else if (supportedMethods.includes(req.method)) {
     // test meta header
     const reg = /^[a-z]{1,}=[a-z0-9\.\-]{1,}(?:,[a-z]{1,}=[a-z0-9\.\-]+)*$/ // eslint-disable-line
-    if (!reg.test(req.headers['x-elastic-client-meta']) || !req.headers['x-elastic-client-meta'].includes('browser')) {
+    if (!reg.test(req.headers['x-elastic-client-meta']) || !req.headers['x-elastic-client-meta'].includes('jsu')) {
       res.writeHead(400, {
         ...headers,
         'content-type': 'text/plain'

@@ -43,7 +43,7 @@ test('Basic', async t => {
     const reg = /^[a-z]{1,}=[a-z0-9\.\-]{1,}(?:,[a-z]{1,}=[a-z0-9\.\-]+)*$/ // eslint-disable-line
     // @ts-expect-error
     t.ok(reg.test(req.headers['x-elastic-client-meta']))
-    t.notOk(req.headers['x-elastic-client-meta']?.includes('browser'))
+    t.ok(req.headers['x-elastic-client-meta']?.includes('jsu'))
     res.setHeader('content-type', 'application/json')
     res.end(JSON.stringify({ hello: 'world' }))
   }
