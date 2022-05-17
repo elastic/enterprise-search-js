@@ -22,9 +22,9 @@
 import type * as AppTypes from './app-types'
 import type * as WorkTypes from './workplace-types'
 
-const clientVersion = '8.1'
+const clientVersion = '8.2'
 const jsVersion = typeof window !== 'undefined'
-  ? 'browser'
+  ? '0'
   : process.versions.node
 
 export interface ClientOptions {
@@ -74,7 +74,7 @@ export class Client {
     this.app = new AppSearchClient(this.transportRequest.bind(this))
     this.workplace = new WorkplaceSearchClient(this.transportRequest.bind(this))
     if (opts.enableMetaHeader === true || opts.enableMetaHeader == null) {
-      this._metaHeader = `ent=${clientVersion},js=${jsVersion},t=${clientVersion},ft=universal`
+      this._metaHeader = `ent=${clientVersion},jsu=${jsVersion},t=${clientVersion},ft=0`
     }
   }
 
