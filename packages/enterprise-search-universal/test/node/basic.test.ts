@@ -102,7 +102,7 @@ test('Abort a request', async t => {
   const controller = new AbortController()
   setTimeout(() => controller.abort(), 100)
   try {
-    await client.transportRequest<{ hello: string }>({ method: 'GET', path: '/', signal: controller.signal })
+    await client.transportRequest<{ hello: string }>({ method: 'GET', path: '/' }, { signal: controller.signal })
     t.fail('Should throw')
   } catch (err: any) {
     t.equal(err.name, 'AbortError')
