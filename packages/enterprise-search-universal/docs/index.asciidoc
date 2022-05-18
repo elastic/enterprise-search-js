@@ -1,0 +1,19 @@
+= enterprise-search-universal
+
+:doctype: book
+
+include::{asciidoc-dir}/../../shared/attributes.asciidoc[]
+
+include::overview.asciidoc[]
+
+include::installation.asciidoc[]
+
+include::connecting.asciidoc[]
+
+include::changelog.asciidoc[]
+
+include::app-api.asciidoc[]
+
+include::workplace-api.asciidoc[]
+
+

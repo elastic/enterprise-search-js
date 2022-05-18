@@ -1,0 +1,42 @@
+[[app-search-api]]
+App Search APIs
+
+app-search-click-api
+=== Click API
+
+==== Tracks results that were clicked after a query
+
+Tracks results that were clicked after a query
+https://www.elastic.co/guide/en/app-search/current/clickthrough.html[Documentation]
+
+[source,js]
+----
+client.app.logClickthrough()
+----
+
+app-search-query-suggestion-api
+=== Query Suggestion API
+
+==== Retrieve query suggestions
+
+Provide relevant query suggestions for incomplete queries
+https://www.elastic.co/guide/en/app-search/current/query-suggestion.html[Documentation]
+
+[source,js]
+----
+client.app.querySuggestion()
+----
+
+app-search-search-api
+=== Search API
+
+==== Submit a search
+
+Submit a search and receive a set of results with meta data
+https://www.elastic.co/guide/en/app-search/current/search.html[Documentation]
+
+[source,js]
+----
+client.app.search()
+----
+
