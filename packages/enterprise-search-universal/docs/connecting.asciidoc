@@ -1,0 +1,22 @@
+[[connecting]]
+== Connecting
+
+This page contains the information you need to connect and use the Client with Elastic Enterprise Search.
+
+NOTE: The universal client only support Bearer authentication.
+
+You should configure the Bearer token in the `token` option.
+
+[source,js]
+----
+// cjs
+const { Client } = require('@elastic/enterprise-search-universal')
+
+// mjs
+import { Client } from '@elastic/enterprise-search-universal'
+
+const client = new Client({
+  url: 'http://localhost:3002',
+  token: 'my-token'
+})
+----

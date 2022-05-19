@@ -1,0 +1,29 @@
+[[app-search-api]]
+Workplace Search APIs
+
+app-search-analytics-api
+=== Analytics API
+
+==== Capture click and feedback analytic events
+
+Capture Analytic events for click and feedback
+https://www.elastic.co/guide/en/workplace-search/current/workplace-search-analytics-api.html[Documentation]
+
+[source,js]
+----
+client.workplace.createAnalyticsEvent()
+----
+
+app-search-search-api
+=== Search API
+
+==== Search across available sources with various query tuning options
+
+Issue a Search Query
+https://www.elastic.co/guide/en/workplace-search/current/workplace-search-search-api.html[Documentation]
+
+[source,js]
+----
+client.workplace.search()
+----
+

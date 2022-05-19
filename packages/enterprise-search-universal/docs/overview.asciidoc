@@ -1,0 +1,49 @@
+[[overview]]
+== Overview
+
+Official universal JavaScript client for Elastic App Search and Workplace Search.
+This module differs from the normal Node.js client as it can be used both in Node.js
+and the browser environment.
+Another important difference is that this client does not support every API that the
+normal Node.js client supports, as it's designed to work with lower permissions.
+
+IMPORTANT: This module expects to find the `fetch` API in the global environment, if you need to use it in Node.js
+as well, you can add it with https://github.com/lquixada/cross-fetch[`cross-fetch`].
+
+[discrete]
+=== Example usage
+
+[source,js]
+----
+// cjs
+const { Client } = require('@elastic/enterprise-search-universal')
+
+// mjs
+import { Client } from '@elastic/enterprise-search-universal'
+
+const client = new Client({
+  url: 'http://localhost:3002',
+  token: 'my-token'
+})
+
+// App Search API
+const response = await client.app.search({
+  engine_name: 'games',
+  body: {
+    query: 'Pack-Man'
+  }
+})
+console.log(response)
+
+// Workplace Search API
+const response = await client.workplace.getDocument({
+  content_source_id: 'test',
+  document_id: 'id'
+})
+console.log(response)
+----
+
+[discrete]
+=== License
+
+This code is available under the https://github.com/elastic/enterprise-search-js/blob/main/packages/enterprise-search-universal/LICENSE[Apache-2.0 license].

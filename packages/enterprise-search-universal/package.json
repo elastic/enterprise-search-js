@@ -1,0 +1,55 @@
+{
+  "name": "@elastic/enterprise-search-universal",
+  "version": "8.2.0-beta.1",
+  "description": "Official universal client for Elastic App Search and Workplace Search.",
+  "main": "lib/client.js",
+  "types": "lib/client.d.ts",
+  "scripts": {
+    "lint": "ts-standard src",
+    "lint:fix": "ts-standard --fix src",
+    "license-checker": "license-checker --production --onlyAllow='MIT;Apache-2.0;Apache1.1;ISC;BSD-3-Clause;BSD-2-Clause;0BSD'",
+    "prebuild": "npm run clean-build && npm run lint",
+    "build": "tsc",
+    "clean-build": "rimraf ./lib && mkdir lib",
+    "prepublishOnly": "npm run build",
+    "test:node": "ts-node test/node/basic.test.ts",
+    "test:browser": "npm run build && airtap --concurrency 1 test/browser/basic.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elastic/enterprise-search-js.git"
+  },
+  "keywords": [
+    "elastic",
+    "enterprise",
+    "workspace",
+    "app",
+    "site",
+    "search"
+  ],
+  "author": {
+    "name": "Tomas Della Vedova",
+    "company": "Elastic BV"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/elastic/enterprise-search-js/issues"
+  },
+  "homepage": "https://github.com/elastic/enterprise-search-js/blob/main/packages/enterprise-search-universal",
+  "engines": {
+    "node": ">=12"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "@types/tape": "^4.13.2",
+    "airtap": "^4.0.4",
+    "airtap-playwright": "^1.0.1",
+    "cross-fetch": "^3.1.5",
+    "license-checker": "^25.0.1",
+    "node-abort-controller": "^3.0.1",
+    "tape": "^5.5.2",
+    "ts-node": "^10.4.0",
+    "ts-standard": "^11.0.0",
+    "typescript": "^4.5.5"
+  }
+}
