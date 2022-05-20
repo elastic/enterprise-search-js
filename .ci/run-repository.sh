@@ -38,8 +38,6 @@ docker build \
        --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
        .
 
-cd packages/enterprise-search
-
 echo -e "\033[32;1mRUN: \033[31mJS \e[0m container.\033[0m"
 
 docker run \
@@ -49,4 +47,4 @@ docker run \
        --rm \
        --volume `pwd`:/code/enterprise-search-js \
        elastic/enterprise-search-js \
-       npm run test:integration
+       npm run test:integration --prefix packages/enterprise-search
