@@ -32,10 +32,8 @@ echo -e "\033[32;1mSUCCESS:\033[0m successfully started the ${STACK_VERSION} sta
 
 echo -e "\033[32;1mBUILD: \033[31mJS \e[0m container.\033[0m"
 
-cd packages/enterprise-search
-
 docker build \
-       --file ../../.ci/Dockerfile \
+       --file .ci/Dockerfile \
        --tag elastic/enterprise-search-js \
        --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
        .
@@ -49,4 +47,4 @@ docker run \
        --rm \
        --volume `pwd`:/code/enterprise-search-js \
        elastic/enterprise-search-js \
-       npm run test:integration
+       npm run test:integration --prefix packages/enterprise-search
