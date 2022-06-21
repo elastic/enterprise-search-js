@@ -9,6 +9,8 @@
 
 Official Node.js client for Elastic Enterprise Search, App Search, and Workplace Search.
 
+:information_source: **_This client is in beta. Beta features are subject to change and are not covered by the support SLA of general release (GA) features. Elastic plans to promote this feature to GA in a future release._**.
+
 ## Install
 ```
 npm install @elastic/enterprise-search
