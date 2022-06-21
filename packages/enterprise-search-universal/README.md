@@ -9,6 +9,8 @@
 
 Official universal JavaScript client for Elastic App Search and Workplace Search.
 
+ℹ️  **_This client is not yet released (not yet in beta phase)_**
+
 ## Install
 ```
 npm install @elastic/enterprise-search-universal
