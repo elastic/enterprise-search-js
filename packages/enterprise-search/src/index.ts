@@ -20,6 +20,7 @@
 import {
   CloudConnectionPool,
   Diagnostic,
+  HttpConnection,
   UndiciConnection
 } from '@elastic/transport'
 import EnterpriseSearchClient from './EnterpriseSearchClient'
@@ -50,11 +51,12 @@ export default class Client {
       this[kConnectionPool] = internal.connectionPool
     } else {
       this[kConnectionPool] = new CloudConnectionPool({
-        Connection: UndiciConnection,
+        Connection: opts.proxy === undefined ? UndiciConnection : HttpConnection,
         diagnostic: this.diagnostic,
         tls: opts.url.startsWith('https://')
           ? { secureProtocol: 'TLSv1_2_method' }
-          : undefined
+          : undefined,
+        proxy: opts.proxy
       })
       this[kConnectionPool].addConnection(opts.url)
     }

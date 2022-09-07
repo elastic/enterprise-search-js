@@ -19,6 +19,7 @@
 
 import {
   CloudConnectionPool,
+  ConnectionPoolOptions,
   Diagnostic
 } from '@elastic/transport'
 
@@ -36,12 +37,16 @@ export interface InternalOptions {
   diagnostic: Diagnostic
 }
 
-export interface ClientOptions extends AuthOptions {
+export interface ClientOptions extends AuthOptions, ProxyOptions {
   url: string
 }
 
 export interface AuthOptions {
   auth: BasicAuth | BearerAuth
+}
+
+export interface ProxyOptions {
+  proxy?: ConnectionPoolOptions['proxy']
 }
 
 export function isBearerAuth (obj: any): obj is BearerAuth {

@@ -17,12 +17,24 @@
  * under the License.
  */
 
+import proxy from 'proxy';
+import * as http from 'http';
 import { test } from 'tap'
 import { Client } from '../../..'
+import { AddressInfo } from 'net';
 
 const url = process.env.ENTERPRISE_SEARCH_URL ?? 'http://localhost:3002'
 const username = process.env.ELASTIC_ENTERPRISE_USER ?? 'elastic'
 const password = process.env.ELASTIC_ENTERPRISE_PASSWORD ?? 'changeme'
+
+const createProxy = (): Promise<http.Server> => {
+  return new Promise((resolve, reject) => {
+    const server = proxy(http.createServer())
+    server.listen(0, '127.0.0.1', () => {
+      resolve(server)
+    })
+  })
+}
 
 test('getHealth', async t => {
   const client = new Client({
@@ -35,6 +47,22 @@ test('getHealth', async t => {
   t.type(response.cluster_uuid, 'string')
 
   await client.close()
+})
+
+test('getHealth Proxy', async t => {
+  const proxy = await createProxy();
+  const client = new Client({
+    url,
+    auth: { username, password },
+    proxy: `http://${(proxy.address() as AddressInfo).address}:${(proxy.address() as AddressInfo).port}`,
+  })
+
+  const response = await client.enterprise.getHealth()
+  t.type(response.name, 'string')
+  t.type(response.cluster_uuid, 'string')
+
+  await client.close()
+  await proxy.close();
 })
 
 test('getReadOnly', async t => {
