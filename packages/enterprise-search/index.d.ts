@@ -19,9 +19,9 @@
 
 import Client from './lib'
 
-export type { ClientOptions, AuthOptions } from './lib/types'
-export type { AppTypes } from './src/AppSearchClient'
-export type { EnterpriseTypes } from './src/EnterpriseSearchClient'
-export type { WorkplaceTypes } from './src/WorkplaceSearchClient'
+export type { ClientOptions, AuthOptions } from './lib/utils'
+export type { AppTypes } from './lib/AppSearchClient'
+export type { EnterpriseTypes } from './lib/EnterpriseSearchClient'
+export type { WorkplaceTypes } from './lib/WorkplaceSearchClient'
 export * from '@elastic/transport'
 export { Client }
