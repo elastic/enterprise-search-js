@@ -20,8 +20,16 @@
 import 'cross-fetch/polyfill'
 import test from 'tape'
 import * as http from 'http'
-import { AbortController } from 'node-abort-controller'
+import { parse } from 'semver';
 import { Client } from '../../src/client'
+
+let AbortController = global.AbortController;
+if (parse(process.version)!.major! < 16) {
+  let {
+    AbortController: polyFillAbortController,
+  } = require("node-abort-controller");
+  AbortController = polyFillAbortController;
+}
 
 type ServerHandler = (req: http.IncomingMessage, res: http.ServerResponse) => void
 function buildServer (handler: ServerHandler): Promise<http.Server> {
