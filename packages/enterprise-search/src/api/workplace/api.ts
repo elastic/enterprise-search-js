@@ -26,7 +26,7 @@
 
 import {
   Transport,
-  TransportRequestOptions
+  TransportRequestOptions,
 } from '@elastic/transport'
 import * as T from './types'
 interface That { transport: Transport }
@@ -39,7 +39,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.CreateContentSourceResponse>({
       method: 'POST',
-      path: '/api/ws/v1/sources',
+      path: `/api/ws/v1/sources`,
       querystring,
       body: body
     }, options)
@@ -51,7 +51,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.ListContentSourcesResponse>({
       method: 'GET',
-      path: '/api/ws/v1/sources',
+      path: `/api/ws/v1/sources`,
       querystring
     }, options)
   }
@@ -303,7 +303,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.ListSynonymSetsResponse>({
       method: 'GET',
-      path: '/api/ws/v1/synonyms',
+      path: `/api/ws/v1/synonyms`,
       querystring,
       body: body
     }, options)
@@ -316,7 +316,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.CreateBatchSynonymSetsResponse>({
       method: 'POST',
-      path: '/api/ws/v1/synonyms',
+      path: `/api/ws/v1/synonyms`,
       querystring,
       body: body
     }, options)
@@ -325,7 +325,7 @@ export default class API {
   async getTriggersBlocklist (this: That, params?: T.GetTriggersBlocklistRequest, options?: TransportRequestOptions): Promise<T.GetTriggersBlocklistResponse> {
     return await this.transport.request<T.GetTriggersBlocklistResponse>({
       method: 'GET',
-      path: '/api/ws/v1/automatic_query_refinement'
+      path: `/api/ws/v1/automatic_query_refinement`,
     }, options)
   }
 
@@ -335,7 +335,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.PutTriggersBlocklistResponse>({
       method: 'PUT',
-      path: '/api/ws/v1/automatic_query_refinement',
+      path: `/api/ws/v1/automatic_query_refinement`,
       querystring
     }, options)
   }
@@ -355,7 +355,7 @@ export default class API {
   async getCurrentUser (this: That, params?: T.GetCurrentUserRequest, options?: TransportRequestOptions): Promise<T.GetCurrentUserResponse> {
     return await this.transport.request<T.GetCurrentUserResponse>({
       method: 'GET',
-      path: '/api/ws/v1/whoami'
+      path: `/api/ws/v1/whoami`,
     }, options)
   }
 
@@ -366,7 +366,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.CreateAnalyticsEventResponse>({
       method: 'POST',
-      path: '/api/ws/v1/analytics/event',
+      path: `/api/ws/v1/analytics/event`,
       querystring,
       body: body
     }, options)
@@ -379,7 +379,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.SearchResponse>({
       method: 'POST',
-      path: '/api/ws/v1/search',
+      path: `/api/ws/v1/search`,
       querystring,
       body: body
     }, options)

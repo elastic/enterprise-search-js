@@ -190,7 +190,7 @@ class WorkplaceSearchClient {
   async getTriggersBlocklist (params?: WorkTypes.GetTriggersBlocklistRequest, options?: RequestOptions): Promise<WorkTypes.GetTriggersBlocklistResponse> {
     return await this.transportRequest<WorkTypes.GetTriggersBlocklistResponse>({
       method: 'GET',
-      path: '/api/ws/v1/automatic_query_refinement'
+      path: `/api/ws/v1/automatic_query_refinement`,
     }, options)
   }
 
@@ -200,7 +200,7 @@ class WorkplaceSearchClient {
     } = params ?? {}
     return await this.transportRequest<WorkTypes.PutTriggersBlocklistResponse>({
       method: 'PUT',
-      path: '/api/ws/v1/automatic_query_refinement',
+      path: `/api/ws/v1/automatic_query_refinement`,
       querystring
     }, options)
   }
@@ -212,7 +212,7 @@ class WorkplaceSearchClient {
     } = params ?? {}
     return await this.transportRequest<WorkTypes.CreateAnalyticsEventResponse>({
       method: 'POST',
-      path: '/api/ws/v1/analytics/event',
+      path: `/api/ws/v1/analytics/event`,
       querystring,
       body: body
     }, options)
@@ -225,7 +225,7 @@ class WorkplaceSearchClient {
     } = params ?? {}
     return await this.transportRequest<WorkTypes.SearchResponse>({
       method: 'POST',
-      path: '/api/ws/v1/search',
+      path: `/api/ws/v1/search`,
       querystring,
       body: body
     }, options)

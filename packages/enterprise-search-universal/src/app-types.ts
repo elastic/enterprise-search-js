@@ -59,9 +59,9 @@ export interface QuerySuggestionRequest {
 
 export interface QuerySuggestionResponse {
   results?: {
-    documents?: Array<{
+    documents?: {
       suggestion?: string
-    }>
+    }[]
     [k: string]: unknown
   }
   meta?: {}
@@ -89,19 +89,19 @@ export interface SearchRequest {
         weight?: number
       }
     }
-    sort?: Array<{
+    sort?: {
       [k: string]:
-      | ('asc' | 'desc')
-      | {
-        center?:
-        | string
-        | Array<{
-          [k: string]: unknown
-        }>
-        order?: 'asc' | 'desc'
-        mode?: 'min' | 'max' | 'median' | 'avg'
-      }
-    }>
+        | ('asc' | 'desc')
+        | {
+            center?:
+              | string
+              | {
+                  [k: string]: unknown
+                }[]
+            order?: 'asc' | 'desc'
+            mode?: 'min' | 'max' | 'median' | 'avg'
+          }
+    }[]
   }
 }
 
@@ -126,5 +126,6 @@ export interface SearchResponse {
     }
     request_id?: string
   }
-  results: Array<{}>
+  results: {}[]
 }
+

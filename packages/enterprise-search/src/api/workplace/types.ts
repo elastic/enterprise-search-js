@@ -52,10 +52,10 @@ export interface CreateContentSourceRequest {
       media_type_field?: string | null
       created_by_field?: string | null
       updated_by_field?: string | null
-      detail_fields?: Array<{
+      detail_fields?: {
         label: string
         field_name: string
-      }>
+      }[]
     }
     /**
      * Whether or not this Content Source will be searchable on the search page.
@@ -75,17 +75,17 @@ export interface CreateContentSourceRequest {
         }
       }
       default_action: 'include' | 'exclude'
-      rules?: Array<{
+      rules?: {
         exclude?: string
         include?: string
         filter_type?: 'object_type' | 'path_template' | 'file_extension'
         fields?:
-        | Array<{
-          remote: string
-          target: string
-        }>
-        | null
-      }>
+          | {
+              remote: string
+              target: string
+            }[]
+          | null
+      }[]
       /**
        * Schedule defining when and how often the content source should be synchronized
        */
@@ -106,7 +106,7 @@ export interface CreateContentSourceRequest {
          * How often to update user permissions, as an ISO-8601 duration
          */
         permissions?: string
-        blocked_windows?: Array<{
+        blocked_windows?: {
           job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
           day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
           /**
@@ -117,30 +117,30 @@ export interface CreateContentSourceRequest {
            * The end of the time window, in the format of HH:mm:ssZ
            */
           end?: string
-        }>
+        }[]
       } | null
     } | null
     /**
      * Facet customizations
      */
     facets?: {
-      overrides: Array<{
+      overrides: {
         field: string
         enabled: boolean
         display_name?: string | null
         transform?: 'capitalize' | 'titleize' | 'mime_type' | null
-      }>
+      }[]
     } | null
     /**
      * Automatic query refinement customizations
      */
     automatic_query_refinement?: {
-      overrides: Array<{
+      overrides: {
         field: string
         enabled: boolean
         query_expansion_phrases: string[]
         is_person?: boolean
-      }>
+      }[]
     } | null
   }
 }
@@ -172,16 +172,16 @@ export interface CreateContentSourceResponse {
   /**
    * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
    */
-  details: Array<{
+  details: {
     [k: string]: unknown
-  }>
+  }[]
   /**
    * A list of Workplace Search Group names and IDs which have access to this Content Source.
    */
-  groups: Array<{
+  groups: {
     id: string
     name: string
-  }>
+  }[]
   /**
    * The human readable display name of this Content Source.
    */
@@ -205,10 +205,10 @@ export interface CreateContentSourceResponse {
     media_type_field?: string | null
     created_by_field?: string | null
     updated_by_field?: string | null
-    detail_fields?: Array<{
+    detail_fields?: {
       label: string
       field_name: string
-    }>
+    }[]
   }
   /**
    * Can be either "organization" or "private." This specifies whether this Content Source is available to groups of users, or a single user.
@@ -232,17 +232,17 @@ export interface CreateContentSourceResponse {
       }
     }
     default_action: 'include' | 'exclude'
-    rules?: Array<{
+    rules?: {
       exclude?: string
       include?: string
       filter_type?: 'object_type' | 'path_template' | 'file_extension'
       fields?:
-      | Array<{
-        remote: string
-        target: string
-      }>
-      | null
-    }>
+        | {
+            remote: string
+            target: string
+          }[]
+        | null
+    }[]
     /**
      * Schedule defining when and how often the content source should be synchronized
      */
@@ -263,7 +263,7 @@ export interface CreateContentSourceResponse {
        * How often to update user permissions, as an ISO-8601 duration
        */
       permissions?: string
-      blocked_windows?: Array<{
+      blocked_windows?: {
         job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
         day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
         /**
@@ -274,7 +274,7 @@ export interface CreateContentSourceResponse {
          * The end of the time window, in the format of HH:mm:ssZ
          */
         end?: string
-      }>
+      }[]
       /**
        * Estimates of when the next sync of each type will be run and average execution time
        */
@@ -342,23 +342,23 @@ export interface CreateContentSourceResponse {
    * Facet customizations
    */
   facets?: {
-    overrides: Array<{
+    overrides: {
       field: string
       enabled: boolean
       display_name?: string | null
       transform?: 'capitalize' | 'titleize' | 'mime_type' | null
-    }>
+    }[]
   } | null
   /**
    * Automatic query refinement customizations
    */
   automatic_query_refinement?: {
-    overrides: Array<{
+    overrides: {
       field: string
       enabled: boolean
       query_expansion_phrases: string[]
       is_person?: boolean
-    }>
+    }[]
   } | null
   /**
    * How many documents are currently indexed in this Content Source. Note, this field is not applicable to Remote Content Sources.
@@ -392,7 +392,7 @@ export interface ListContentSourcesResponse {
       size: number
     }
   }
-  results: Array<{
+  results: {
     /**
      * The Content Source Identifier.
      */
@@ -416,16 +416,16 @@ export interface ListContentSourcesResponse {
     /**
      * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
      */
-    details: Array<{
+    details: {
       [k: string]: unknown
-    }>
+    }[]
     /**
      * A list of Workplace Search Group names and IDs which have access to this Content Source.
      */
-    groups: Array<{
+    groups: {
       id: string
       name: string
-    }>
+    }[]
     /**
      * The human readable display name of this Content Source.
      */
@@ -449,10 +449,10 @@ export interface ListContentSourcesResponse {
       media_type_field?: string | null
       created_by_field?: string | null
       updated_by_field?: string | null
-      detail_fields?: Array<{
+      detail_fields?: {
         label: string
         field_name: string
-      }>
+      }[]
     }
     /**
      * Can be either "organization" or "private." This specifies whether this Content Source is available to groups of users, or a single user.
@@ -476,17 +476,17 @@ export interface ListContentSourcesResponse {
         }
       }
       default_action: 'include' | 'exclude'
-      rules?: Array<{
+      rules?: {
         exclude?: string
         include?: string
         filter_type?: 'object_type' | 'path_template' | 'file_extension'
         fields?:
-        | Array<{
-          remote: string
-          target: string
-        }>
-        | null
-      }>
+          | {
+              remote: string
+              target: string
+            }[]
+          | null
+      }[]
       /**
        * Schedule defining when and how often the content source should be synchronized
        */
@@ -507,7 +507,7 @@ export interface ListContentSourcesResponse {
          * How often to update user permissions, as an ISO-8601 duration
          */
         permissions?: string
-        blocked_windows?: Array<{
+        blocked_windows?: {
           job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
           day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
           /**
@@ -518,7 +518,7 @@ export interface ListContentSourcesResponse {
            * The end of the time window, in the format of HH:mm:ssZ
            */
           end?: string
-        }>
+        }[]
         /**
          * Estimates of when the next sync of each type will be run and average execution time
          */
@@ -586,23 +586,23 @@ export interface ListContentSourcesResponse {
      * Facet customizations
      */
     facets?: {
-      overrides: Array<{
+      overrides: {
         field: string
         enabled: boolean
         display_name?: string | null
         transform?: 'capitalize' | 'titleize' | 'mime_type' | null
-      }>
+      }[]
     } | null
     /**
      * Automatic query refinement customizations
      */
     automatic_query_refinement?: {
-      overrides: Array<{
+      overrides: {
         field: string
         enabled: boolean
         query_expansion_phrases: string[]
         is_person?: boolean
-      }>
+      }[]
     } | null
     /**
      * How many documents are currently indexed in this Content Source. Note, this field is not applicable to Remote Content Sources.
@@ -612,7 +612,7 @@ export interface ListContentSourcesResponse {
      * The date/time when documents were last indexed into this Content Source. This may be "null" if documents have not yet been indexed. Note, this field is not applicable to Remote Content Sources.
      */
     last_indexed_at?: string | null
-  }>
+  }[]
 }
 
 export interface GetContentSourceRequest {
@@ -649,16 +649,16 @@ export interface GetContentSourceResponse {
   /**
    * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
    */
-  details: Array<{
+  details: {
     [k: string]: unknown
-  }>
+  }[]
   /**
    * A list of Workplace Search Group names and IDs which have access to this Content Source.
    */
-  groups: Array<{
+  groups: {
     id: string
     name: string
-  }>
+  }[]
   /**
    * The human readable display name of this Content Source.
    */
@@ -682,10 +682,10 @@ export interface GetContentSourceResponse {
     media_type_field?: string | null
     created_by_field?: string | null
     updated_by_field?: string | null
-    detail_fields?: Array<{
+    detail_fields?: {
       label: string
       field_name: string
-    }>
+    }[]
   }
   /**
    * Can be either "organization" or "private." This specifies whether this Content Source is available to groups of users, or a single user.
@@ -709,17 +709,17 @@ export interface GetContentSourceResponse {
       }
     }
     default_action: 'include' | 'exclude'
-    rules?: Array<{
+    rules?: {
       exclude?: string
       include?: string
       filter_type?: 'object_type' | 'path_template' | 'file_extension'
       fields?:
-      | Array<{
-        remote: string
-        target: string
-      }>
-      | null
-    }>
+        | {
+            remote: string
+            target: string
+          }[]
+        | null
+    }[]
     /**
      * Schedule defining when and how often the content source should be synchronized
      */
@@ -740,7 +740,7 @@ export interface GetContentSourceResponse {
        * How often to update user permissions, as an ISO-8601 duration
        */
       permissions?: string
-      blocked_windows?: Array<{
+      blocked_windows?: {
         job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
         day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
         /**
@@ -751,7 +751,7 @@ export interface GetContentSourceResponse {
          * The end of the time window, in the format of HH:mm:ssZ
          */
         end?: string
-      }>
+      }[]
       /**
        * Estimates of when the next sync of each type will be run and average execution time
        */
@@ -819,23 +819,23 @@ export interface GetContentSourceResponse {
    * Facet customizations
    */
   facets?: {
-    overrides: Array<{
+    overrides: {
       field: string
       enabled: boolean
       display_name?: string | null
       transform?: 'capitalize' | 'titleize' | 'mime_type' | null
-    }>
+    }[]
   } | null
   /**
    * Automatic query refinement customizations
    */
   automatic_query_refinement?: {
-    overrides: Array<{
+    overrides: {
       field: string
       enabled: boolean
       query_expansion_phrases: string[]
       is_person?: boolean
-    }>
+    }[]
   } | null
   /**
    * How many documents are currently indexed in this Content Source. Note, this field is not applicable to Remote Content Sources.
@@ -879,10 +879,10 @@ export interface PutContentSourceRequest {
       media_type_field?: string | null
       created_by_field?: string | null
       updated_by_field?: string | null
-      detail_fields?: Array<{
+      detail_fields?: {
         label: string
         field_name: string
-      }>
+      }[]
     }
     /**
      * Whether or not this Content Source will be searchable on the search page.
@@ -902,17 +902,17 @@ export interface PutContentSourceRequest {
         }
       }
       default_action: 'include' | 'exclude'
-      rules?: Array<{
+      rules?: {
         exclude?: string
         include?: string
         filter_type?: 'object_type' | 'path_template' | 'file_extension'
         fields?:
-        | Array<{
-          remote: string
-          target: string
-        }>
-        | null
-      }>
+          | {
+              remote: string
+              target: string
+            }[]
+          | null
+      }[]
       /**
        * Schedule defining when and how often the content source should be synchronized
        */
@@ -933,7 +933,7 @@ export interface PutContentSourceRequest {
          * How often to update user permissions, as an ISO-8601 duration
          */
         permissions?: string
-        blocked_windows?: Array<{
+        blocked_windows?: {
           job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
           day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
           /**
@@ -944,30 +944,30 @@ export interface PutContentSourceRequest {
            * The end of the time window, in the format of HH:mm:ssZ
            */
           end?: string
-        }>
+        }[]
       } | null
     } | null
     /**
      * Facet customizations
      */
     facets?: {
-      overrides: Array<{
+      overrides: {
         field: string
         enabled: boolean
         display_name?: string | null
         transform?: 'capitalize' | 'titleize' | 'mime_type' | null
-      }>
+      }[]
     } | null
     /**
      * Automatic query refinement customizations
      */
     automatic_query_refinement?: {
-      overrides: Array<{
+      overrides: {
         field: string
         enabled: boolean
         query_expansion_phrases: string[]
         is_person?: boolean
-      }>
+      }[]
     } | null
   }
 }
@@ -999,16 +999,16 @@ export interface PutContentSourceResponse {
   /**
    * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
    */
-  details: Array<{
+  details: {
     [k: string]: unknown
-  }>
+  }[]
   /**
    * A list of Workplace Search Group names and IDs which have access to this Content Source.
    */
-  groups: Array<{
+  groups: {
     id: string
     name: string
-  }>
+  }[]
   /**
    * The human readable display name of this Content Source.
    */
@@ -1032,10 +1032,10 @@ export interface PutContentSourceResponse {
     media_type_field?: string | null
     created_by_field?: string | null
     updated_by_field?: string | null
-    detail_fields?: Array<{
+    detail_fields?: {
       label: string
       field_name: string
-    }>
+    }[]
   }
   /**
    * Can be either "organization" or "private." This specifies whether this Content Source is available to groups of users, or a single user.
@@ -1059,17 +1059,17 @@ export interface PutContentSourceResponse {
       }
     }
     default_action: 'include' | 'exclude'
-    rules?: Array<{
+    rules?: {
       exclude?: string
       include?: string
       filter_type?: 'object_type' | 'path_template' | 'file_extension'
       fields?:
-      | Array<{
-        remote: string
-        target: string
-      }>
-      | null
-    }>
+        | {
+            remote: string
+            target: string
+          }[]
+        | null
+    }[]
     /**
      * Schedule defining when and how often the content source should be synchronized
      */
@@ -1090,7 +1090,7 @@ export interface PutContentSourceResponse {
        * How often to update user permissions, as an ISO-8601 duration
        */
       permissions?: string
-      blocked_windows?: Array<{
+      blocked_windows?: {
         job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
         day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
         /**
@@ -1101,7 +1101,7 @@ export interface PutContentSourceResponse {
          * The end of the time window, in the format of HH:mm:ssZ
          */
         end?: string
-      }>
+      }[]
       /**
        * Estimates of when the next sync of each type will be run and average execution time
        */
@@ -1169,23 +1169,23 @@ export interface PutContentSourceResponse {
    * Facet customizations
    */
   facets?: {
-    overrides: Array<{
+    overrides: {
       field: string
       enabled: boolean
       display_name?: string | null
       transform?: 'capitalize' | 'titleize' | 'mime_type' | null
-    }>
+    }[]
   } | null
   /**
    * Automatic query refinement customizations
    */
   automatic_query_refinement?: {
-    overrides: Array<{
+    overrides: {
       field: string
       enabled: boolean
       query_expansion_phrases: string[]
       is_person?: boolean
-    }>
+    }[]
   } | null
   /**
    * How many documents are currently indexed in this Content Source. Note, this field is not applicable to Remote Content Sources.
@@ -1259,9 +1259,9 @@ export interface DeleteDocumentsByQueryRequest {
 export interface DeleteDocumentsByQueryResponse {
   total: number
   deleted: number
-  failures: Array<{
+  failures: {
     [k: string]: unknown
-  }>
+  }[]
 }
 
 export interface ListDocumentsRequest {
@@ -1279,57 +1279,57 @@ export interface ListDocumentsRequest {
     }
     filters?: {
       [k: string]:
-      | ((string | number) | Array<string | number>)
-      | {
-        /**
-             * A value to filter on
+        | ((string | number) | (string | number)[])
+        | {
+            /**
+             * The start of the range, inclusive
              */
-        from?: string | number
-        /**
-             * A value to filter on
+            from?: string | number
+            /**
+             * The end of the range, exclusive
              */
-        to?: string | number
-      }
-      | {
-        /**
+            to?: string | number
+          }
+        | {
+            /**
              * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
              */
-        unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-        /**
+            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+            /**
              * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
              */
-        center: string | [number, number]
-        /**
-             * A value to filter on
+            center: string | [number, number]
+            /**
+             * Inclusive lower bound of the range. Is required if to is not provided
              */
-        from?: string | number
-        /**
-             * A value to filter on
+            from?: string | number
+            /**
+             * Exclusive upper bound of the range. Is required if from is not provided
              */
-        to?: string | number
-      }
-      | {
-        /**
+            to?: string | number
+          }
+        | {
+            /**
              * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
              */
-        unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-        /**
+            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+            /**
              * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
              */
-        center: string | [number, number]
-        /**
+            center: string | [number, number]
+            /**
              * A number representing the distance unit
              */
-        distance: number
-      }
+            distance: number
+          }
     }
     sort?:
-    | {
-      [k: string]: 'asc' | 'desc'
-    }
-    | Array<{
-      [k: string]: 'asc' | 'desc'
-    }>
+      | {
+          [k: string]: 'asc' | 'desc'
+        }
+      | {
+          [k: string]: 'asc' | 'desc'
+        }[]
     cursor?: string
   }
 }
@@ -1348,9 +1348,9 @@ export interface ListDocumentsResponse {
     }
     warnings: string[]
   }
-  results: Array<{
+  results: {
     [k: string]: unknown
-  }>
+  }[]
 }
 
 export interface IndexDocumentsRequest {
@@ -1358,16 +1358,16 @@ export interface IndexDocumentsRequest {
    * Unique ID for a Custom API source, provided upon creation of a Custom API Source
    */
   content_source_id: string
-  documents: Array<{
+  documents: {
     [k: string]: unknown
-  }>
+  }[]
 }
 
 export interface IndexDocumentsResponse {
-  results: Array<{
+  results: {
     id: string
     errors: string[]
-  }>
+  }[]
 }
 
 export interface DeleteDocumentsRequest {
@@ -1379,10 +1379,10 @@ export interface DeleteDocumentsRequest {
 }
 
 export interface DeleteDocumentsResponse {
-  results: Array<{
+  results: {
     id: string
     success: boolean
-  }>
+  }[]
 }
 
 export interface GetDocumentRequest {
@@ -1426,21 +1426,21 @@ export interface ListExternalIdentitiesResponse {
       size: number
     }
   }
-  results: Array<{
+  results: {
     content_source_id: string
     external_user_id: string
     /**
      * List of external user properties
      */
-    external_user_properties?: Array<{
+    external_user_properties?: {
       attribute_name: '_elasticsearch_username'
       attribute_value: string
-    }>
+    }[]
     /**
      * List of permissions
      */
     permissions?: string[]
-  }>
+  }[]
 }
 
 export interface CreateExternalIdentityRequest {
@@ -1456,10 +1456,10 @@ export interface CreateExternalIdentityRequest {
     /**
      * A list of external user properties, where each property is an object with an attribute_name and attribute_value.
      */
-    external_user_properties: Array<{
+    external_user_properties: {
       attribute_name: '_elasticsearch_username'
       attribute_value: string
-    }>
+    }[]
     /**
      * A list of user permissions.
      */
@@ -1473,10 +1473,10 @@ export interface CreateExternalIdentityResponse {
   /**
    * List of external user properties
    */
-  external_user_properties?: Array<{
+  external_user_properties?: {
     attribute_name: '_elasticsearch_username'
     attribute_value: string
-  }>
+  }[]
   /**
    * List of permissions
    */
@@ -1500,10 +1500,10 @@ export interface GetExternalIdentityResponse {
   /**
    * List of external user properties
    */
-  external_user_properties?: Array<{
+  external_user_properties?: {
     attribute_name: '_elasticsearch_username'
     attribute_value: string
-  }>
+  }[]
   /**
    * List of permissions
    */
@@ -1528,11 +1528,11 @@ export interface PutExternalIdentityRequest {
      * A list of external user properties, where each property is an object with an attribute_name and attribute_value.
      */
     external_user_properties?:
-    | Array<{
-      attribute_name: '_elasticsearch_username'
-      attribute_value: string
-    }>
-    | null
+      | {
+          attribute_name: '_elasticsearch_username'
+          attribute_value: string
+        }[]
+      | null
     /**
      * A list of user permissions.
      */
@@ -1546,10 +1546,10 @@ export interface PutExternalIdentityResponse {
   /**
    * List of external user properties
    */
-  external_user_properties?: Array<{
+  external_user_properties?: {
     attribute_name: '_elasticsearch_username'
     attribute_value: string
-  }>
+  }[]
   /**
    * List of permissions
    */
@@ -1579,39 +1579,39 @@ export interface CommandSyncJobsRequest {
    */
   job_type?: unknown[]
   body:
-  | ({
-    [k: string]: unknown
-  } & {
-    force_interrupt?: boolean
-    command?: 'start'
-  })
-  | ({
-    [k: string]: unknown
-  } & {
-    command?: 'interrupt'
-  })
+    | ({
+        [k: string]: unknown
+      } & {
+        force_interrupt?: boolean
+        command?: 'start'
+      })
+    | ({
+        [k: string]: unknown
+      } & {
+        command?: 'interrupt'
+      })
 }
 
 export interface CommandSyncJobsResponse {
   results:
-  | {
-    started: Array<{
-      id: string
-      job_type: 'full' | 'incremental' | 'delete' | 'permissions'
-      status: 'enqueued' | 'running' | 'suspended' | 'failed' | 'complete'
-      created_at: string
-      last_updated_at: string
-    }>
-  }
-  | {
-    interrupted: Array<{
-      id: string
-      job_type: 'full' | 'incremental' | 'delete' | 'permissions'
-      status: 'enqueued' | 'running' | 'suspended' | 'failed' | 'complete'
-      created_at: string
-      last_updated_at: string
-    }>
-  }
+    | {
+        started: {
+          id: string
+          job_type: 'full' | 'incremental' | 'delete' | 'permissions'
+          status: 'enqueued' | 'running' | 'suspended' | 'failed' | 'complete'
+          created_at: string
+          last_updated_at: string
+        }[]
+      }
+    | {
+        interrupted: {
+          id: string
+          job_type: 'full' | 'incremental' | 'delete' | 'permissions'
+          status: 'enqueued' | 'running' | 'suspended' | 'failed' | 'complete'
+          created_at: string
+          last_updated_at: string
+        }[]
+      }
 }
 
 export interface GetSynonymSetRequest {
@@ -1742,7 +1742,7 @@ export interface ListSynonymSetsResponse {
   /**
    * The synonym list results
    */
-  results?: Array<{
+  results?: {
     /**
      * The id of the synonym set
      */
@@ -1759,7 +1759,7 @@ export interface ListSynonymSetsResponse {
      * The timestamp in ISO format when the set was last updated
      */
     updated_at?: string
-  }>
+  }[]
 }
 
 export interface CreateBatchSynonymSetsRequest {
@@ -1779,7 +1779,7 @@ export interface CreateBatchSynonymSetsResponse {
   /**
    * The synonym sets requested to be created
    */
-  synonym_sets?: Array<{
+  synonym_sets?: {
     /**
      * The id of the created set, or null if invalid
      */
@@ -1792,7 +1792,7 @@ export interface CreateBatchSynonymSetsResponse {
      * An optional array of error messages, if any
      */
     errors?: string[]
-  }>
+  }[]
 }
 
 export interface GetTriggersBlocklistRequest {}
@@ -1815,22 +1815,22 @@ export interface GetAutoQueryRefinementDetailsRequest {
 }
 
 export interface GetAutoQueryRefinementDetailsResponse {
-  overrides: Array<{
+  overrides: {
     field: string
     enabled: boolean
     query_expansion_phrases: string[]
     is_person?: boolean
-  }>
-  defaults: Array<{
+  }[]
+  defaults: {
     field: string
     query_expansion_phrases: string[]
     is_person: boolean
-  }>
-  results: Array<{
+  }[]
+  results: {
     field: string
     query_expansion_phrases: string[]
     is_person: boolean
-  }>
+  }[]
 }
 
 export interface GetCurrentUserRequest {}
@@ -1893,156 +1893,162 @@ export interface SearchRequest {
     }
     filters?: {
       [k: string]:
-      | ((string | number) | Array<string | number>)
-      | {
-        /**
-             * A value to filter on
+        | ((string | number) | (string | number)[])
+        | {
+            /**
+             * The start of the range, inclusive
              */
-        from?: string | number
-        /**
-             * A value to filter on
+            from?: string | number
+            /**
+             * The end of the range, exclusive
              */
-        to?: string | number
-      }
-      | {
-        /**
+            to?: string | number
+          }
+        | {
+            /**
              * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
              */
-        unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-        /**
+            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+            /**
              * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
              */
-        center: string | [number, number]
-        /**
-             * A value to filter on
+            center: string | [number, number]
+            /**
+             * Inclusive lower bound of the range. Is required if to is not provided
              */
-        from?: string | number
-        /**
-             * A value to filter on
+            from?: string | number
+            /**
+             * Exclusive upper bound of the range. Is required if from is not provided
              */
-        to?: string | number
-      }
-      | {
-        /**
+            to?: string | number
+          }
+        | {
+            /**
              * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
              */
-        unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-        /**
+            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+            /**
              * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
              */
-        center: string | [number, number]
-        /**
+            center: string | [number, number]
+            /**
              * A number representing the distance unit
              */
-        distance: number
-      }
+            distance: number
+          }
     }
     sort?:
-    | {
-      [k: string]: 'asc' | 'desc'
-    }
-    | Array<{
-      [k: string]: 'asc' | 'desc'
-    }>
+      | {
+          [k: string]: 'asc' | 'desc'
+        }
+      | {
+          [k: string]: 'asc' | 'desc'
+        }[]
     facets?: {
       [k: string]:
-      | Array<| {
-        type: 'range'
-        name?: string
-        ranges: Array<| {
-          [k: string]: unknown
-        }
-        | {
-          [k: string]: unknown
-        }>
-        center?: string | string | string | [number, number]
-        unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-      }
-      | {
-        type: 'value'
-        name?: string
-        size?: number
-        /**
+        | (
+            | {
+                type: 'range'
+                name?: string
+                ranges: (
+                  | {
+                      [k: string]: unknown
+                    }
+                  | {
+                      [k: string]: unknown
+                    }
+                )[]
+                center?: string | string | string | [number, number]
+                unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+              }
+            | {
+                type: 'value'
+                name?: string
+                size?: number
+                /**
                  * Facet field to sort on and sort by count and/or value
                  */
-        sort?: {
-          count?: 'asc' | 'desc'
-          value?: 'asc' | 'desc'
-        }
-      }>
-      | (
-        | {
-          type: 'range'
-          name?: string
-          ranges: Array<| {
-            [k: string]: unknown
-          }
-          | {
-            [k: string]: unknown
-          }>
-          center?: string | [number, number]
-          unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-        }
-        | {
-          type: 'value'
-          name?: string
-          size?: number
-          /**
+                sort?: {
+                  count?: 'asc' | 'desc'
+                  value?: 'asc' | 'desc'
+                }
+              }
+          )[]
+        | (
+            | {
+                type: 'range'
+                name?: string
+                ranges: (
+                  | {
+                      [k: string]: unknown
+                    }
+                  | {
+                      [k: string]: unknown
+                    }
+                )[]
+                center?: string | [number, number]
+                unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+              }
+            | {
+                type: 'value'
+                name?: string
+                size?: number
+                /**
                  * Facet field to sort on and sort by count and/or value
                  */
-          sort?: {
-            count?: 'asc' | 'desc'
-            value?: 'asc' | 'desc'
-          }
-        }
-      )
+                sort?: {
+                  count?: 'asc' | 'desc'
+                  value?: 'asc' | 'desc'
+                }
+              }
+          )
     }
     boosts?: {
       [k: string]:
-      | Array<(
-        | {
-          [k: string]: unknown
-        }
-        | {
-          [k: string]: unknown
-        }
-      ) &
-      (
-        | {
-          [k: string]: unknown
-        }
-        | {
-          function: 'linear' | 'exponential' | 'logarithmic'
-          [k: string]: unknown
-        }
-      ) &
-      (
-        | {
-          [k: string]: unknown
-        }
-        | {
-          [k: string]: unknown
-        }
-      )>
-      | ((
-        | {
-          [k: string]: unknown
-        }
-        | {
-          [k: string]: unknown
-        }
-      ) &
-      (
-        | {
-          [k: string]: unknown
-        }
-        | {
-          function: 'linear' | 'exponential' | 'logarithmic'
-          [k: string]: unknown
-        }
-      ) & {
-        [k: string]: unknown
-      })
+        | ((
+            | {
+                [k: string]: unknown
+              }
+            | {
+                [k: string]: unknown
+              }
+          ) &
+            (
+              | {
+                  [k: string]: unknown
+                }
+              | {
+                  function: 'linear' | 'exponential' | 'logarithmic'
+                  [k: string]: unknown
+                }
+            ) &
+            (
+              | {
+                  [k: string]: unknown
+                }
+              | {
+                  [k: string]: unknown
+                }
+            ))[]
+        | ((
+            | {
+                [k: string]: unknown
+              }
+            | {
+                [k: string]: unknown
+              }
+          ) &
+            (
+              | {
+                  [k: string]: unknown
+                }
+              | {
+                  function: 'linear' | 'exponential' | 'logarithmic'
+                  [k: string]: unknown
+                }
+            ) & {
+              [k: string]: unknown
+            })
     }
     /**
      * Optional parameter to search standard, remote only, or all available sources
@@ -2081,7 +2087,7 @@ export interface SearchResponse {
     query_refinements?: {
       submitted_query: string
       decorated_query_html: string
-      refinements: Array<{
+      refinements: {
         /**
          * The term(s) used for the trigger
          */
@@ -2100,51 +2106,51 @@ export interface SearchResponse {
         trigger_filter_type?: string
         filter?: {
           [k: string]:
-          | ((string | number) | Array<string | number>)
-          | {
-            /**
-                 * A value to filter on
+            | ((string | number) | (string | number)[])
+            | {
+                /**
+                 * The start of the range, inclusive
                  */
-            from?: string | number
-            /**
-                 * A value to filter on
+                from?: string | number
+                /**
+                 * The end of the range, exclusive
                  */
-            to?: string | number
-          }
-          | {
-            /**
+                to?: string | number
+              }
+            | {
+                /**
                  * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
                  */
-            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-            /**
+                unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+                /**
                  * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
                  */
-            center: string | string | string | [number, number]
-            /**
-                 * A value to filter on
+                center: string | string | string | [number, number]
+                /**
+                 * Inclusive lower bound of the range. Is required if to is not provided
                  */
-            from?: string | number
-            /**
-                 * A value to filter on
+                from?: string | number
+                /**
+                 * Exclusive upper bound of the range. Is required if from is not provided
                  */
-            to?: string | number
-          }
-          | {
-            /**
+                to?: string | number
+              }
+            | {
+                /**
                  * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
                  */
-            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-            /**
+                unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+                /**
                  * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
                  */
-            center: string | string | string | [number, number]
-            /**
+                center: string | string | string | [number, number]
+                /**
                  * A number representing the distance unit
                  */
-            distance: number
-          }
+                distance: number
+              }
         }
-      }>
+      }[]
     }
     /**
      * content sources used in the search query
@@ -2163,37 +2169,38 @@ export interface SearchResponse {
      */
     timeout?: number
   }
-  results: Array<{
+  results: {
     [k: string]: unknown
-  }>
+  }[]
   /**
    * facets returned from the query
    */
   facets?:
-  | {
-    type?: 'value' | 'range'
-    /**
+    | {
+        type?: 'value' | 'range'
+        /**
          * array of facets and counts for this field
          */
-    data?: Array<{
-      value?: string | number
-      count: number
-      key?: string
-      from?: string | number
-      to?: string | number
-    }>
-  }
-  | Array<{
-    type?: 'value' | 'range'
-    /**
+        data?: {
+          value?: string | number
+          count: number
+          key?: string
+          from?: string | number
+          to?: string | number
+        }[]
+      }
+    | {
+        type?: 'value' | 'range'
+        /**
          * array of facets and counts for this field
          */
-    data?: Array<{
-      value?: string | number
-      count: number
-      key?: string
-      from?: string | number
-      to?: string | number
-    }>
-  }>
+        data?: {
+          value?: string | number
+          count: number
+          key?: string
+          from?: string | number
+          to?: string | number
+        }[]
+      }[]
 }
+

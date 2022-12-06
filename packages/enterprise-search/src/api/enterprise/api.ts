@@ -26,7 +26,7 @@
 
 import {
   Transport,
-  TransportRequestOptions
+  TransportRequestOptions,
 } from '@elastic/transport'
 import * as T from './types'
 interface That { transport: Transport }
@@ -35,14 +35,14 @@ export default class API {
   async getHealth (this: That, params?: T.GetHealthRequest, options?: TransportRequestOptions): Promise<T.GetHealthResponse> {
     return await this.transport.request<T.GetHealthResponse>({
       method: 'GET',
-      path: '/api/ent/v1/internal/health'
+      path: `/api/ent/v1/internal/health`,
     }, options)
   }
 
   async getReadOnly (this: That, params?: T.GetReadOnlyRequest, options?: TransportRequestOptions): Promise<T.GetReadOnlyResponse> {
     return await this.transport.request<T.GetReadOnlyResponse>({
       method: 'GET',
-      path: '/api/ent/v1/internal/read_only_mode'
+      path: `/api/ent/v1/internal/read_only_mode`,
     }, options)
   }
 
@@ -53,7 +53,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.PutReadOnlyResponse>({
       method: 'PUT',
-      path: '/api/ent/v1/internal/read_only_mode',
+      path: `/api/ent/v1/internal/read_only_mode`,
       querystring,
       body: body
     }, options)
@@ -65,7 +65,32 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.GetStatsResponse>({
       method: 'GET',
-      path: '/api/ent/v1/internal/stats',
+      path: `/api/ent/v1/internal/stats`,
+      querystring
+    }, options)
+  }
+
+  async getStorage (this: That, params?: T.GetStorageRequest, options?: TransportRequestOptions): Promise<T.GetStorageResponse> {
+    return await this.transport.request<T.GetStorageResponse>({
+      method: 'GET',
+      path: `/api/ent/v1/internal/storage`,
+    }, options)
+  }
+
+  async getStaleStorage (this: That, params?: T.GetStaleStorageRequest, options?: TransportRequestOptions): Promise<T.GetStaleStorageResponse> {
+    return await this.transport.request<T.GetStaleStorageResponse>({
+      method: 'GET',
+      path: `/api/ent/v1/internal/storage/stale`,
+    }, options)
+  }
+
+  async deleteStaleStorage (this: That, params?: T.DeleteStaleStorageRequest, options?: TransportRequestOptions): Promise<T.DeleteStaleStorageResponse> {
+    const {
+      ...querystring
+    } = params ?? {}
+    return await this.transport.request<T.DeleteStaleStorageResponse>({
+      method: 'DELETE',
+      path: `/api/ent/v1/internal/storage/stale`,
       querystring
     }, options)
   }
@@ -73,7 +98,7 @@ export default class API {
   async getVersion (this: That, params?: T.GetVersionRequest, options?: TransportRequestOptions): Promise<T.GetVersionResponse> {
     return await this.transport.request<T.GetVersionResponse>({
       method: 'GET',
-      path: '/api/ent/v1/internal/version'
+      path: `/api/ent/v1/internal/version`,
     }, options)
   }
 }
