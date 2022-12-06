@@ -88,162 +88,156 @@ export interface SearchRequest {
     }
     filters?: {
       [k: string]:
-        | ((string | number) | (string | number)[])
-        | {
-            /**
+      | ((string | number) | Array<string | number>)
+      | {
+        /**
              * The start of the range, inclusive
              */
-            from?: string | number
-            /**
+        from?: string | number
+        /**
              * The end of the range, exclusive
              */
-            to?: string | number
-          }
-        | {
-            /**
+        to?: string | number
+      }
+      | {
+        /**
              * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
              */
-            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-            /**
+        unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+        /**
              * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
              */
-            center: string | [number, number]
-            /**
+        center: string | [number, number]
+        /**
              * Inclusive lower bound of the range. Is required if to is not provided
              */
-            from?: string | number
-            /**
+        from?: string | number
+        /**
              * Exclusive upper bound of the range. Is required if from is not provided
              */
-            to?: string | number
-          }
-        | {
-            /**
+        to?: string | number
+      }
+      | {
+        /**
              * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
              */
-            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-            /**
+        unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+        /**
              * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
              */
-            center: string | [number, number]
-            /**
+        center: string | [number, number]
+        /**
              * A number representing the distance unit
              */
-            distance: number
-          }
+        distance: number
+      }
     }
     sort?:
-      | {
-          [k: string]: 'asc' | 'desc'
-        }
-      | {
-          [k: string]: 'asc' | 'desc'
-        }[]
+    | {
+      [k: string]: 'asc' | 'desc'
+    }
+    | Array<{
+      [k: string]: 'asc' | 'desc'
+    }>
     facets?: {
       [k: string]:
-        | (
-            | {
-                type: 'range'
-                name?: string
-                ranges: (
-                  | {
-                      [k: string]: unknown
-                    }
-                  | {
-                      [k: string]: unknown
-                    }
-                )[]
-                center?: string | string | string | [number, number]
-                unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-              }
-            | {
-                type: 'value'
-                name?: string
-                size?: number
-                /**
+      | Array<| {
+        type: 'range'
+        name?: string
+        ranges: Array<| {
+          [k: string]: unknown
+        }
+        | {
+          [k: string]: unknown
+        }>
+        center?: string | string | string | [number, number]
+        unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+      }
+      | {
+        type: 'value'
+        name?: string
+        size?: number
+        /**
                  * Facet field to sort on and sort by count and/or value
                  */
-                sort?: {
-                  count?: 'asc' | 'desc'
-                  value?: 'asc' | 'desc'
-                }
-              }
-          )[]
-        | (
-            | {
-                type: 'range'
-                name?: string
-                ranges: (
-                  | {
-                      [k: string]: unknown
-                    }
-                  | {
-                      [k: string]: unknown
-                    }
-                )[]
-                center?: string | [number, number]
-                unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-              }
-            | {
-                type: 'value'
-                name?: string
-                size?: number
-                /**
+        sort?: {
+          count?: 'asc' | 'desc'
+          value?: 'asc' | 'desc'
+        }
+      }>
+      | (
+        | {
+          type: 'range'
+          name?: string
+          ranges: Array<| {
+            [k: string]: unknown
+          }
+          | {
+            [k: string]: unknown
+          }>
+          center?: string | [number, number]
+          unit?: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+        }
+        | {
+          type: 'value'
+          name?: string
+          size?: number
+          /**
                  * Facet field to sort on and sort by count and/or value
                  */
-                sort?: {
-                  count?: 'asc' | 'desc'
-                  value?: 'asc' | 'desc'
-                }
-              }
-          )
+          sort?: {
+            count?: 'asc' | 'desc'
+            value?: 'asc' | 'desc'
+          }
+        }
+      )
     }
     boosts?: {
       [k: string]:
-        | ((
-            | {
-                [k: string]: unknown
-              }
-            | {
-                [k: string]: unknown
-              }
-          ) &
-            (
-              | {
-                  [k: string]: unknown
-                }
-              | {
-                  function: 'linear' | 'exponential' | 'logarithmic'
-                  [k: string]: unknown
-                }
-            ) &
-            (
-              | {
-                  [k: string]: unknown
-                }
-              | {
-                  [k: string]: unknown
-                }
-            ))[]
-        | ((
-            | {
-                [k: string]: unknown
-              }
-            | {
-                [k: string]: unknown
-              }
-          ) &
-            (
-              | {
-                  [k: string]: unknown
-                }
-              | {
-                  function: 'linear' | 'exponential' | 'logarithmic'
-                  [k: string]: unknown
-                }
-            ) & {
-              [k: string]: unknown
-            })
+      | Array<(
+        | {
+          [k: string]: unknown
+        }
+        | {
+          [k: string]: unknown
+        }
+      ) &
+      (
+        | {
+          [k: string]: unknown
+        }
+        | {
+          function: 'linear' | 'exponential' | 'logarithmic'
+          [k: string]: unknown
+        }
+      ) &
+      (
+        | {
+          [k: string]: unknown
+        }
+        | {
+          [k: string]: unknown
+        }
+      )>
+      | ((
+        | {
+          [k: string]: unknown
+        }
+        | {
+          [k: string]: unknown
+        }
+      ) &
+      (
+        | {
+          [k: string]: unknown
+        }
+        | {
+          function: 'linear' | 'exponential' | 'logarithmic'
+          [k: string]: unknown
+        }
+      ) & {
+        [k: string]: unknown
+      })
     }
     /**
      * Optional parameter to search standard, remote only, or all available sources
@@ -282,7 +276,7 @@ export interface SearchResponse {
     query_refinements?: {
       submitted_query: string
       decorated_query_html: string
-      refinements: {
+      refinements: Array<{
         /**
          * The term(s) used for the trigger
          */
@@ -301,51 +295,51 @@ export interface SearchResponse {
         trigger_filter_type?: string
         filter?: {
           [k: string]:
-            | ((string | number) | (string | number)[])
-            | {
-                /**
+          | ((string | number) | Array<string | number>)
+          | {
+            /**
                  * The start of the range, inclusive
                  */
-                from?: string | number
-                /**
+            from?: string | number
+            /**
                  * The end of the range, exclusive
                  */
-                to?: string | number
-              }
-            | {
-                /**
+            to?: string | number
+          }
+          | {
+            /**
                  * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
                  */
-                unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-                /**
+            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+            /**
                  * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
                  */
-                center: string | string | string | [number, number]
-                /**
+            center: string | string | string | [number, number]
+            /**
                  * Inclusive lower bound of the range. Is required if to is not provided
                  */
-                from?: string | number
-                /**
+            from?: string | number
+            /**
                  * Exclusive upper bound of the range. Is required if from is not provided
                  */
-                to?: string | number
-              }
-            | {
-                /**
+            to?: string | number
+          }
+          | {
+            /**
                  * The base unit of measurement [mm, cm, m (meters), km, in, ft, yd, or mi (miles)]
                  */
-                unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
-                /**
+            unit: 'm' | 'mi' | 'in' | 'ft' | 'yd' | 'km' | 'cm' | 'mm'
+            /**
                  * The mode of the distribution as a "lat, lon" string, "POINT(lon lat)" WKT POINT string, Geohash string, or [lon, lat] array
                  */
-                center: string | string | string | [number, number]
-                /**
+            center: string | string | string | [number, number]
+            /**
                  * A number representing the distance unit
                  */
-                distance: number
-              }
+            distance: number
+          }
         }
-      }[]
+      }>
     }
     /**
      * content sources used in the search query
@@ -364,38 +358,37 @@ export interface SearchResponse {
      */
     timeout?: number
   }
-  results: {
+  results: Array<{
     [k: string]: unknown
-  }[]
+  }>
   /**
    * facets returned from the query
    */
   facets?:
-    | {
-        type?: 'value' | 'range'
-        /**
+  | {
+    type?: 'value' | 'range'
+    /**
          * array of facets and counts for this field
          */
-        data?: {
-          value?: string | number
-          count: number
-          key?: string
-          from?: string | number
-          to?: string | number
-        }[]
-      }
-    | {
-        type?: 'value' | 'range'
-        /**
+    data?: Array<{
+      value?: string | number
+      count: number
+      key?: string
+      from?: string | number
+      to?: string | number
+    }>
+  }
+  | Array<{
+    type?: 'value' | 'range'
+    /**
          * array of facets and counts for this field
          */
-        data?: {
-          value?: string | number
-          count: number
-          key?: string
-          from?: string | number
-          to?: string | number
-        }[]
-      }[]
+    data?: Array<{
+      value?: string | number
+      count: number
+      key?: string
+      from?: string | number
+      to?: string | number
+    }>
+  }>
 }
-

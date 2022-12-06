@@ -26,7 +26,7 @@
 
 import {
   Transport,
-  TransportRequestOptions,
+  TransportRequestOptions
 } from '@elastic/transport'
 import * as T from './types'
 interface That { transport: Transport }
@@ -458,7 +458,7 @@ export default class API {
   async getCrawlerMetrics (this: That, params?: T.GetCrawlerMetricsRequest, options?: TransportRequestOptions): Promise<T.GetCrawlerMetricsResponse> {
     return await this.transport.request<T.GetCrawlerMetricsResponse>({
       method: 'GET',
-      path: `/api/as/v1/crawler/metrics`,
+      path: '/api/as/v1/crawler/metrics'
     }, options)
   }
 
@@ -593,7 +593,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.GetCrawlerDomainValidationResultResponse>({
       method: 'POST',
-      path: `/api/as/v1/crawler/validate_url`,
+      path: '/api/as/v1/crawler/validate_url',
       querystring,
       body: body
     }, options)
@@ -602,7 +602,7 @@ export default class API {
   async getCrawlerUserAgent (this: That, params?: T.GetCrawlerUserAgentRequest, options?: TransportRequestOptions): Promise<T.GetCrawlerUserAgentResponse> {
     return await this.transport.request<T.GetCrawlerUserAgentResponse>({
       method: 'GET',
-      path: `/api/as/v1/crawler/user_agent`,
+      path: '/api/as/v1/crawler/user_agent'
     }, options)
   }
 
@@ -612,7 +612,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.ListApiKeysResponse>({
       method: 'GET',
-      path: `/api/as/v1/credentials`,
+      path: '/api/as/v1/credentials',
       querystring
     }, options)
   }
@@ -624,7 +624,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.CreateApiKeyResponse>({
       method: 'POST',
-      path: `/api/as/v1/credentials`,
+      path: '/api/as/v1/credentials',
       querystring,
       body: body
     }, options)
@@ -809,7 +809,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.ListEnginesResponse>({
       method: 'GET',
-      path: `/api/as/v1/engines`,
+      path: '/api/as/v1/engines',
       querystring
     }, options)
   }
@@ -821,7 +821,7 @@ export default class API {
     } = params ?? {}
     return await this.transport.request<T.CreateEngineResponse>({
       method: 'POST',
-      path: `/api/as/v1/engines`,
+      path: '/api/as/v1/engines',
       querystring,
       body: body
     }, options)

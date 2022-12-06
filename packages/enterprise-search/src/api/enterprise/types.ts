@@ -154,12 +154,12 @@ export interface GetStatsResponse {
     end: string
     metrics: {
       [k: string]:
-        | number
-        | {
-            sum: number
-            max: number
-            mean: number
-          }
+      | number
+      | {
+        sum: number
+        max: number
+        mean: number
+      }
     }
   }
   queues: {
@@ -255,10 +255,10 @@ export interface GetStatsResponse {
 export interface GetStorageRequest {}
 
 export interface GetStorageResponse {
-  indices: {
+  indices: Array<{
     name: string
     size_in_bytes: number
-  }[]
+  }>
   summary: {
     index_count: number
     size_in_bytes: number
@@ -268,10 +268,10 @@ export interface GetStorageResponse {
 export interface GetStaleStorageRequest {}
 
 export interface GetStaleStorageResponse {
-  indices: {
+  indices: Array<{
     name: string
     size_in_bytes: number
-  }[]
+  }>
   summary: {
     index_count: number
     size_in_bytes: number
@@ -297,4 +297,3 @@ export interface GetVersionResponse {
   build_hash: string
   build_date: string
 }
-
