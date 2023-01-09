@@ -91,11 +91,11 @@ export interface SearchRequest {
       | ((string | number) | Array<string | number>)
       | {
         /**
-             * A value to filter on
+             * The start of the range, inclusive
              */
         from?: string | number
         /**
-             * A value to filter on
+             * The end of the range, exclusive
              */
         to?: string | number
       }
@@ -109,11 +109,11 @@ export interface SearchRequest {
              */
         center: string | [number, number]
         /**
-             * A value to filter on
+             * Inclusive lower bound of the range. Is required if to is not provided
              */
         from?: string | number
         /**
-             * A value to filter on
+             * Exclusive upper bound of the range. Is required if from is not provided
              */
         to?: string | number
       }
@@ -298,11 +298,11 @@ export interface SearchResponse {
           | ((string | number) | Array<string | number>)
           | {
             /**
-                 * A value to filter on
+                 * The start of the range, inclusive
                  */
             from?: string | number
             /**
-                 * A value to filter on
+                 * The end of the range, exclusive
                  */
             to?: string | number
           }
@@ -316,11 +316,11 @@ export interface SearchResponse {
                  */
             center: string | string | string | [number, number]
             /**
-                 * A value to filter on
+                 * Inclusive lower bound of the range. Is required if to is not provided
                  */
             from?: string | number
             /**
-                 * A value to filter on
+                 * Exclusive upper bound of the range. Is required if from is not provided
                  */
             to?: string | number
           }

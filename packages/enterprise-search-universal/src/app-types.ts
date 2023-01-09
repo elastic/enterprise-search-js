@@ -128,3 +128,67 @@ export interface SearchResponse {
   }
   results: Array<{}>
 }
+
+export interface MultiSearchRequest {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  body?: {
+    queries: Array<{
+      query: string
+      analytics?: {}
+      boost?: {}
+      facets?: {}
+      filters?: {}
+      group?: {}
+      page?: {
+        current?: number
+        size?: number
+      }
+      result_fields?: {}
+      search_fields?: {
+        [k: string]: {
+          weight?: number
+        }
+      }
+      sort?: Array<{
+        [k: string]:
+        | ('asc' | 'desc')
+        | {
+          center?:
+          | string
+          | Array<{
+            [k: string]: unknown
+          }>
+          order?: 'asc' | 'desc'
+          mode?: 'min' | 'max' | 'median' | 'avg'
+        }
+      }>
+    }>
+  }
+}
+
+export type MultiSearchResponse = Array<{
+  meta: {
+    page: {
+      current: number
+      total_pages: number
+      total_results: number
+      size: number
+    }
+  } & {
+    alerts: string[]
+    warnings: string[]
+    precision?: number
+    engine: {
+      name?: string
+      /**
+       * Engine type
+       */
+      type?: 'meta' | 'default'
+    }
+    request_id?: string
+  }
+  results: Array<{}>
+}>

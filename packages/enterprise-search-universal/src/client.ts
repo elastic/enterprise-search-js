@@ -179,6 +179,20 @@ class AppSearchClient {
       body: body
     }, options)
   }
+
+  async multiSearch (params: AppTypes.MultiSearchRequest, options?: RequestOptions): Promise<AppTypes.MultiSearchResponse> {
+    const {
+      engine_name,
+      body,
+      ...querystring
+    } = params ?? {}
+    return await this.transportRequest<AppTypes.MultiSearchResponse>({
+      method: 'POST',
+      path: `/api/as/v1/engines/${engine_name}/multi_search`,
+      querystring,
+      body: body
+    }, options)
+  }
 }
 
 class WorkplaceSearchClient {

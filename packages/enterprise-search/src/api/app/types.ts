@@ -84,7 +84,8 @@ export interface ListAdaptiveRelevanceSuggestionsRequest {
       size?: number
     }
     filters?: {
-      [k: string]: unknown
+      status?: Array<'pending' | 'applied' | 'automated' | 'rejected' | 'disabled'>
+      type?: 'curation'
     }
   }
 }
@@ -133,7 +134,8 @@ export interface GetAdaptiveRelevanceSuggestionsRequest {
       size?: number
     }
     filters?: {
-      [k: string]: unknown
+      status?: Array<'pending' | 'applied' | 'automated' | 'rejected' | 'disabled'>
+      type?: 'curation'
     }
   }
 }
@@ -166,7 +168,8 @@ export interface GetTopClicksAnalyticsRequest {
     }
     | {
       date: {
-        [k: string]: unknown
+        to: string
+        from: string
       }
     }
     | {
@@ -175,7 +178,8 @@ export interface GetTopClicksAnalyticsRequest {
       }
       | {
         date: {
-          [k: string]: unknown
+          to: string
+          from: string
         }
       }>
     }
@@ -216,7 +220,8 @@ export interface GetCountAnalyticsRequest {
     }
     | {
       date: {
-        [k: string]: unknown
+        to: string
+        from: string
       }
     }
     | {
@@ -231,7 +236,8 @@ export interface GetCountAnalyticsRequest {
       }
       | {
         date: {
-          [k: string]: unknown
+          to: string
+          from: string
         }
       }>
     }
@@ -266,7 +272,8 @@ export interface GetTopQueriesAnalyticsRequest {
     }
     | {
       date: {
-        [k: string]: unknown
+        to: string
+        from: string
       }
     }
     | {
@@ -281,7 +288,8 @@ export interface GetTopQueriesAnalyticsRequest {
       }
       | {
         date: {
-          [k: string]: unknown
+          to: string
+          from: string
         }
       }>
     }
@@ -339,9 +347,7 @@ export interface GetCrawlerUrlExtractionResultResponse {
     }
     extraction: {
       content_hash: string
-      content_hash_fields: Array<{
-        [k: string]: unknown
-      }>
+      content_hash_fields: string[]
       content_fields: {}
       meta_tag_warnings: Array<{
         name: string
@@ -367,11 +373,13 @@ export interface CreateCrawlerCrawlRequestRequest {
    */
   engine_name: string
   body?: {
-    max_crawl_depth?: number
-    sitemap_discovery_disabled?: boolean
-    domain_allowlist?: string[]
-    seed_urls?: string[]
-    sitemap_urls?: string[]
+    overrides: {
+      max_crawl_depth?: number
+      sitemap_discovery_disabled?: boolean
+      domain_allowlist?: string[]
+      seed_urls?: string[]
+      sitemap_urls?: string[]
+    }
   }
 }
 
@@ -1705,7 +1713,10 @@ export interface ListCurationsResponse {
      */
     hidden?: string[]
     suggestion?: {
-      [k: string]: unknown
+      query?: string
+      status?: 'pending' | 'applied' | 'automated' | 'rejected' | 'disabled'
+      updated_at?: string
+      created_at?: string
     }
   }>
 }
@@ -1730,7 +1741,10 @@ export interface CreateCurationRequest {
      */
     hidden?: string[]
     suggestion?: {
-      [k: string]: unknown
+      query?: string
+      status?: 'pending' | 'applied' | 'automated' | 'rejected' | 'disabled'
+      updated_at?: string
+      created_at?: string
     }
   }
 }
@@ -1765,7 +1779,10 @@ export interface GetCurationResponse {
    */
   hidden?: string[]
   suggestion?: {
-    [k: string]: unknown
+    query?: string
+    status?: 'pending' | 'applied' | 'automated' | 'rejected' | 'disabled'
+    updated_at?: string
+    created_at?: string
   }
 }
 
@@ -1793,7 +1810,10 @@ export interface PutCurationRequest {
      */
     hidden?: string[]
     suggestion?: {
-      [k: string]: unknown
+      query?: string
+      status?: 'pending' | 'applied' | 'automated' | 'rejected' | 'disabled'
+      updated_at?: string
+      created_at?: string
     }
   }
 }
@@ -2066,19 +2086,70 @@ export interface AddMetaEngineSourceResponse {
   }
 }
 
+export interface SearchEsSearchV0Request {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  /**
+   * Query parameters to be passed to Elasticsearch _search API
+   */
+  es_search_query_params?: {
+    [k: string]: unknown
+  }
+  /**
+   * The search query associated with this request when recording search analytics
+   */
+  'X-Enterprise-Search-Analytics'?: {
+    [k: string]: unknown
+  }
+  /**
+   * Analytics tags to be applied with this search request
+   */
+  'X-Enterprise-Search-Analytics-Tags'?: {
+    [k: string]: unknown
+  }
+  /**
+   * The Elasticsearch token API
+   */
+  Authorization: {
+    [k: string]: unknown
+  }
+  body?: {}
+}
+
+export type SearchEsSearchV0Response = Record<string, unknown>
+
 export interface SearchEsSearchRequest {
   /**
    * Name of the engine
    */
   engine_name: string
-  body?: {
-    request: {
-      [k: string]: unknown
-    }
-    analytics?: {
-      [k: string]: unknown
-    }
+  /**
+   * Query parameters to be passed to Elasticsearch _search API
+   */
+  es_search_query_params?: {
+    [k: string]: unknown
   }
+  /**
+   * The search query associated with this request when recording search analytics
+   */
+  'X-Enterprise-Search-Analytics'?: {
+    [k: string]: unknown
+  }
+  /**
+   * Analytics tags to be applied with this search request
+   */
+  'X-Enterprise-Search-Analytics-Tags'?: {
+    [k: string]: unknown
+  }
+  /**
+   * The Elasticsearch token API
+   */
+  Authorization: {
+    [k: string]: unknown
+  }
+  body?: {}
 }
 
 export type SearchEsSearchResponse = Record<string, unknown>
@@ -2091,9 +2162,8 @@ export interface GetApiLogsRequest {
   body?: {
     filters: {
       date: {
-        from?: string
-        to?: string
-        required?: ['from', 'to']
+        from: string
+        to: string
       }
       status?: number
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
@@ -2120,9 +2190,8 @@ export interface GetApiLogsResponse {
     query?: string
     filters?: {
       date: {
-        from?: string
-        to?: string
-        required?: ['from', 'to']
+        from: string
+        to: string
       }
       status?: number
       method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
@@ -2248,6 +2317,126 @@ export interface SearchResponse {
   results: Array<{}>
 }
 
+export interface MultiSearchRequest {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  body?: {
+    queries: Array<{
+      query: string
+      analytics?: {}
+      boost?: {}
+      facets?: {}
+      filters?: {}
+      group?: {}
+      page?: {
+        current?: number
+        size?: number
+      }
+      result_fields?: {}
+      search_fields?: {
+        [k: string]: {
+          weight?: number
+        }
+      }
+      sort?: Array<{
+        [k: string]:
+        | ('asc' | 'desc')
+        | {
+          center?:
+          | string
+          | Array<{
+            [k: string]: unknown
+          }>
+          order?: 'asc' | 'desc'
+          mode?: 'min' | 'max' | 'median' | 'avg'
+        }
+      }>
+    }>
+  }
+}
+
+export type MultiSearchResponse = Array<{
+  meta: {
+    page: {
+      current: number
+      total_pages: number
+      total_results: number
+      size: number
+    }
+  } & {
+    alerts: string[]
+    warnings: string[]
+    precision?: number
+    engine: {
+      name?: string
+      /**
+       * Engine type
+       */
+      type?: 'meta' | 'default'
+    }
+    request_id?: string
+  }
+  results: Array<{}>
+}>
+
+export interface SearchExplainV0Request {
+  /**
+   * Name of the engine
+   */
+  engine_name: string
+  body?: {
+    query: string
+    analytics?: {}
+    boost?: {}
+    facets?: {}
+    filters?: {}
+    group?: {}
+    page?: {
+      current?: number
+      size?: number
+    }
+    result_fields?: {}
+    search_fields?: {
+      [k: string]: {
+        weight?: number
+      }
+    }
+    sort?: Array<{
+      [k: string]:
+      | ('asc' | 'desc')
+      | {
+        center?:
+        | string
+        | Array<{
+          [k: string]: unknown
+        }>
+        order?: 'asc' | 'desc'
+        mode?: 'min' | 'max' | 'median' | 'avg'
+      }
+    }>
+  }
+}
+
+export interface SearchExplainV0Response {
+  meta: {
+    alerts: string[]
+    warnings: string[]
+    precision?: number
+    engine: {
+      name?: string
+      /**
+       * Engine type
+       */
+      type?: 'meta' | 'default'
+    }
+    request_id?: string
+  }
+  query_string: string
+  query_body: {}
+}
+
 export interface SearchExplainRequest {
   /**
    * Name of the engine
@@ -2320,6 +2509,7 @@ export interface GetSearchSettingsResponse {
   }
   result_fields?: {}
   precision?: number
+  precision_enabled?: boolean
 }
 
 export interface PutSearchSettingsRequest {
@@ -2336,6 +2526,7 @@ export interface PutSearchSettingsRequest {
     }
     result_fields?: {}
     precision?: number
+    precision_enabled?: boolean
   }
 }
 
@@ -2348,6 +2539,7 @@ export interface PutSearchSettingsResponse {
   }
   result_fields?: {}
   precision?: number
+  precision_enabled?: boolean
 }
 
 export interface ResetSearchSettingsRequest {
@@ -2366,6 +2558,7 @@ export interface ResetSearchSettingsResponse {
   }
   result_fields?: {}
   precision?: number
+  precision_enabled?: boolean
 }
 
 export interface ListSynonymSetsRequest {

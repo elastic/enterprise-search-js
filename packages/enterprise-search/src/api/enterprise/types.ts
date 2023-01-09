@@ -246,7 +246,48 @@ export interface GetStatsResponse {
       total_private_sources: number
       total_queries_last_30_days: number
     }
+    enterprise_search: {
+      total_search_indices: number
+    }
   }
+}
+
+export interface GetStorageRequest {}
+
+export interface GetStorageResponse {
+  indices: Array<{
+    name: string
+    size_in_bytes: number
+  }>
+  summary: {
+    index_count: number
+    size_in_bytes: number
+  }
+}
+
+export interface GetStaleStorageRequest {}
+
+export interface GetStaleStorageResponse {
+  indices: Array<{
+    name: string
+    size_in_bytes: number
+  }>
+  summary: {
+    index_count: number
+    size_in_bytes: number
+  }
+}
+
+export interface DeleteStaleStorageRequest {
+  /**
+   * The value for the "force" flag
+   */
+  force?: boolean
+}
+
+export interface DeleteStaleStorageResponse {
+  indices: string[]
+  index_count: number
 }
 
 export interface GetVersionRequest {}
