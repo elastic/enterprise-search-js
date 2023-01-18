@@ -1,2 +1,0 @@
-[#node-client-release-notes]
-== Release Notes
