@@ -1,3 +1,4 @@
+[#index]
 = enterprise-search-js
 
 :doctype:           book
