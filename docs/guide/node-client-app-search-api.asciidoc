@@ -189,8 +189,6 @@ Refer to the {app-search-ref}/documents.html[HTTP API reference^] for the full H
 
 Add documents to an engine with the `indexDocuments()` method:
 
-// TODO: For some reason I can't pass a variable with the engine name to the method. It works fine when I pass the full string. Is it something to do with parentheses?
-
 [source,javascript]
 ----
 const documents = [{
@@ -1181,7 +1179,6 @@ async function run() {
 run().catch(console.error)
 ----
 
-// TODO: Verify this behavior
 Update a domain with the `putCrawlerDomain()` method:
 
 [source,javascript]
@@ -2001,6 +1998,3 @@ async function run() {
 
 run().catch(console.error)
 ----
-
-//TODO WIP: ResponseError: {"errors":["Missing required parameter: _json"]}
-// Couldn't figure that one out :)

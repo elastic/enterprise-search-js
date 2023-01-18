@@ -11,10 +11,6 @@ To make a request to the Workplace Search API, use the `workplace` property of t
 
 Refer to the {workplace-search-ref}/workplace-search-api-overview.html[Workplace Search API reference^] to find the full HTTP API endpoints documentation.
 
-// ^^^ See relevant discuss thread about Workplace Search limits documentation 
-// https://discuss.elastic.co/t/limits/281505
-// TODO: Any ideas about how we might best present these limits, other than the above NOTE?
-
 **On this page**
 
 * <<node-client-workplace-search-api-initializing>>
