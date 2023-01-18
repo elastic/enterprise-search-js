@@ -1,0 +1,2000 @@
+[#app-search-api]
+== App Search APIs
+
+[NOTE]
+====
+For performance and historical reasons, App Search has default limitations on some objects and API calls.
+Refer to {app-search-ref}/limits.html[App Search Limits^] for details.
+====
+
+To make a request to the App Search API, use the `app` property of the `client` object, followed by the desired method.
+
+Refer to the {app-search-ref}/api-reference.html[HTTP API reference^] to find the full HTTP API documentation.
+
+**On this page**
+
+* <<app-search-api-initializing>>
+* <<app-search-api-engine-apis>>
+* <<app-search-api-documents-apis>>
+* <<app-search-api-schema-apis>>
+* <<app-search-api-search-apis>>
+* <<app-search-api-curation-apis>>
+* <<app-search-api-meta-engine-apis>>
+* <<app-search-api-crawler-apis>>
+* <<app-search-api-adaptive-relevance-apis>>
+
+[discrete#app-search-api-initializing]
+=== Initializing the Client
+
+See <<quickstart-client>> for details on initializing the client.
+
+Note that App Search also has its own application-specific API keys and tokens.
+Refer to <<authentication>> for more information and relevant links.
+
+[discrete#app-search-api-initializing-api-key]
+==== API key privileges
+
+To use these APIs, you'll need API keys with `read`, `write` or `search` access, depending on the action. 
+If you hit an `UnauthorizedError`, make sure the key you're using has the proper privileges.
+
+[discrete#app-search-api-engine-apis]
+=== Engine APIs
+
+Refer to the {app-search-ref}/engines.html[HTTP API reference^] for the full HTTP API documentation.
+
+Engines index documents and perform search functions.
+To use App Search you must *first create an engine*.
+
+[discrete#app-search-api-engine-apis-create]
+==== Create engine
+
+Create an engine named `national-parks` that uses the English
+language analyzer with the `createEngine()` method:
+
+[source,javascript]
+----
+async function run() {
+  const engine = await client.app.createEngine(
+    {name: 'national-parks', language: 'en'})
+  if (engine.errors) {
+    console.log(engine)
+    process.exit(1)
+  }
+  console.log(engine)
+}
+
+run().catch(console.error)
+----
+
+[discrete#app-search-api-engine-apis-get]
+==== Get engine
+
+Retrieve information about an engine with the `getEngine()` method:
+
+[source,javascript]
+----
+async function run() {
+  const engine = await client.app.getEngine(
+    {engine_name: 'national-parks'})
+  if (engine.errors) {
+    console.log(engine)
+    process.exit(1)
+  }
+  console.log(engine)
+}
+
+run().catch(console.error)
+----
+
+Example reponse:
+
+[source,json]
+----
+{
+  "document_count": 0,
+  "language": "en",
+  "name": "national-parks",
+  "type": "default"
+}
+----
+
+[discrete#app-search-api-engine-apis-list]
+==== List engines
+
+List all App Search engines with the `listEngines()` method:
+
+[source,javascript]
+----
+async function run() {
+  const engines = await client.app.listEngines()
+  if (engines.errors) {
+    console.log(engines)
+    process.exit(1)
+  }
+  console.log(engines)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  meta: { page: { current: 1, total_pages: 1, total_results: 3, size: 25 } },
+  results: [
+    {
+      name: 'my-latest-engine',
+      type: 'default',
+      language: null,
+      index_create_settings_override: {},
+      document_count: 121
+    },
+    {
+      name: 'new-engine',
+      type: 'default',
+      language: null,
+      index_create_settings_override: {},
+      document_count: 10
+    },
+    {
+      name: 'national-parks',
+      type: 'elasticsearch',
+      language: null,
+      index_create_settings_override: {},
+      document_count: 18
+    }
+  ]
+}
+----
+====
+
+[discrete#app-search-api-engine-apis-delete]
+==== Delete engine
+
+Delete an engine and all its documents with the `deleteEngine()` method:
+
+[source,javascript]
+----
+async function run() {
+  const engine = await client.app.deleteEngine({engine_name: 'parks'})
+  if (engine.errors) {
+    console.log(engine)
+    process.exit(1)
+  }
+  console.log(engine)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+{
+  "deleted": True
+}
+----
+
+[discrete#app-search-api-documents-apis]
+=== Documents APIs
+
+Refer to the {app-search-ref}/documents.html[HTTP API reference^] for the full HTTP API documentation.
+
+[discrete#app-search-api-documents-apis-create-index]
+==== Create and index documents
+
+Add documents to an engine with the `indexDocuments()` method:
+
+[source,javascript]
+----
+const documents = [{
+        "id": "park_rocky-mountain",
+        "title": "Rocky Mountain",
+        "nps_link": "https://www.nps.gov/romo/index.htm",
+        "states": [
+            "Colorado"
+        ],
+        "visitors": 4517585,
+        "location": "40.4,-105.58",
+        "acres": 265795.2,
+        "date_established": "1915-01-26T06:00:00Z"
+    }, {
+        "id": "park_saguaro",
+        "title": "Saguaro",
+        "nps_link": "https://www.nps.gov/sagu/index.htm",
+        "states": [
+            "Arizona"
+        ],
+        "visitors": 820426,
+        "location": "32.25,-110.5",
+        "acres": 91715.72,
+        "date_established": "1994-10-14T05:00:00Z"
+    }]
+
+async function run() {
+  const response = await client.app.indexDocuments(
+    {engine_name:'national-parks', documents})
+  if (response.errors) {
+    console.log(response)
+    process.exit(1)
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+[
+  {
+    "errors": [],
+    "id": "park_rocky-mountain"
+  },
+  {
+    "errors": [],
+    "id": "park_saguaro"
+  }
+]
+----
+
+[discrete#app-search-api-documents-apis-list]
+==== List documents
+
+List all documents in an engine with the `listDocuments()` method:
+
+[source,javascript]
+----
+async function run() {const documentsList = await client.app.listDocuments(
+  {engine_name: 'national-parks'})
+  if (documentsList.errors) {
+    console.log(documentsList)
+    process.exit(1)
+  }
+  console.log(documentsList)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  "meta": {
+    "page": {
+      "current": 1,
+      "size": 100,
+      "total_pages": 1,
+      "total_results": 2
+    }
+  },
+  "results": [
+    {
+      "acres": "91715.72",
+      "date_established": "1994-10-14T05:00:00Z",
+      "id": "park_saguaro",
+      "location": "32.25,-110.5",
+      "nps_link": "https://www.nps.gov/sagu/index.htm",
+      "states": [
+        "Arizona"
+      ],
+      "title": "Saguaro",
+      "visitors": "820426",
+      "world_heritage_site": "false"
+    },
+    {
+      "acres": "265795.2",
+      "date_established": "1915-01-26T06:00:00Z",
+      "id": "park_rocky-mountain",
+      "location": "40.4,-105.58",
+      "nps_link": "https://www.nps.gov/romo/index.htm",
+      "states": [
+        "Colorado"
+      ],
+      "title": "Rocky Mountain",
+      "visitors": "4517585",
+      "world_heritage_site": "false"
+    }
+  ]
+}
+----
+====
+
+[discrete#app-search-api-documents-apis-get-by-id]
+==== Get documents by ID
+
+Retrieve a set of documents by their `id` with the `getDocuments()` method:
+
+[source,javascript]
+----
+async function run() {
+  const documents = await client.app.getDocuments(
+    {engine_name: 'national-parks', 
+    documentIds: ['park_rocky-mountain', 'park_saguaro']})
+  if (documents.errors) {
+    console.log(documents)
+    process.exit(1)
+  }
+  console.log(documents)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+[
+  {
+    id: 'park_rocky-mountain',
+    title: 'Rocky Mountain',
+    nps_link: 'https://www.nps.gov/romo/index.htm',
+    states: [ 'Colorado' ],
+    visitors: '4517585',
+    location: '40.4,-105.58',
+    acres: '265795.2',
+    date_established: '1915-01-26T06:00:00Z'
+  },
+  {
+    id: 'park_saguaro',
+    title: 'Saguaro',
+    nps_link: 'https://www.nps.gov/sagu/index.htm',
+    states: [ 'Arizona' ],
+    visitors: '820426',
+    location: '32.25,-110.5',
+    acres: '91715.72',
+    date_established: '1994-10-14T05:00:00Z'
+  }
+]
+----
+====
+
+[discrete#app-search-api-documents-apis-update]
+==== Update existing documents
+
+Update documents with the `putDocuments()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.putDocuments(
+    {engine_name: 'national-parks',  
+    documents:[{"id": "park_rocky-style", "visitors": 10000000}]})
+  if (response.errors) {
+    console.log(response)
+    process.exit(1)
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+[
+  {
+    "errors": [],
+    "id": "park_rocky-mountain"
+  }
+]
+----
+
+[discrete#app-search-api-documents-apis-delete]
+==== Delete documents
+
+Delete documents from an engine with the `deleteDocuments()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteDocuments(
+    {engine_name: 'national-parks', 
+    documentIds: ['park_rocky-mountain']})
+  if (response.errors) {
+    console.log(response)
+    process.exit(1)
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+[ { id: 'park_rocky-mountain', deleted: true } ]
+----
+
+[discrete#app-search-api-schema-apis]
+=== Schema APIs
+
+Use Schema APIs to inspect how data is being indexed by an engine.
+
+Refer to the {app-search-ref}/schema.html[HTTP API reference^] for the full HTTP API documentation.
+
+[discrete#app-search-api-schema-apis-get]
+==== Get schema
+
+To look at the existing schema inferred from your data, use the `getSchema()` method:
+
+[source,javascript]
+----
+async function run() {
+  const schema = await client.app.getSchema({engine_name: 'national-parks'})
+  if (schema.errors) {
+    console.log(schema)
+    process.exit(1)
+  }
+  console.log(schema)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  "acres": "text",
+  "date_established": "text",
+  "location": "text",
+  "nps_link": "text",
+  "states": "text",
+  "title": "text",
+  "visitors": "text",
+  "world_heritage_site": "text"
+}
+----
+====
+
+[discrete#app-search-api-schema-apis-update]
+==== Update schema
+
+In the previous example, the `date_established` field wasn't indexed as a `date` type. 
+Update the type of the `date_established` field with the `putSchema()` method:
+
+[source,javascript]
+----
+async function run () {
+  const schemaUpdate = await client.app.putSchema(
+    {engine_name: 'national-parks', 
+    schema: {date_established: 'date'}})
+  if (schemaUpdate.errors) {
+    console.log(schemaUpdate)
+    process.exit(1)
+  }
+  console.log(schemaUpdate)}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  "acres": "text",
+  "date_established": "date",
+  "location": "text",
+  "nps_link": "text",
+  "states": "text",
+  "title": "text",
+  "visitors": "text",
+  "world_heritage_site": "text"
+}
+----
+====
+
+[discrete#app-search-api-search-apis]
+=== Search APIs
+
+Refer to the {app-search-ref}/search.html[HTTP API reference^] for the full HTTP API documentation.
+
+[discrete#app-search-api-search-apis-single]
+==== Single search
+
+Once documents are ingested and the schema is defined, use the `search()` method to search an engine
+for matching documents.
+
+[source,javascript]
+----
+async function run() {
+  const searchResponse = await client.app.search(
+    {engine_name: 'national-parks', 
+    body: {query: 'rock'}})
+  if (searchResponse.errors) {
+    console.log(searchResponse)
+    process.exit(1)
+  }
+  console.log(searchResponse)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  "meta": {
+    "alerts": [],
+    "engine": {
+      "name": "national-parks-demo",
+      "type": "default"
+    },
+    "page": {
+      "current": 1,
+      "size": 10,
+      "total_pages": 2,
+      "total_results": 15
+    },
+    "request_id": "6266df8b-8b19-4ff0-b1ca-3877d867eb7d",
+    "warnings": []
+  },
+  "results": [
+    {
+      "_meta": {
+        "engine": "national-parks-demo",
+        "id": "park_rocky-mountain",
+        "score": 6776379.0
+      },
+      "acres": {
+        "raw": 265795.2
+      },
+      "date_established": {
+        "raw": "1915-01-26T06:00:00+00:00"
+      },
+      "id": {
+        "raw": "park_rocky-mountain"
+      },
+      "location": {
+        "raw": "40.4,-105.58"
+      },
+      "nps_link": {
+        "raw": "https://www.nps.gov/romo/index.htm"
+      },
+      "square_km": {
+        "raw": 1075.6
+      },
+      "states": {
+        "raw": [
+          "Colorado"
+        ]
+      },
+      "title": {
+        "raw": "Rocky Mountain"
+      },
+      "visitors": {
+        "raw": 4517585.0
+      },
+      "world_heritage_site": {
+        "raw": "false"
+      }
+    }
+  ]
+}
+----
+====
+
+// [discrete#app-search-api-search-apis-multi]
+// ==== Multi Search
+
+// NOTE: Multi search is not implemented
+// 
+// `TypeError: client.app.multiSearch` is not a function.
+
+// Looks like this method is not yet implemented in the Node.js client.
+//
+
+// Execute multiple searches at the same time with the `multi_search()` method:
+
+// [source,javascript]
+// ----
+// client
+//   .app
+//   .multiSearch({engine_name: 'national-parks', body: {queries: [{query: 'rock'}, {query: 'lake'}]}})
+//   .then(response => console.log(response))
+//   .catch(error => console.log(error))
+// ----
+
+// .Expand to see an *example response*
+// [%collapsible]
+// ====
+// [source,json]
+// ----
+// [
+//   {
+//     "meta": {
+//       "alerts": [],
+//       "engine": {
+//         "name": "national-parks-demo",
+//         "type": "default"
+//       },
+//       "page": {
+//         "current": 1,
+//         "size": 1,
+//         "total_pages": 15,
+//         "total_results": 15
+//       },
+//       "warnings": []
+//     },
+//     "results": [
+//       {
+//         "_meta": {
+//           "engine": "national-parks",
+//           "id": "park_rocky-mountain",
+//           "score": 6776379.0
+//         },
+//         "acres": {
+//           "raw": 265795.2
+//         },
+//         "date_established": {
+//           "raw": "1915-01-26T06:00:00+00:00"
+//         },
+//         "id": {
+//           "raw": "park_rocky-mountain"
+//         },
+//         "location": {
+//           "raw": "40.4,-105.58"
+//         },
+//         "nps_link": {
+//           "raw": "https://www.nps.gov/romo/index.htm"
+//         },
+//         "square_km": {
+//           "raw": 1075.6
+//         },
+//         "states": {
+//           "raw": [
+//             "Colorado"
+//           ]
+//         },
+//         "title": {
+//           "raw": "Rocky Mountain"
+//         },
+//         "visitors": {
+//           "raw": 4517585.0
+//         },
+//         "world_heritage_site": {
+//           "raw": "false"
+//         }
+//       }
+//     ]
+//   },
+//   ...
+// ]
+// ----
+// ====
+
+[discrete#app-search-api-curation-apis]
+=== Curations APIs
+
+{app-search-ref}/curations-guide.html[Curations^] hide or promote result content for pre-defined search queries.
+
+Refer to the {app-search-ref}/curations.html[HTTP API reference^] for the full HTTP API documentation.
+
+[discrete#app-search-api-curation-apis-create]
+==== Create curation
+
+Create a curation with the `createCuration()` method:
+
+[source,javascript]
+----
+async function run() {
+  const curation = await client.app.createCuration(
+    {
+    engine_name: 'national-parks',
+    queries: ['rocks', 'rock', 'hills'],
+    promoted_doc_ids: ['park_rocky-mountains'],
+    hidden_doc_ids: ['park_saguaro']
+  })
+  if (curation.errors) {
+    console.log(process.exit(1))
+}
+  console.log(curation)
+}
+
+run().catch(console.error)
+----
+
+A successful response returns the *curation ID*:
+
+[source,json]
+----
+{
+  "id": "cur-6011f5b57cef06e6c883814a"
+}
+----
+
+[discrete#app-search-api-curation-apis-get]
+==== Get curation
+
+Retrieve a curation with the `getCuration()` method:
+
+[source,javascript]
+----
+async function run() {
+  const curation = await client.app.getCuration(
+    {
+    engine_name: 'national-parks',
+    curation_id: 'cur-6011f5b57cef06e6c883814a'
+  })
+  if (curation.errors) {
+    console.log(process.exit(1))
+}
+  console.log(curation)
+}
+
+run().catch(console.error)
+----
+
+A successful response returns the curation details.
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  "hidden": [
+    "park_saguaro"
+  ],
+  "id": "cur-6011f5b57cef06e6c883814a",
+  "promoted": [
+    "park_rocky-mountains"
+  ],
+  "queries": [
+    "rocks",
+    "rock",
+    "hills"
+  ]
+}
+----
+====
+
+[discrete#app-search-api-curation-apis-list]
+==== List curations
+
+List curations for an engine with the `listCurations()` method:
+
+[source,javascript]
+----
+async function run() {
+  const list = await client.app.listCurations({
+    engine_name: 'national-parks'
+  })
+  if (list.errors) {
+    console.log(list)
+    return
+  }
+  console.log(list)
+}
+
+run().catch(console.error)
+----
+
+[discrete#app-search-api-curation-apis-delete]
+==== Delete curation
+
+Delete a curation with the deleteCuration() method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteCuration({
+    engine_name: 'national-parks',
+    curation_id: 'cur-63bc026993f3219cc38a2676'
+  })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+{ deleted: true }
+----
+
+[discrete#app-search-api-meta-engine-apis]
+=== Meta engine APIs
+
+A {app-search-ref}/meta-engines-guide.html[*meta engine*^] has no documents of its own, instead it combines multiple other engines to be searched together as a single engine.
+
+The engines that comprise a meta engine are referred to as "source engines".
+
+Refer to the {app-search-ref}/meta-engines.html[meta engines API reference^] for the full HTTP API documentation.
+
+[discrete#app-search-api-meta-engine-apis-create]
+==== Create meta engine
+
+Create a {app-search-ref}/meta-engines-guide.html[meta engine^] with the `createEngine()` method, setting the `type` parameter to `"meta"`.
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.createEngine({
+    name: 'my-meta-engine',
+    type: 'meta',
+    source_engines: ['my-engine']
+  })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  name: 'my-meta-engine',
+  type: 'meta',
+  source_engines: [ 'my-engine' ],
+  document_count: 6
+}
+----
+====
+
+[discrete#app-search-api-meta-engine-apis-search]
+==== Searching documents in a meta engine
+
+Search a meta engine the same way you search any App Search engine.
+Refer to <<app-search-api-search-apis-single>>.
+
+Use the `search()` method to search an engine for matching documents.
+
+[source,javascript]
+----
+async function run() {
+  const query = await client.app.search({
+    engine_name: 'my-meta-engine',
+    body: {
+      query: 'rock'
+    }
+  })
+  if (query.errors) {
+    console.log(query)
+    return
+  }
+  console.log(query)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  meta: {
+    alerts: [],
+    warnings: [],
+    precision: 2,
+    engine: { name: 'my-meta-engine', type: 'meta' },
+    page: { current: 1, total_pages: 0, total_results: 0, size: 10 },
+    request_id: 'BTilBfcCR6mlcG13ct9L4g'
+  },
+  results: []
+}
+----
+====
+
+[discrete#app-search-api-meta-engine-apis-add-source]
+==== Adding source engines to an existing meta engine
+
+Add a source engine to a meta engine with the `addMetaEngineSource()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.addMetaEngineSource({
+    engine_name: 'my-meta-engine',
+    sourceEngines: ['national-parks']
+  })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  name: 'meta-engine',
+  type: 'meta',
+  source_engines: [ 'my-engine', 'national-parks' ],
+  document_count: 7
+}
+----
+====
+
+[discrete#app-search-api-meta-engine-apis-remove-source]
+==== Delete source engine from a meta engine
+
+Delete a source engine from a meta engine with the `deleteMetaEngineSource()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteMetaEngineSource({
+    engine_name: 'my-meta-engine',
+    sourceEngines: ['my-engine']
+  })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  name: 'my-meta-engine',
+  type: 'meta',
+  source_engines: [ 'national-parks' ],
+  document_count: 1
+}
+----
+====
+
+[discrete#app-search-api-crawler-apis]
+=== Web crawler APIs
+
+These APIs are for the {app-search-ref}/web-crawler.html[*App Search* web crawler^], not to be confused with the {enterprise-search-ref}/crawler.html[*Elastic* web crawler^] introduced in 8.4.0.
+
+Refer to the {app-search-ref}/web-crawler-api-reference.html[HTTP API reference^] for the full HTTP API documentation.
+
+[discrete#app-search-api-crawler-apis-domains]
+==== Domains
+
+Create a domain with the `createCrawlerDomain()` method:
+
+[source,javascript]
+----
+async function run() {
+  const domain = await client.app.createCrawlerDomain({
+    engine_name: 'crawler-engine',
+    body: {
+      name: 'https://example.com'
+    }
+  })
+  if (domain.errors) {
+    console.log(domain)
+    return
+  }
+  console.log(domain)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  id: '63bdb02b93f321d33b8a3409',
+  name: 'https://example.com',
+  document_count: 0,
+  deduplication_enabled: true,
+  deduplication_fields: [
+    'title',
+    'body_content',
+    'meta_keywords',
+    'meta_description',
+    'links',
+    'headings'
+  ],
+  available_deduplication_fields: [
+    'title',
+    'body_content',
+    'meta_keywords',
+    'meta_description',
+    'links',
+    'headings'
+  ],
+  auth: null,
+  created_at: '2023-01-10T18:36:27Z',
+  last_visited_at: null,
+  entry_points: [
+    {
+      id: '63bdb02b93f321d33b8a340a',
+      value: '/',
+      created_at: '2023-01-10T18:36:27Z'
+    }
+  ],
+  crawl_rules: [],
+  default_crawl_rule: {
+    id: '-',
+    order: 0,
+    policy: 'allow',
+    rule: 'regex',
+    pattern: '.*',
+    created_at: '2023-01-10T18:36:28Z'
+  },
+  sitemaps: []
+}
+----
+====
+
+List all domains with the `listCrawlerDomains()` method:
+
+[source,javascript]
+----
+// List crawler domains
+
+async function run() {
+  const response = await client.app.listCrawlerDomains(
+    {engine_name: 'crawler-engine'})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  meta: { page: { current: 1, total_pages: 1, total_results: 4, size: 25 } },
+  results: [
+    {
+      id: '63bdb8ec93f321254a8a34ae',
+      name: 'https://example.com',
+      document_count: 1,
+      deduplication_enabled: true,
+      deduplication_fields: [Array],
+      available_deduplication_fields: [Array],
+      auth: null,
+      created_at: '2023-01-10T19:13:48Z',
+      last_visited_at: '2023-01-17T11:32:12Z',
+      entry_points: [Array],
+      crawl_rules: [],
+      default_crawl_rule: [Object],
+      sitemaps: []
+    },
+    {
+      id: '63be90b993f3211c088a3c41',
+      name: 'http://another-example.com',
+      document_count: 0,
+      deduplication_enabled: true,
+      deduplication_fields: [Array],
+      available_deduplication_fields: [Array],
+      auth: null,
+      created_at: '2023-01-11T10:34:33Z',
+      last_visited_at: '2023-01-17T11:32:12Z',
+      entry_points: [Array],
+      crawl_rules: [Array],
+      default_crawl_rule: [Object],
+      sitemaps: []
+    },
+    {
+      id: '63c684fb93f321c51e8a7c80',
+      name: 'https://www.pap.fr',
+      document_count: 0,
+      deduplication_enabled: true,
+      deduplication_fields: [Array],
+      available_deduplication_fields: [Array],
+      auth: null,
+      created_at: '2023-01-17T11:22:35Z',
+      last_visited_at: '2023-01-17T11:32:12Z',
+      entry_points: [Array],
+      crawl_rules: [],
+      default_crawl_rule: [Object],
+      sitemaps: []
+    },
+    {
+      id: '63c6890c93f321ea818a7d02',
+      name: 'https://www.elastic.co',
+      document_count: 0,
+      deduplication_enabled: true,
+      deduplication_fields: [Array],
+      available_deduplication_fields: [Array],
+      auth: null,
+      created_at: '2023-01-17T11:39:56Z',
+      last_visited_at: null,
+      entry_points: [Array],
+      crawl_rules: [],
+      default_crawl_rule: [Object],
+      sitemaps: []
+    }
+  ]
+}
+----
+====
+
+
+Retrieve a domain with the `getCrawlerDomain()` method:
+
+[source,javascript]
+----
+async function run() {
+  const domain = await client.app.getCrawlerDomain({
+    engine_name: 'crawler-engine',
+    domain_id: '63bdb02b93f321d33b8a3409'
+  })
+  if (domain.errors) {
+    console.log(domain)
+    return
+  }
+  console.log(domain)
+}
+
+run().catch(console.error)
+----
+
+Update a domain with the `putCrawlerDomain()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.putCrawlerDomain({
+      engine_name: 'crawler-engine', 
+      domain_id: '63c6890c93f321ea818a7d02', 
+      body: {name: ['https://www.theguardian.com']}})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+Delete a domain with the `deleteCrawlerDomain()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteCrawlerDomain({
+      engine_name: 'crawler-engine', 
+      domain_id: '63be90b993f3211c088a3c41'})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source, json]
+----
+{ deleted: true }
+----
+
+To validate a domain use the `getCrawlerDomainValidationResult()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.getCrawlerDomainValidationResult(
+    {body: {
+    url: 'https://example.com',
+    checks: ['dns', 'robots_txt', 'tcp', 'url', 'url_content', 'url_request']
+  }})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  url: 'https://example.com',
+  normalized_url: 'https://example.com/',
+  valid: true,
+  results: [
+    {
+      result: 'ok',
+      name: 'url',
+      details: {},
+      comment: 'URL structure looks valid'
+    },
+    {
+      result: 'ok',
+      name: 'dns',
+      details: [Object],
+      comment: 'Domain name resolution successful: 1 addresses found'
+    },
+    {
+      result: 'ok',
+      name: 'robots_txt',
+      details: {},
+      comment: 'No robots.txt found for https://example.com.'
+    },
+    {
+      result: 'ok',
+      name: 'tcp',
+      details: [Object],
+      comment: 'TCP connection successful'
+    },
+    {
+      result: 'ok',
+      name: 'url_request',
+      details: [Object],
+      comment: 'Successfully fetched https://example.com: HTTP 200.'
+    },
+    {
+      result: 'ok',
+      name: 'url_content',
+      details: [Object],
+      comment: 'Successfully extracted some content from https://example.com.'
+    },
+    {
+      result: 'ok',
+      name: 'url_content',
+      details: [Object],
+      comment: 'Successfully extracted some links from https://example.com.'
+    },
+    {
+      result: 'ok',
+      name: 'url_request',
+      details: [Object],
+      comment: 'Successfully fetched https://example.com: HTTP 200.'
+    }
+  ]
+}
+----
+====
+
+To extract content from a URL use the `getCrawlerUrlExtractionResult()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.getCrawlerUrlExtractionResult(
+    {engine_name: 'crawler-engine', 
+  body: {url: 'https://example.com'}})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  url: 'https://example.com',
+  normalized_url: 'https://example.com/',
+  results: {
+    download: { status_code: 200 },
+    extraction: {
+      content_hash: 'fb38982491c4a9377f8cf0c57e75e067bca65daf',
+      content_hash_fields: [Array],
+      content_fields: [Object],
+      meta_tag_warnings: []
+    },
+    indexing: { document_id: null, document_fields: null },
+    deduplication: { urls_count: 0, urls_sample: [] }
+  }
+}
+----
+====
+
+Trace a URL to determine if the web crawler saw the URL, how it discovered it, and other events specific to that URL.
+To trace a URL use the `getCrawlerUrlTracingResult()` method:
+
+[source,javascript]
+----
+async function run() { 
+  const response = await client.app.getCrawlerUrlTracingResult(
+    {engine_name: 'crawler-engine', 
+    body:{
+    url: "https://example.com"
+  }})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  url: 'https://example.com',
+  normalized_url: 'https://example.com/',
+  crawl_requests: [
+    {
+      crawl_request: [Object],
+      found: true,
+      discover: [Array],
+      seed: [Object],
+      fetch: [Object],
+      output: [Object]
+    }
+  ]
+}
+----
+====
+
+[discrete#app-search-api-crawler-apis-crawls]
+==== Crawls
+
+Find active crawl requests with the `getCrawlerActiveCrawlRequest()` method:
+
+[source,javascript]
+----
+async function run()  {
+  const response = await client.app.getCrawlerActiveCrawlRequest(
+    {engine_name: 'crawler-engine'})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+ {
+  meta: {
+    body: { error: 'There are no active crawl requests for this engine' },
+    statusCode: 404,
+    headers: {
+      'cache-control': 'no-cache',
+      'content-length': '62',
+      'content-type': 'application/json;charset=utf-8',
+      date: 'Tue, 17 Jan 2023 11:51:26 GMT',
+      server: 'Jetty(9.4.43.v20210629)',
+      vary: 'Origin',
+      'x-app-search-version': '8.5.3',
+      'x-cloud-request-id': 'Uh4ur47ERQGnlIeExfm1jw',
+      'x-found-handling-cluster': '613fd603d1da400b99740c891b094278',
+      'x-found-handling-instance': 'instance-0000000001',
+      'x-request-id': 'Uh4ur47ERQGnlIeExfm1jw',
+      'x-runtime': '0.102867'
+    },
+    meta: {
+      context: null,
+      request: [Object],
+      name: 'app-search',
+      connection: [Object],
+      attempts: 0,
+      aborted: false
+    },
+    warnings: [Getter]
+  }
+}
+----
+====
+
+Start a crawl with the `createCrawlerCrawlRequest()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.createCrawlerCrawlRequest(
+    {engine_name: 'crawler-engine'})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  id: '63be8e5e93f321f6828a3bed',
+  type: 'full',
+  status: 'pending',
+  created_at: '2023-01-11T10:24:30Z',
+  begun_at: null,
+  completed_at: null
+}
+----
+====
+
+Cancel an active crawl with the `deleteCrawlerActiveCrawlRequest()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteCrawlerActiveCrawlRequest(
+    {engine_name: 'crawler-engine'})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  id: '63c68c0f93f321c7a88a7d37',
+  type: 'full',
+  status: 'canceling',
+  created_at: '2023-01-17T11:52:47Z',
+  begun_at: '2023-01-17T11:52:48Z',
+  completed_at: null
+}
+----
+====
+
+[discrete#app-search-api-crawler-apis-entry-points]
+==== Entry Points
+
+Create an entry point with the `createCrawlerEntryPoint()` method:
+[source,javascript]
+----
+async function run() {const response = await client.app.createCrawlerEntryPoint(
+    {engine_name: 'crawler-engine', 
+    domain_id: '63c6890c93f321ea818a7d02',
+    body: {value: '/blog'}
+    })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  id: '63be90d993f32111e08a3c53',
+  value: '/blog',
+  created_at: '2023-01-11T10:35:05Z'
+}
+----
+====
+
+Delete an entry point with the `deleteCrawlerEntryPoint()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteCrawlerEntryPoint(
+    {engine_name: 'crawler-engine', 
+    domain_id: '63c6890c93f321ea818a7d02',
+    entry_point_id: '63be90d993f32111e08a3c53'
+    })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+{deleted: true}
+----
+
+[discrete#app-search-api-crawler-apis-crawl-rules]
+==== Crawl Rules
+
+Create a crawl rule with the `createCrawlerCrawlRule()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.createCrawlerCrawlRule(
+    {engine_name: 'crawler-engine', 
+    domain_id: '63be90b993f3211c088a3c41',
+    body: {
+      "policy": "allow",
+      "rule": "contains",
+      "pattern": "/blog"
+    }
+    })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  id: '63be932893f321ce7c8a3c72',
+  order: 0,
+  policy: 'deny',
+  rule: 'ends',
+  pattern: '/dont-crawl',
+  created_at: '2023-01-11T10:44:56Z'
+}
+----
+====
+
+Update a crawl rule with the `putCrawlerCrawlRule()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.putCrawlerCrawlRule(
+    {engine_name: 'crawler-engine',
+    domain_id: '63c6890c93f321ea818a7d02', 
+    crawl_rule_id: '63c68e6393f321faa08a9cd6',
+    body: {
+      "policy": "deny",
+      "rule": "begins",
+      "pattern": "/blog"
+    }
+    })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+Delete a crawl rule with the `deleteCrawlerCrawlRule()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteCrawlerCrawlRule(
+    {engine_name: 'crawler-engine',
+    domain_id: '63be90b993f3211c088a3c41', 
+    crawl_rule_id: '63be932893f321ce7c8a3c72'
+    })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+{deleted: true}
+----
+
+[discrete#app-search-api-crawler-apis-sitemaps]
+==== Sitemaps
+
+Create a sitemap with the `createCrawlerSitemap()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.createCrawlerSitemap(
+    {engine_name: 'crawler-engine', 
+    domain_id: '63c6890c93f321ea818a7d02',
+    body: {
+      url: 'https://example.com/sitemap.xml'
+    }
+    })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  id: '63be961d93f32104cb8a3cb9',
+  url: 'https://example.com/sitemap.xml',
+  created_at: '2023-01-11T10:57:33Z'
+}
+----
+====
+
+Update a sitemap with the `putCrawlerSitemap()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.putCrawlerSitemap(
+      {engine_name: 'crawler-engine', 
+      domain_id: '63c6890c93f321ea818a7d02',
+      sitemap_id: '63c68f7593f32152cd8a9d01',
+      body: {
+      url: 'https://example.com/sitemap.xml'
+      }})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+Delete a sitemap with the `deleteCrawlerSitemap()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.deleteCrawlerSitemap(
+      {engine_name: 'crawler-engine', 
+       domain_id: '63c6890c93f321ea818a7d02',
+      sitemap_id: '63c68f7593f32152cd8a9d01',
+    })
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+A successful response looks like this:
+
+[source,json]
+----
+{deleted: true}
+----
+
+[discrete#app-search-api-adaptive-relevance-apis]
+=== Adaptive Relevance APIs
+
+Refer to the {app-search-ref}/adaptive-relevance-api-reference.html[HTTP API reference^] for the full HTTP API documentation.
+
+[NOTE]
+====
+The adaptive relevance API is a *beta* feature. 
+Beta features are subject to change and are not covered by the support SLA of general release (GA) features.
+====
+
+[discrete#app-search-api-adaptive-relevance-apis-settings]
+==== Settings
+
+Get adaptive relevenace settings for an engine with the `getAdaptiveRelevanceSettings()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.getAdaptiveRelevanceSettings(
+    {engine_name: 'adaptive-engine'})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  curation: {
+    enabled: false,
+    mode: 'manual',
+    timeframe: 7,
+    max_size: 3,
+    min_clicks: 20,
+    schedule_frequency: 1,
+    schedule_unit: 'day'
+  }
+}
+----
+====
+
+Enable automatic adaptive relevance with the `putAdaptiveRelevanceSettings()` method:
+
+[source,javascript]
+----
+async function run() { 
+  const response = await client.app.putAdaptiveRelevanceSettings(
+    {engine_name: 'adaptive-engine',
+    body: {
+      curation: {
+        mode: 'automatic'
+      }
+    }})
+    if (response.errors) {
+      console.log(response)
+      return
+    }
+    console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+{
+  curation: {
+    enabled: false,
+    mode: 'manual',
+    timeframe: 7,
+    max_size: 3,
+    min_clicks: 20,
+    schedule_frequency: 1,
+    schedule_unit: 'day'
+  }
+}
+{
+  curation: {
+    enabled: false,
+    mode: 'automatic',
+    timeframe: 7,
+    max_size: 3,
+    min_clicks: 20,
+    schedule_frequency: 1,
+    schedule_unit: 'day'
+  }
+}
+----
+====
+
+[discrete#app-search-api-adaptive-relevance-apis-suggestions]
+==== Suggestions
+
+List all adaptive relevance suggestions for an engine with the `listAdaptiveRelevanceSuggestions()` method:
+
+[NOTE]
+====
+You'll need to enable suggestions in the App Search UI before you can use this method.
+Enable suggestions under the settings tab in *App Search > Engines > _your-engine_ > Curations*.
+====
+
+[source,javascript]
+----
+async function run() { 
+  const response = await client.app.listAdaptiveRelevanceSuggestions(
+    {engine_name: 'adaptive-engine'})
+  if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source, json]
+----
+{
+  "meta": {
+    "page": {
+      "current": 1,
+      "total_pages": 1,
+      "total_results": 2,
+      "size": 25
+    }
+  },
+  "results": [
+    {
+      "query": "forest",
+      "type": "curation",
+      "status": "pending",
+      "updated_at": "2021-09-02T07:22:23Z",
+      "created_at": "2021-09-02T07:22:23Z",
+      "promoted": [
+        "park_everglades",
+        "park_american-samoa",
+        "park_arches"
+      ],
+      "operation": "create"
+    },
+    {
+      "query": "park",
+      "type": "curation",
+      "status": "pending",
+      "updated_at": "2021-10-22T07:34:12Z",
+      "created_at": "2021-10-22T07:34:54Z",
+      "promoted": [
+        "park_yellowstone"
+      ],
+      "operation": "create",
+      "override_manual_curation": true
+    }
+  ]
+}
+----
+====
+
+Get adaptive relevance suggestions for a query with the `getAdaptiveRelevanceSuggestions()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.getAdaptiveRelevanceSuggestions(
+    {engine_name: 'adaptive-engine',
+    search_suggestion_query: 'forest'})
+    if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
+
+.Expand to see an *example response*
+[%collapsible]
+====
+[source, json]
+----
+{
+  "meta": {
+    "page": {
+      "current": 1,
+      "total_pages": 1,
+      "total_results": 1,
+      "size": 25
+    }
+  },
+  "results": [
+    {
+      "query": "forest",
+      "type": "curation",
+      "status": "pending",
+      "updated_at": "2021-09-02T07:22:23Z",
+      "created_at": "2021-09-02T07:22:23Z",
+      "promoted": [
+        "park_everglades",
+        "park_american-samoa",
+        "park_arches"
+      ],
+      "operation": "create"
+    }
+  ]
+}
+----
+====
+Update status of adaptive relevance suggestions with the `putAdaptiveRelevanceSuggestions()` method:
+
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.putAdaptiveRelevanceSuggestions(
+    {engine_name: 'adaptive-engine',
+    body: {
+      curation: {enabled: true},
+    }})
+    if (response.errors) {
+    console.log(response)
+    return
+  }
+  console.log(response)
+}
+
+run().catch(console.error)
+----
