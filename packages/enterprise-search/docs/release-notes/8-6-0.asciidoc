@@ -1,0 +1,9 @@
+[#release-notes-8-6-0]
+=== 8.6.0 release notes
+
+The Enterprise Search Node.js client is now *generally available*.
+
+* Added the `app.multiSearch` API method.
+* Added the `enterprise.getStorage` API method.
+* Added the `enterprise.getStaleStorage` API method.
+* Added the `enterprise.deleteStaleStorage` API method.
