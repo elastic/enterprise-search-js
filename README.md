@@ -10,6 +10,8 @@
 Official Node.js and universal clients for Elastic Enterprise Search, App Search, and Workplace Search.
 
 - [Node.js client](./packages/enterprise-search) - All Enterprise Search APIs supported in Node.js
+   - Read the [documentation](https://www.elastic.co/guide/en/enterprise-search-clients/enterprise-search-node/8.6/index.html)
+
 - [Universal client](./packages/enterprise-search-universal) - Node.js and browser support for a lower API surface (search and analytics)
 
 ## License
