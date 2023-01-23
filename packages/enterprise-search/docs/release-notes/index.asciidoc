@@ -1,2 +1,7 @@
 [#release-notes]
 == Release Notes
+
+ * <<release-notes-8-6-0, 8.6.0 Release Notes>>
+ 
+
+include::8-6-0.asciidoc[]

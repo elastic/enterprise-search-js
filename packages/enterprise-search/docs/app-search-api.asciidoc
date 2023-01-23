@@ -597,94 +597,94 @@ run().catch(console.error)
 ----
 ====
 
-// [discrete#app-search-api-search-apis-multi]
-// ==== Multi Search
 
-// NOTE: Multi search is not implemented
-// 
-// `TypeError: client.app.multiSearch` is not a function.
+[discrete#app-search-api-search-apis-multi]
+==== Multi Search
 
-// Looks like this method is not yet implemented in the Node.js client.
-//
+Execute multiple searches at the same time with the `multi_search()` method:
 
-// Execute multiple searches at the same time with the `multi_search()` method:
+[source,javascript]
+----
+async function run() {
+  const response = await client.app.multiSearch(
+    {engine_name: 'national-parks', body: {queries: [{query: 'rock'}, {query: 'lake'}]}})
+    if (response.errors) {
+      console.log(response)
+      process.exit(1)
+    }
+  console.log(response)
+}
 
-// [source,javascript]
-// ----
-// client
-//   .app
-//   .multiSearch({engine_name: 'national-parks', body: {queries: [{query: 'rock'}, {query: 'lake'}]}})
-//   .then(response => console.log(response))
-//   .catch(error => console.log(error))
-// ----
+run().catch(console.error)
+----
 
-// .Expand to see an *example response*
-// [%collapsible]
-// ====
-// [source,json]
-// ----
-// [
-//   {
-//     "meta": {
-//       "alerts": [],
-//       "engine": {
-//         "name": "national-parks-demo",
-//         "type": "default"
-//       },
-//       "page": {
-//         "current": 1,
-//         "size": 1,
-//         "total_pages": 15,
-//         "total_results": 15
-//       },
-//       "warnings": []
-//     },
-//     "results": [
-//       {
-//         "_meta": {
-//           "engine": "national-parks",
-//           "id": "park_rocky-mountain",
-//           "score": 6776379.0
-//         },
-//         "acres": {
-//           "raw": 265795.2
-//         },
-//         "date_established": {
-//           "raw": "1915-01-26T06:00:00+00:00"
-//         },
-//         "id": {
-//           "raw": "park_rocky-mountain"
-//         },
-//         "location": {
-//           "raw": "40.4,-105.58"
-//         },
-//         "nps_link": {
-//           "raw": "https://www.nps.gov/romo/index.htm"
-//         },
-//         "square_km": {
-//           "raw": 1075.6
-//         },
-//         "states": {
-//           "raw": [
-//             "Colorado"
-//           ]
-//         },
-//         "title": {
-//           "raw": "Rocky Mountain"
-//         },
-//         "visitors": {
-//           "raw": 4517585.0
-//         },
-//         "world_heritage_site": {
-//           "raw": "false"
-//         }
-//       }
-//     ]
-//   },
-//   ...
-// ]
-// ----
-// ====
+.Expand to see an *example response*
+[%collapsible]
+====
+[source,json]
+----
+[
+  {
+    "meta": {
+      "alerts": [],
+      "engine": {
+        "name": "national-parks-demo",
+        "type": "default"
+      },
+      "page": {
+        "current": 1,
+        "size": 1,
+        "total_pages": 15,
+        "total_results": 15
+      },
+      "warnings": []
+    },
+    "results": [
+      {
+        "_meta": {
+          "engine": "national-parks",
+          "id": "park_rocky-mountain",
+          "score": 6776379.0
+        },
+        "acres": {
+          "raw": 265795.2
+        },
+        "date_established": {
+          "raw": "1915-01-26T06:00:00+00:00"
+        },
+        "id": {
+          "raw": "park_rocky-mountain"
+        },
+        "location": {
+          "raw": "40.4,-105.58"
+        },
+        "nps_link": {
+          "raw": "https://www.nps.gov/romo/index.htm"
+        },
+        "square_km": {
+          "raw": 1075.6
+        },
+        "states": {
+          "raw": [
+            "Colorado"
+          ]
+        },
+        "title": {
+          "raw": "Rocky Mountain"
+        },
+        "visitors": {
+          "raw": 4517585.0
+        },
+        "world_heritage_site": {
+          "raw": "false"
+        }
+      }
+    ]
+  },
+  ...
+]
+----
+====
 
 [discrete#app-search-api-curation-apis]
 === Curations APIs
