@@ -1,7 +1,7 @@
 [#overview]
 == Overview
 
-https://github.com/elastic/enterprise-search-js[`enterprise-search-js`^] is the official *Node.js* client for Elastic Enterprise Search, App Search, and Workplace Search.
+https://github.com/elastic/enterprise-search-js/tree/8.6[`enterprise-search-js`^] is the official *Node.js* client for Elastic Enterprise Search, App Search, and Workplace Search.
 
 The Enterprise Search Node.js client is *generally available* as of Enterprise Search *version 8.6.0*.
 
