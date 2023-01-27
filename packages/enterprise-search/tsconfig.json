@@ -21,7 +21,8 @@
     "importHelpers": true,
     "outDir": "lib",
     "lib": [
-      "esnext"
+      "esnext",
+      "dom"
     ]
   },
   "formatCodeOptions": {
