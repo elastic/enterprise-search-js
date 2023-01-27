@@ -40,7 +40,8 @@
     "node": ">=12"
   },
   "devDependencies": {
-    "@types/node": "^17.0.23",
+    "@types/node": "*",
+    "@types/semver": "^7.3.13",
     "@types/tape": "^4.13.2",
     "airtap": "^4.0.4",
     "airtap-playwright": "^1.0.1",
