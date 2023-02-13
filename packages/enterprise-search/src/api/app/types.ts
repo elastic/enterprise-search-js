@@ -2086,40 +2086,6 @@ export interface AddMetaEngineSourceResponse {
   }
 }
 
-export interface SearchEsSearchV0Request {
-  /**
-   * Name of the engine
-   */
-  engine_name: string
-  /**
-   * Query parameters to be passed to Elasticsearch _search API
-   */
-  es_search_query_params?: {
-    [k: string]: unknown
-  }
-  /**
-   * The search query associated with this request when recording search analytics
-   */
-  'X-Enterprise-Search-Analytics'?: {
-    [k: string]: unknown
-  }
-  /**
-   * Analytics tags to be applied with this search request
-   */
-  'X-Enterprise-Search-Analytics-Tags'?: {
-    [k: string]: unknown
-  }
-  /**
-   * The Elasticsearch token API
-   */
-  Authorization: {
-    [k: string]: unknown
-  }
-  body?: {}
-}
-
-export type SearchEsSearchV0Response = Record<string, unknown>
-
 export interface SearchEsSearchRequest {
   /**
    * Name of the engine
@@ -2263,7 +2229,7 @@ export interface SearchRequest {
   body?: {
     query: string
     analytics?: {}
-    boost?: {}
+    boosts?: {}
     facets?: {}
     filters?: {}
     group?: {}
@@ -2326,7 +2292,7 @@ export interface MultiSearchRequest {
     queries: Array<{
       query: string
       analytics?: {}
-      boost?: {}
+      boosts?: {}
       facets?: {}
       filters?: {}
       group?: {}
@@ -2381,62 +2347,6 @@ export type MultiSearchResponse = Array<{
   results: Array<{}>
 }>
 
-export interface SearchExplainV0Request {
-  /**
-   * Name of the engine
-   */
-  engine_name: string
-  body?: {
-    query: string
-    analytics?: {}
-    boost?: {}
-    facets?: {}
-    filters?: {}
-    group?: {}
-    page?: {
-      current?: number
-      size?: number
-    }
-    result_fields?: {}
-    search_fields?: {
-      [k: string]: {
-        weight?: number
-      }
-    }
-    sort?: Array<{
-      [k: string]:
-      | ('asc' | 'desc')
-      | {
-        center?:
-        | string
-        | Array<{
-          [k: string]: unknown
-        }>
-        order?: 'asc' | 'desc'
-        mode?: 'min' | 'max' | 'median' | 'avg'
-      }
-    }>
-  }
-}
-
-export interface SearchExplainV0Response {
-  meta: {
-    alerts: string[]
-    warnings: string[]
-    precision?: number
-    engine: {
-      name?: string
-      /**
-       * Engine type
-       */
-      type?: 'meta' | 'default'
-    }
-    request_id?: string
-  }
-  query_string: string
-  query_body: {}
-}
-
 export interface SearchExplainRequest {
   /**
    * Name of the engine
@@ -2445,7 +2355,7 @@ export interface SearchExplainRequest {
   body?: {
     query: string
     analytics?: {}
-    boost?: {}
+    boosts?: {}
     facets?: {}
     filters?: {}
     group?: {}
