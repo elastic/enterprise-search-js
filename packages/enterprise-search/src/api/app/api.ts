@@ -879,20 +879,6 @@ export default class API {
     }, options)
   }
 
-  async searchEsSearch_v0 (this: That, params: T.SearchEsSearchV0Request, options?: TransportRequestOptions): Promise<T.SearchEsSearchV0Response> {
-    const {
-      engine_name,
-      body,
-      ...querystring
-    } = params ?? {}
-    return await this.transport.request<T.SearchEsSearchV0Response>({
-      method: 'POST',
-      path: `/api/as/v0/engines/${engine_name}/elasticsearch/_search`,
-      querystring,
-      body: body
-    }, options)
-  }
-
   async searchEsSearch (this: That, params: T.SearchEsSearchRequest, options?: TransportRequestOptions): Promise<T.SearchEsSearchResponse> {
     const {
       engine_name,
@@ -984,20 +970,6 @@ export default class API {
     return await this.transport.request<T.MultiSearchResponse>({
       method: 'POST',
       path: `/api/as/v1/engines/${engine_name}/multi_search`,
-      querystring,
-      body: body
-    }, options)
-  }
-
-  async search_explain_v0 (this: That, params: T.SearchExplainV0Request, options?: TransportRequestOptions): Promise<T.SearchExplainV0Response> {
-    const {
-      engine_name,
-      body,
-      ...querystring
-    } = params ?? {}
-    return await this.transport.request<T.SearchExplainV0Response>({
-      method: 'POST',
-      path: `/api/as/v0/engines/${engine_name}/search_explain`,
       querystring,
       body: body
     }, options)
