@@ -1,3 +1,19 @@
+---
 steps:
-  - label: ":js: Greetings :elastic-enterprise-search:"
-    command: "echo 'Hello, world!'"
+  - label: ":js: :elastic-enterprise-search:"
+    agents:
+      provider: gcp
+    matrix:
+      setup:
+        nodejs:
+          - "14"
+          - "16"
+          - "18"
+          - "20"
+        stack_version:
+          - "8.2.0-SNAPSHOT"
+    env:
+      NODE_JS_VERSION: "{{ matrix.nodejs }}"
+      STACK_VERSION: "{{ matrix.stack_version }}"
+    command: ./.buildkite/run-tests
+    artifact_paths: "*-junit.xml"
