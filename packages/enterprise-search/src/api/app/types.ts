@@ -2211,7 +2211,7 @@ export interface PutSchemaRequest {
    */
   engine_name: string
   schema?: {
-    [k: string]: [k: string]| unknown
+    [k: string]: string
   }
 }
 
