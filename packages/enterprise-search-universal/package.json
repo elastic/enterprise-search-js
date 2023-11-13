@@ -1,6 +1,6 @@
 {
   "name": "@elastic/enterprise-search-universal",
-  "version": "8.7.0",
+  "version": "8.11.0",
   "description": "Official universal client for Elastic App Search and Workplace Search.",
   "main": "lib/client.js",
   "types": "lib/client.d.ts",
