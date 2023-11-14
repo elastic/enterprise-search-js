@@ -1,0 +1,4 @@
+[#release-notes-8-6-1]
+=== 8.6.1 release notes
+
+* Updated APIs to include missing changes from the 8.6 specification.
