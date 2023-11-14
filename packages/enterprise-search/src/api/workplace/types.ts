@@ -75,6 +75,9 @@ export interface CreateContentSourceRequest {
         }
       }
       default_action: 'include' | 'exclude'
+      /**
+       * @minItems 0
+       */
       rules?: Array<{
         exclude?: string
         include?: string
@@ -106,6 +109,9 @@ export interface CreateContentSourceRequest {
          * How often to update user permissions, as an ISO-8601 duration
          */
         permissions?: string
+        /**
+         * @minItems 0
+         */
         blocked_windows?: Array<{
           job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
           day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
@@ -124,6 +130,9 @@ export interface CreateContentSourceRequest {
      * Facet customizations
      */
     facets?: {
+      /**
+       * @minItems 0
+       */
       overrides: Array<{
         field: string
         enabled: boolean
@@ -135,6 +144,9 @@ export interface CreateContentSourceRequest {
      * Automatic query refinement customizations
      */
     automatic_query_refinement?: {
+      /**
+       * @minItems 0
+       */
       overrides: Array<{
         field: string
         enabled: boolean
@@ -171,12 +183,16 @@ export interface CreateContentSourceResponse {
   is_remote: boolean
   /**
    * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
+   *
+   * @minItems 0
    */
   details: Array<{
     [k: string]: unknown
   }>
   /**
    * A list of Workplace Search Group names and IDs which have access to this Content Source.
+   *
+   * @minItems 0
    */
   groups: Array<{
     id: string
@@ -232,6 +248,9 @@ export interface CreateContentSourceResponse {
       }
     }
     default_action: 'include' | 'exclude'
+    /**
+     * @minItems 0
+     */
     rules?: Array<{
       exclude?: string
       include?: string
@@ -263,6 +282,9 @@ export interface CreateContentSourceResponse {
        * How often to update user permissions, as an ISO-8601 duration
        */
       permissions?: string
+      /**
+       * @minItems 0
+       */
       blocked_windows?: Array<{
         job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
         day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
@@ -342,6 +364,9 @@ export interface CreateContentSourceResponse {
    * Facet customizations
    */
   facets?: {
+    /**
+     * @minItems 0
+     */
     overrides: Array<{
       field: string
       enabled: boolean
@@ -353,6 +378,9 @@ export interface CreateContentSourceResponse {
    * Automatic query refinement customizations
    */
   automatic_query_refinement?: {
+    /**
+     * @minItems 0
+     */
     overrides: Array<{
       field: string
       enabled: boolean
@@ -415,12 +443,16 @@ export interface ListContentSourcesResponse {
     is_remote: boolean
     /**
      * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
+     *
+     * @minItems 0
      */
     details: Array<{
       [k: string]: unknown
     }>
     /**
      * A list of Workplace Search Group names and IDs which have access to this Content Source.
+     *
+     * @minItems 0
      */
     groups: Array<{
       id: string
@@ -476,6 +508,9 @@ export interface ListContentSourcesResponse {
         }
       }
       default_action: 'include' | 'exclude'
+      /**
+       * @minItems 0
+       */
       rules?: Array<{
         exclude?: string
         include?: string
@@ -507,6 +542,9 @@ export interface ListContentSourcesResponse {
          * How often to update user permissions, as an ISO-8601 duration
          */
         permissions?: string
+        /**
+         * @minItems 0
+         */
         blocked_windows?: Array<{
           job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
           day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
@@ -586,6 +624,9 @@ export interface ListContentSourcesResponse {
      * Facet customizations
      */
     facets?: {
+      /**
+       * @minItems 0
+       */
       overrides: Array<{
         field: string
         enabled: boolean
@@ -597,6 +638,9 @@ export interface ListContentSourcesResponse {
      * Automatic query refinement customizations
      */
     automatic_query_refinement?: {
+      /**
+       * @minItems 0
+       */
       overrides: Array<{
         field: string
         enabled: boolean
@@ -648,12 +692,16 @@ export interface GetContentSourceResponse {
   is_remote: boolean
   /**
    * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
+   *
+   * @minItems 0
    */
   details: Array<{
     [k: string]: unknown
   }>
   /**
    * A list of Workplace Search Group names and IDs which have access to this Content Source.
+   *
+   * @minItems 0
    */
   groups: Array<{
     id: string
@@ -709,6 +757,9 @@ export interface GetContentSourceResponse {
       }
     }
     default_action: 'include' | 'exclude'
+    /**
+     * @minItems 0
+     */
     rules?: Array<{
       exclude?: string
       include?: string
@@ -740,6 +791,9 @@ export interface GetContentSourceResponse {
        * How often to update user permissions, as an ISO-8601 duration
        */
       permissions?: string
+      /**
+       * @minItems 0
+       */
       blocked_windows?: Array<{
         job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
         day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
@@ -819,6 +873,9 @@ export interface GetContentSourceResponse {
    * Facet customizations
    */
   facets?: {
+    /**
+     * @minItems 0
+     */
     overrides: Array<{
       field: string
       enabled: boolean
@@ -830,6 +887,9 @@ export interface GetContentSourceResponse {
    * Automatic query refinement customizations
    */
   automatic_query_refinement?: {
+    /**
+     * @minItems 0
+     */
     overrides: Array<{
       field: string
       enabled: boolean
@@ -902,6 +962,9 @@ export interface PutContentSourceRequest {
         }
       }
       default_action: 'include' | 'exclude'
+      /**
+       * @minItems 0
+       */
       rules?: Array<{
         exclude?: string
         include?: string
@@ -933,6 +996,9 @@ export interface PutContentSourceRequest {
          * How often to update user permissions, as an ISO-8601 duration
          */
         permissions?: string
+        /**
+         * @minItems 0
+         */
         blocked_windows?: Array<{
           job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
           day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
@@ -951,6 +1017,9 @@ export interface PutContentSourceRequest {
      * Facet customizations
      */
     facets?: {
+      /**
+       * @minItems 0
+       */
       overrides: Array<{
         field: string
         enabled: boolean
@@ -962,6 +1031,9 @@ export interface PutContentSourceRequest {
      * Automatic query refinement customizations
      */
     automatic_query_refinement?: {
+      /**
+       * @minItems 0
+       */
       overrides: Array<{
         field: string
         enabled: boolean
@@ -998,12 +1070,16 @@ export interface PutContentSourceResponse {
   is_remote: boolean
   /**
    * A list of key/value metadata for the Content Source and the account which authenticated/connected it.
+   *
+   * @minItems 0
    */
   details: Array<{
     [k: string]: unknown
   }>
   /**
    * A list of Workplace Search Group names and IDs which have access to this Content Source.
+   *
+   * @minItems 0
    */
   groups: Array<{
     id: string
@@ -1059,6 +1135,9 @@ export interface PutContentSourceResponse {
       }
     }
     default_action: 'include' | 'exclude'
+    /**
+     * @minItems 0
+     */
     rules?: Array<{
       exclude?: string
       include?: string
@@ -1090,6 +1169,9 @@ export interface PutContentSourceResponse {
        * How often to update user permissions, as an ISO-8601 duration
        */
       permissions?: string
+      /**
+       * @minItems 0
+       */
       blocked_windows?: Array<{
         job_type: 'full' | 'incremental' | 'delete' | 'permissions' | 'all'
         day: 'all' | 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday'
@@ -1169,6 +1251,9 @@ export interface PutContentSourceResponse {
    * Facet customizations
    */
   facets?: {
+    /**
+     * @minItems 0
+     */
     overrides: Array<{
       field: string
       enabled: boolean
@@ -1180,6 +1265,9 @@ export interface PutContentSourceResponse {
    * Automatic query refinement customizations
    */
   automatic_query_refinement?: {
+    /**
+     * @minItems 0
+     */
     overrides: Array<{
       field: string
       enabled: boolean
@@ -1282,11 +1370,11 @@ export interface ListDocumentsRequest {
       | ((string | number) | Array<string | number>)
       | {
         /**
-             * A value to filter on
+             * The start of the range, inclusive
              */
         from?: string | number
         /**
-             * A value to filter on
+             * The end of the range, exclusive
              */
         to?: string | number
       }
@@ -1300,11 +1388,11 @@ export interface ListDocumentsRequest {
              */
         center: string | [number, number]
         /**
-             * A value to filter on
+             * Inclusive lower bound of the range. Is required if to is not provided
              */
         from?: string | number
         /**
-             * A value to filter on
+             * Exclusive upper bound of the range. Is required if from is not provided
              */
         to?: string | number
       }
@@ -1358,6 +1446,10 @@ export interface IndexDocumentsRequest {
    * Unique ID for a Custom API source, provided upon creation of a Custom API Source
    */
   content_source_id: string
+  /**
+   * @minItems 1
+   * @maxItems 100
+   */
   documents: Array<{
     [k: string]: unknown
   }>
@@ -1366,6 +1458,9 @@ export interface IndexDocumentsRequest {
 export interface IndexDocumentsResponse {
   results: Array<{
     id: string
+    /**
+     * @minItems 0
+     */
     errors: string[]
   }>
 }
@@ -1375,6 +1470,10 @@ export interface DeleteDocumentsRequest {
    * Unique ID for a Custom API source, provided upon creation of a Custom API Source
    */
   content_source_id: string
+  /**
+   * @minItems 1
+   * @maxItems 100
+   */
   document_ids: string[]
 }
 
@@ -1431,6 +1530,8 @@ export interface ListExternalIdentitiesResponse {
     external_user_id: string
     /**
      * List of external user properties
+     *
+     * @maxItems 1024
      */
     external_user_properties?: Array<{
       attribute_name: '_elasticsearch_username'
@@ -1455,6 +1556,9 @@ export interface CreateExternalIdentityRequest {
     external_user_id: string
     /**
      * A list of external user properties, where each property is an object with an attribute_name and attribute_value.
+     *
+     * @minItems 0
+     * @maxItems 1024
      */
     external_user_properties: Array<{
       attribute_name: '_elasticsearch_username'
@@ -1462,6 +1566,8 @@ export interface CreateExternalIdentityRequest {
     }>
     /**
      * A list of user permissions.
+     *
+     * @minItems 0
      */
     permissions: string[]
   }
@@ -1472,6 +1578,8 @@ export interface CreateExternalIdentityResponse {
   external_user_id: string
   /**
    * List of external user properties
+   *
+   * @maxItems 1024
    */
   external_user_properties?: Array<{
     attribute_name: '_elasticsearch_username'
@@ -1499,6 +1607,8 @@ export interface GetExternalIdentityResponse {
   external_user_id: string
   /**
    * List of external user properties
+   *
+   * @maxItems 1024
    */
   external_user_properties?: Array<{
     attribute_name: '_elasticsearch_username'
@@ -1526,6 +1636,9 @@ export interface PutExternalIdentityRequest {
     external_user_id: string
     /**
      * A list of external user properties, where each property is an object with an attribute_name and attribute_value.
+     *
+     * @minItems 0
+     * @maxItems 1024
      */
     external_user_properties?:
     | Array<{
@@ -1535,6 +1648,8 @@ export interface PutExternalIdentityRequest {
     | null
     /**
      * A list of user permissions.
+     *
+     * @minItems 0
      */
     permissions?: string[] | null
   }
@@ -1545,6 +1660,8 @@ export interface PutExternalIdentityResponse {
   external_user_id: string
   /**
    * List of external user properties
+   *
+   * @maxItems 1024
    */
   external_user_properties?: Array<{
     attribute_name: '_elasticsearch_username'
@@ -1651,6 +1768,8 @@ export interface PutSynonymSetRequest {
   body: {
     /**
      * A list of terms for this synonym set
+     *
+     * @minItems 2
      */
     synonyms: string[]
   }
@@ -1896,11 +2015,11 @@ export interface SearchRequest {
       | ((string | number) | Array<string | number>)
       | {
         /**
-             * A value to filter on
+             * The start of the range, inclusive
              */
         from?: string | number
         /**
-             * A value to filter on
+             * The end of the range, exclusive
              */
         to?: string | number
       }
@@ -1914,11 +2033,11 @@ export interface SearchRequest {
              */
         center: string | [number, number]
         /**
-             * A value to filter on
+             * Inclusive lower bound of the range. Is required if to is not provided
              */
         from?: string | number
         /**
-             * A value to filter on
+             * Exclusive upper bound of the range. Is required if from is not provided
              */
         to?: string | number
       }
@@ -1949,6 +2068,9 @@ export interface SearchRequest {
       | Array<| {
         type: 'range'
         name?: string
+        /**
+                 * @minItems 1
+                 */
         ranges: Array<| {
           [k: string]: unknown
         }
@@ -1974,6 +2096,9 @@ export interface SearchRequest {
         | {
           type: 'range'
           name?: string
+          /**
+                 * @minItems 1
+                 */
           ranges: Array<| {
             [k: string]: unknown
           }
@@ -2024,15 +2149,9 @@ export interface SearchRequest {
           [k: string]: unknown
         }
       )>
-      | ((
-        | {
-          [k: string]: unknown
-        }
-        | {
-          [k: string]: unknown
-        }
-      ) &
-      (
+      | ({
+        [k: string]: unknown
+      } & (
         | {
           [k: string]: unknown
         }
@@ -2040,9 +2159,7 @@ export interface SearchRequest {
           function: 'linear' | 'exponential' | 'logarithmic'
           [k: string]: unknown
         }
-      ) & {
-        [k: string]: unknown
-      })
+      ))
     }
     /**
      * Optional parameter to search standard, remote only, or all available sources
@@ -2054,6 +2171,8 @@ export interface SearchRequest {
     timeout?: number
     /**
      * Optional list of content source ids to only return results from
+     *
+     * @minItems 1
      */
     content_sources?: string[]
   }
@@ -2088,6 +2207,9 @@ export interface SearchResponse {
         term?: string
         /**
          * The start and end position the term(s) exist in the original query
+         *
+         * @minItems 2
+         * @maxItems 2
          */
         position?: number[]
         /**
@@ -2103,11 +2225,11 @@ export interface SearchResponse {
           | ((string | number) | Array<string | number>)
           | {
             /**
-                 * A value to filter on
+                 * The start of the range, inclusive
                  */
             from?: string | number
             /**
-                 * A value to filter on
+                 * The end of the range, exclusive
                  */
             to?: string | number
           }
@@ -2121,11 +2243,11 @@ export interface SearchResponse {
                  */
             center: string | string | string | [number, number]
             /**
-                 * A value to filter on
+                 * Inclusive lower bound of the range. Is required if to is not provided
                  */
             from?: string | number
             /**
-                 * A value to filter on
+                 * Exclusive upper bound of the range. Is required if from is not provided
                  */
             to?: string | number
           }

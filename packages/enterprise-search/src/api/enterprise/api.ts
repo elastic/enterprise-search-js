@@ -70,6 +70,31 @@ export default class API {
     }, options)
   }
 
+  async getStorage (this: That, params?: T.GetStorageRequest, options?: TransportRequestOptions): Promise<T.GetStorageResponse> {
+    return await this.transport.request<T.GetStorageResponse>({
+      method: 'GET',
+      path: '/api/ent/v1/internal/storage'
+    }, options)
+  }
+
+  async getStaleStorage (this: That, params?: T.GetStaleStorageRequest, options?: TransportRequestOptions): Promise<T.GetStaleStorageResponse> {
+    return await this.transport.request<T.GetStaleStorageResponse>({
+      method: 'GET',
+      path: '/api/ent/v1/internal/storage/stale'
+    }, options)
+  }
+
+  async deleteStaleStorage (this: That, params?: T.DeleteStaleStorageRequest, options?: TransportRequestOptions): Promise<T.DeleteStaleStorageResponse> {
+    const {
+      ...querystring
+    } = params ?? {}
+    return await this.transport.request<T.DeleteStaleStorageResponse>({
+      method: 'DELETE',
+      path: '/api/ent/v1/internal/storage/stale',
+      querystring
+    }, options)
+  }
+
   async getVersion (this: That, params?: T.GetVersionRequest, options?: TransportRequestOptions): Promise<T.GetVersionResponse> {
     return await this.transport.request<T.GetVersionResponse>({
       method: 'GET',
