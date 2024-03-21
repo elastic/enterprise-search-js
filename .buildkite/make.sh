@@ -5,7 +5,7 @@
 # Skeleton for common build entry script for all elastic
 # clients. Needs to be adapted to individual client usage.
 #
-# Must be called: ./.ci/make.sh <target> <params>
+# Must be called: ./.buildkite/make.sh <target> <params>
 #
 # Version: 1.1.0
 #
@@ -38,7 +38,7 @@ WORKFLOW=${WORKFLOW-staging}
 set -euo pipefail
 
 product="elastic/enterprise-search-js"
-output_folder=".ci/output"
+output_folder=".buildkite/output"
 OUTPUT_DIR="$repo/${output_folder}"
 REPO_BINDING="${OUTPUT_DIR}:/sln/${output_folder}"
 mkdir -p "$OUTPUT_DIR"
@@ -116,7 +116,7 @@ esac
 echo -e "\033[34;1mINFO: building $product container\033[0m"
 
 docker build \
-  --file .ci/Dockerfile \
+  --file .buildkite/Dockerfile \
   --tag ${product} \
   --build-arg NODE_JS_VERSION=${NODE_JS_VERSION} \
   --build-arg USER_ID="$(id -u)" \
@@ -136,14 +136,14 @@ docker run \
   --name make-enterprise-search-js \
   --rm \
   $product \
-  node .ci/make.mjs --task $TASK ${TASK_ARGS[*]}
+  node .buildkite/make.mjs --task $TASK ${TASK_ARGS[*]}
 
 # ------------------------------------------------------- #
 # Post Command tasks & checks
 # ------------------------------------------------------- #
 
 if [[ "$CMD" == "assemble" ]]; then
-	if compgen -G ".ci/output/*" > /dev/null; then
+	if compgen -G ".buildkite/output/*" > /dev/null; then
 		echo -e "\033[32;1mTARGET: successfully assembled client v$VERSION\033[0m"
 	else
 		echo -e "\033[31;1mTARGET: assemble failed, empty workspace!\033[0m"
