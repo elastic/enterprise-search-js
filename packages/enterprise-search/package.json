@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/elastic/enterprise-search-js/blob/main/packages/enterprise-search",
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "devDependencies": {
     "@types/node": "*",
