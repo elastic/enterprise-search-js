@@ -1,0 +1,4 @@
+[#release-notes-8-6-1]
+=== 8.6.1 release notes
+
+* Added APIs that were unintentionally excluded from v8.6.0.
