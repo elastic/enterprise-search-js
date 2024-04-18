@@ -22,7 +22,7 @@
 import type * as AppTypes from './app-types'
 import type * as WorkTypes from './workplace-types'
 
-const clientVersion = '8.2'
+const clientVersion = '8.14'
 const jsVersion = typeof window !== 'undefined'
   ? '0'
   : process.versions.node
@@ -50,7 +50,7 @@ type TransportRequest = <T = unknown>(params: RequestParams, options?: RequestOp
 export class ResponseError extends Error {
   statusCode: number
   body: any
-  constructor (message: string, statusCode: number, body: any) {
+  constructor(message: string, statusCode: number, body: any) {
     if (typeof body === 'string') {
       message = body
     }
@@ -68,7 +68,7 @@ export class Client {
   readonly app: AppSearchClient
   readonly workplace: WorkplaceSearchClient
 
-  constructor (opts: ClientOptions) {
+  constructor(opts: ClientOptions) {
     this._url = opts.url
     this._token = opts.token
     this.app = new AppSearchClient(this.transportRequest.bind(this))
@@ -78,7 +78,7 @@ export class Client {
     }
   }
 
-  async transportRequest<T = unknown> (params: RequestParams, options?: RequestOptions): Promise<T> {
+  async transportRequest<T = unknown>(params: RequestParams, options?: RequestOptions): Promise<T> {
     const requestOptions: RequestInit = {
       method: params.method,
       headers: new Headers({ authorization: this._token }),
@@ -134,11 +134,11 @@ export class Client {
 
 class AppSearchClient {
   transportRequest: TransportRequest
-  constructor (transportRequest: TransportRequest) {
+  constructor(transportRequest: TransportRequest) {
     this.transportRequest = transportRequest
   }
 
-  async logClickthrough (params: AppTypes.LogClickthroughRequest, options?: RequestOptions): Promise<AppTypes.LogClickthroughResponse> {
+  async logClickthrough(params: AppTypes.LogClickthroughRequest, options?: RequestOptions): Promise<AppTypes.LogClickthroughResponse> {
     const {
       engine_name,
       body,
@@ -152,7 +152,7 @@ class AppSearchClient {
     }, options)
   }
 
-  async querySuggestion (params: AppTypes.QuerySuggestionRequest, options?: RequestOptions): Promise<AppTypes.QuerySuggestionResponse> {
+  async querySuggestion(params: AppTypes.QuerySuggestionRequest, options?: RequestOptions): Promise<AppTypes.QuerySuggestionResponse> {
     const {
       engine_name,
       body,
@@ -166,7 +166,7 @@ class AppSearchClient {
     }, options)
   }
 
-  async search (params: AppTypes.SearchRequest, options?: RequestOptions): Promise<AppTypes.SearchResponse> {
+  async search(params: AppTypes.SearchRequest, options?: RequestOptions): Promise<AppTypes.SearchResponse> {
     const {
       engine_name,
       body,
@@ -180,7 +180,7 @@ class AppSearchClient {
     }, options)
   }
 
-  async multiSearch (params: AppTypes.MultiSearchRequest, options?: RequestOptions): Promise<AppTypes.MultiSearchResponse> {
+  async multiSearch(params: AppTypes.MultiSearchRequest, options?: RequestOptions): Promise<AppTypes.MultiSearchResponse> {
     const {
       engine_name,
       body,
@@ -197,18 +197,18 @@ class AppSearchClient {
 
 class WorkplaceSearchClient {
   transportRequest: TransportRequest
-  constructor (transportRequest: TransportRequest) {
+  constructor(transportRequest: TransportRequest) {
     this.transportRequest = transportRequest
   }
 
-  async getTriggersBlocklist (params?: WorkTypes.GetTriggersBlocklistRequest, options?: RequestOptions): Promise<WorkTypes.GetTriggersBlocklistResponse> {
+  async getTriggersBlocklist(params?: WorkTypes.GetTriggersBlocklistRequest, options?: RequestOptions): Promise<WorkTypes.GetTriggersBlocklistResponse> {
     return await this.transportRequest<WorkTypes.GetTriggersBlocklistResponse>({
       method: 'GET',
       path: '/api/ws/v1/automatic_query_refinement'
     }, options)
   }
 
-  async putTriggersBlocklist (params?: WorkTypes.PutTriggersBlocklistRequest, options?: RequestOptions): Promise<WorkTypes.PutTriggersBlocklistResponse> {
+  async putTriggersBlocklist(params?: WorkTypes.PutTriggersBlocklistRequest, options?: RequestOptions): Promise<WorkTypes.PutTriggersBlocklistResponse> {
     const {
       ...querystring
     } = params ?? {}
@@ -219,7 +219,7 @@ class WorkplaceSearchClient {
     }, options)
   }
 
-  async createAnalyticsEvent (params: WorkTypes.CreateAnalyticsEventRequest, options?: RequestOptions): Promise<WorkTypes.CreateAnalyticsEventResponse> {
+  async createAnalyticsEvent(params: WorkTypes.CreateAnalyticsEventRequest, options?: RequestOptions): Promise<WorkTypes.CreateAnalyticsEventResponse> {
     const {
       body,
       ...querystring
@@ -232,7 +232,7 @@ class WorkplaceSearchClient {
     }, options)
   }
 
-  async search (params: WorkTypes.SearchRequest, options?: RequestOptions): Promise<WorkTypes.SearchResponse> {
+  async search(params: WorkTypes.SearchRequest, options?: RequestOptions): Promise<WorkTypes.SearchResponse> {
     const {
       body,
       ...querystring
