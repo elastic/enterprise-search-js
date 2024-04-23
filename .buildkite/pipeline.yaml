@@ -6,12 +6,10 @@ steps:
     matrix:
       setup:
         nodejs:
-          - "14"
-          - "16"
           - "18"
           - "20"
         stack_version:
-          - "8.2.0-SNAPSHOT"
+          - "8.14.0-SNAPSHOT"
     env:
       NODE_JS_VERSION: "{{ matrix.nodejs }}"
       STACK_VERSION: "{{ matrix.stack_version }}"

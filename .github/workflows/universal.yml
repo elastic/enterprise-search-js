@@ -3,10 +3,10 @@ name: Universal CI
 on:
   pull_request:
     paths:
-      - 'packages/enterprise-search-universal/**'
+      - "packages/enterprise-search-universal/**"
   push:
     paths:
-      - 'packages/enterprise-search-universal/**'
+      - "packages/enterprise-search-universal/**"
 
 jobs:
   test-node:
@@ -15,31 +15,31 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x, 20.x]
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npm install
+      - name: Install
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npm install
 
-    - name: Lint
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npm run lint
+      - name: Lint
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npm run lint
 
-    - name: Unit test
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npm run test:node
+      - name: Unit test
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npm run test:node
 
   test-browser:
     name: Test Browser
@@ -47,41 +47,41 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
         os: [ubuntu-latest]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npm install
+      - name: Install
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npm install
 
-    - name: Playwright configuration
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npx playwright install-deps
+      - name: Playwright configuration
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npx playwright install-deps
 
-    - name: Playwright browser install
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npx playwright install
+      - name: Playwright browser install
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npx playwright install
 
-    - name: Lint
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npm run lint
+      - name: Lint
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npm run lint
 
-    - name: Unit test
-      working-directory: ./packages/enterprise-search-universal
-      run: |
-        npm run test:browser
+      - name: Unit test
+        working-directory: ./packages/enterprise-search-universal
+        run: |
+          npm run test:browser
 
   license:
     name: License check
@@ -92,19 +92,19 @@ jobs:
         node-version: [16.x]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install
-      working-directory: ./packages/enterprise-search
-      run: |
-        npm install
+      - name: Install
+        working-directory: ./packages/enterprise-search
+        run: |
+          npm install
 
-    - name: License checker
-      working-directory: ./packages/enterprise-search
-      run: |
-        npm run license-checker
+      - name: License checker
+        working-directory: ./packages/enterprise-search
+        run: |
+          npm run license-checker
