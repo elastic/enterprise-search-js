@@ -6,7 +6,7 @@ metadata:
   name: enterprise-search-js
 spec:
   type: library
-  owner: group:clients-team
+  owner: group:devtools-team
   lifecycle: production
 
 ---
@@ -18,7 +18,7 @@ metadata:
   description: Test enterprise-search-js client
 spec:
   type: buildkite-pipeline
-  owner: group:clients-team
+  owner: group:devtools-team
   system: buildkite
   implementation:
     apiVersion: buildkite.elastic.dev/v1
@@ -29,7 +29,7 @@ spec:
       repository: elastic/enterprise-search-js
       pipeline_file: .buildkite/pipeline.yaml
       teams:
-        clients-team:
+        devtools-team:
           access_level: MANAGE_BUILD_AND_READ
         everyone:
           access_level: READ_ONLY
