@@ -1,3 +1,15 @@
+# :warning: App Search and Workplace Search will be discontinued in 9.0
+
+App Search and Workplace Search will be discontinued in 9.0.
+App Search and Workplace Search and the Enterprise Search clients will continue to be supported in their current form throughout 8.x versions, for as long as 8.x is supported.
+We recommend using the latest stable release of the clients if you're still using App Search or Workplace Search.
+
+Here are some useful links with more information:
+
+- [Comparison - Table: App Search (standalone) and Elasticsearch](https://www.elastic.co/guide/en/app-search/current/index.html)
+- [From App Search to Elasticsearch — Tap into the future of search](https://www.elastic.co/blog/app-search-to-elasticsearch)
+- [App Search Engine exporter to Elasticsearch](https://github.com/elastic/elasticsearch-labs/blob/main/notebooks/enterprise-search/app-search-engine-exporter.ipynb)
+
 <p align="center">
   <a href="https://github.com/elastic/enterprise-search-js">
     <img src="https://github.com/elastic/enterprise-search-js/raw/main/packages/enterprise-search/test/fixtures/elastic-enterprise-search-logo.png" width="70%" alt="Elastic Enterprise Search" />

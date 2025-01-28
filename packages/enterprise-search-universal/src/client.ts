@@ -22,6 +22,8 @@
 import type * as AppTypes from './app-types'
 import type * as WorkTypes from './workplace-types'
 
+console.warn("App Search and Workplace Search will be discontinued in 9.0. App Search and Workplace Search and the Enterprise Search clients will continue to be supported in their current form throughout 8.x versions, for as long as 8.x is supported. We recommend using the latest stable release of the clients if you're still using App Search or Workplace Search.")
+
 const clientVersion = '8.14'
 const jsVersion = typeof window !== 'undefined'
   ? '0'
