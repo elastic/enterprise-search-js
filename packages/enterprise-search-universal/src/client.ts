@@ -22,7 +22,9 @@
 import type * as AppTypes from './app-types'
 import type * as WorkTypes from './workplace-types'
 
-console.warn("App Search and Workplace Search will be discontinued in 9.0. App Search and Workplace Search and the Enterprise Search clients will continue to be supported in their current form throughout 8.x versions, for as long as 8.x is supported. We recommend using the latest stable release of the clients if you're still using App Search or Workplace Search.")
+console.warn(`Starting with Elastic version 9.0, the standalone Enterprise Search products, will no longer be included in our offering. They remain supported in their current form in version 8.x and will only receive security upgrades and fixes. Enterprise Search clients will continue to be supported in their current form throughout 8.x versions, according to our EOL policy (https://www.elastic.co/support/eol).
+
+We recommend transitioning to our actively developed Elastic Stack (https://www.elastic.co/elastic-stack) tools for your search use cases. However, if you're still using any Enterprise Search products, we recommend using the latest stable release of the clients.`)
 
 const clientVersion = '8.14'
 const jsVersion = typeof window !== 'undefined'
