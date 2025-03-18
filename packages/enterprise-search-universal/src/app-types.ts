@@ -75,7 +75,7 @@ export interface SearchRequest {
   body?: {
     query: string
     analytics?: {}
-    boosts?: {}
+    boost?: {}
     facets?: {}
     filters?: {}
     group?: {}
@@ -138,7 +138,7 @@ export interface MultiSearchRequest {
     queries: Array<{
       query: string
       analytics?: {}
-      boosts?: {}
+      boost?: {}
       facets?: {}
       filters?: {}
       group?: {}

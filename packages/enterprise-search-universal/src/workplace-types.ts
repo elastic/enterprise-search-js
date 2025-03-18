@@ -192,7 +192,7 @@ export interface SearchRequest {
         }
       )
     }
-    boosts?: {
+    boost?: {
       [k: string]:
       | Array<(
         | {

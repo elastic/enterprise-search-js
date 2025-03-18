@@ -47,7 +47,7 @@ test('returns engine search settings', async t => {
   const response = await client.app.getSearchSettings({ engine_name: engineName })
   t.type(response.search_fields, 'object')
   t.type(response.result_fields, 'object')
-  t.type(response.boosts, 'object')
+  t.type(response.boost, 'object')
 
   await client.close()
 })
@@ -74,7 +74,7 @@ test('update search settings', async t => {
   const response = await client.app.putSearchSettings({
     engine_name: engineName,
     body: {
-      boosts: {
+      boost: {
         year: [{
           type: 'proximity',
           function: 'linear',
@@ -84,7 +84,7 @@ test('update search settings', async t => {
       }
     }
   })
-  t.same(response.boosts, {
+  t.same(response.boost, {
     year: [{
       type: 'proximity',
       function: 'linear',
@@ -105,7 +105,7 @@ test('resets search setting', async t => {
   const response = await client.app.resetSearchSettings({ engine_name: engineName })
   t.type(response.search_fields, 'object')
   t.type(response.result_fields, 'object')
-  t.type(response.boosts, 'object')
+  t.type(response.boost, 'object')
 
   await client.close()
 })

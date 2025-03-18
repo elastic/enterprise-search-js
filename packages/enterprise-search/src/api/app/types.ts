@@ -2227,7 +2227,7 @@ export interface SearchRequest {
   body?: {
     query: string
     analytics?: {}
-    boosts?: {}
+    boost?: {}
     facets?: {}
     filters?: {}
     group?: {}
@@ -2290,7 +2290,7 @@ export interface MultiSearchRequest {
     queries: Array<{
       query: string
       analytics?: {}
-      boosts?: {}
+      boost?: {}
       facets?: {}
       filters?: {}
       group?: {}
@@ -2353,7 +2353,7 @@ export interface SearchExplainRequest {
   body?: {
     query: string
     analytics?: {}
-    boosts?: {}
+    boost?: {}
     facets?: {}
     filters?: {}
     group?: {}
@@ -2409,7 +2409,7 @@ export interface GetSearchSettingsRequest {
 }
 
 export interface GetSearchSettingsResponse {
-  boosts?: {}
+  boost?: {}
   search_fields?: {
     [k: string]: {
       weight?: number
@@ -2426,7 +2426,7 @@ export interface PutSearchSettingsRequest {
    */
   engine_name: string
   body?: {
-    boosts?: {}
+    boost?: {}
     search_fields?: {
       [k: string]: {
         weight?: number
@@ -2439,7 +2439,7 @@ export interface PutSearchSettingsRequest {
 }
 
 export interface PutSearchSettingsResponse {
-  boosts?: {}
+  boost?: {}
   search_fields?: {
     [k: string]: {
       weight?: number
@@ -2458,7 +2458,7 @@ export interface ResetSearchSettingsRequest {
 }
 
 export interface ResetSearchSettingsResponse {
-  boosts?: {}
+  boost?: {}
   search_fields?: {
     [k: string]: {
       weight?: number
