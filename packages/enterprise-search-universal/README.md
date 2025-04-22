@@ -8,7 +8,7 @@ We recommend transitioning to our actively developed [Elastic Stack](https://www
 Here are some useful links with more information:
 
 - [Enterprise Search FAQ](https://www.elastic.co/resources/enterprise-search/enterprise-search-faq)
-- [One stop shop for Upgrading to Elastic Search 9](https://www.elastic.co/guide/en/enterprise-search/current/upgrading-to-9-x.html)
+- [One stop shop for Upgrading to Elastic Search 9](https://www.elastic.co/guide/en/enterprise-search/8.18/upgrading-to-9-x.html)
 
 <p align="center">
   <a href="https://github.com/elastic/enterprise-search-js">
